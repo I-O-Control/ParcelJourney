@@ -48,6 +48,20 @@
 /analysis/cad-connected-layout.html
 /analysis/scada/
 /tools/__pycache__/
+/tools/analyze_real_temp_journeys.py
+/tools/build_fiege_behavior_model.py
+/tools/build_inferred_operational_model.py
+/tools/build_interpolated_position_model.py
+/tools/build_operations_catalog.py
+/tools/build_real_*.py
+/tools/build_verified_real_journeys.py
+/tools/check_equipment_replay.py
+/tools/extract_scada_screens.py
+/tools/infer_conveyor_layout.py
+/tools/inventory_current_configuration.py
+/tools/reconstruct_scada_belts.py
+/tools/run_100_layout_examples.py
+/parcel-journey-map.html
 
 # Generated scenario feed; keep only catalogue metadata
 /test-feed-parcel/*
