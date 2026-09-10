@@ -1,0 +1,6 @@
+{
+  "Id": "parcel-journey",
+  "DisplayName": "Parcel Journey",
+  "EntryAssembly": "ParcelJourney.IocPlugin.dll",
+  "MinHostApiVersion": 1
+}

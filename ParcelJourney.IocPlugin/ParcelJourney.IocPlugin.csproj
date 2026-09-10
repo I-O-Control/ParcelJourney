@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+  <PropertyGroup><TargetFramework>net8.0-windows</TargetFramework><Nullable>enable</Nullable><ImplicitUsings>enable</ImplicitUsings><IsPackable>false</IsPackable><AddRazorSupportForMvc>true</AddRazorSupportForMvc></PropertyGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <ProjectReference Include="..\ParcelJourney.Core\ParcelJourney.Core.csproj" />
+    <ProjectReference Include="C:\Users\porfy\source\repos\IocOrchestrator\IocOrchestrator.Abstractions\IocOrchestrator.Abstractions.csproj"><Private>false</Private></ProjectReference>
+  </ItemGroup>
+  <ItemGroup><None Update="plugin.json" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
+  <Target Name="DeployToHostPlugins" AfterTargets="Build">
+    <PropertyGroup><HostPluginsDir>C:\Users\porfy\source\repos\IocOrchestrator\bin\$(Configuration)\net8.0-windows\plugins\parcel-journey\</HostPluginsDir></PropertyGroup>
+    <ItemGroup><PluginAssets Include="$(MSBuildThisFileDirectory)wwwroot\**\*" /></ItemGroup>
+    <MakeDir Directories="$(HostPluginsDir)" ContinueOnError="true" />
+    <Copy SourceFiles="$(TargetPath);$(TargetDir)plugin.json;$(TargetDir)$(AssemblyName).deps.json" DestinationFolder="$(HostPluginsDir)" SkipUnchangedFiles="true" ContinueOnError="true" />
+    <Copy SourceFiles="@(ReferenceCopyLocalPaths)" DestinationFolder="$(HostPluginsDir)" SkipUnchangedFiles="true" ContinueOnError="true" />
+    <Copy SourceFiles="@(PluginAssets)" DestinationFolder="$(HostPluginsDir)wwwroot\%(RecursiveDir)" SkipUnchangedFiles="true" ContinueOnError="true" />
+  </Target>
+</Project>

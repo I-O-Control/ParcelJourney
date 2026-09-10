@@ -1,0 +1,204 @@
+{
+  "name": "Fiege ParcelJourney test feed",
+  "readOnlySources": true,
+  "scenarios": [
+    {
+      "parcelId": "9100000001",
+      "orderId": "92000000000000001",
+      "trackingId": "TRK9100000001",
+      "scenario": "01-normal-ar",
+      "title": "Normal accepted telescopic divert",
+      "expectedOutcome": "CLOSED",
+      "routeDescription": "SC_VL1 -> SC_ETIINL1 -> SC_ETIOSL1 -> Hall 4 telescopic destination",
+      "target": "AR",
+      "source": "synthetic Fiege behavior feed"
+    },
+    {
+      "parcelId": "9100000002",
+      "orderId": "92000000000000002",
+      "trackingId": "TRK9100000002",
+      "scenario": "02-normal-al",
+      "title": "Normal accepted left divert",
+      "expectedOutcome": "CLOSED",
+      "routeDescription": "SC_START -> SC_WAAP -> SC_VL1 -> Hall 3 telescopic destination",
+      "target": "AL",
+      "source": "synthetic Fiege behavior feed"
+    },
+    {
+      "parcelId": "9100000003",
+      "orderId": "92000000000000003",
+      "trackingId": "TRK9100000003",
+      "scenario": "03-straight-through",
+      "title": "Straight-through transport",
+      "expectedOutcome": "CLOSED",
+      "routeDescription": "SC_START -> SC_WAAP -> SC_WAVL -> SC_H4T1",
+      "target": "WG",
+      "source": "synthetic Fiege behavior feed"
+    },
+    {
+      "parcelId": "9100000004",
+      "orderId": "92000000000000004",
+      "trackingId": "TRK9100000004",
+      "scenario": "04-alternate-target",
+      "title": "Alternate/second-right target",
+      "expectedOutcome": "CLOSED",
+      "routeDescription": "SC_VL2 -> SC_H4T4 -> SC_H4T5",
+      "target": "RR",
+      "source": "synthetic Fiege behavior feed"
+    },
+    {
+      "parcelId": "9100000005",
+      "orderId": "92000000000000005",
+      "trackingId": "TRK9100000005",
+      "scenario": "05-labeler-line-1",
+      "title": "Labeler line 1 with printer output",
+      "expectedOutcome": "CLOSED",
+      "routeDescription": "SC_ETIINL1 -> printer 1 -> SC_ETIOSL1 -> destination",
+      "target": "AR",
+      "source": "synthetic Fiege behavior feed"
+    },
+    {
+      "parcelId": "9100000006",
+      "orderId": "92000000000000006",
+      "trackingId": "TRK9100000006",
+      "scenario": "06-labeler-line-5",
+      "title": "Labeler line 5 with printer output",
+      "expectedOutcome": "CLOSED",
+      "routeDescription": "SC_ETIINL5 -> printer 5 -> SC_ETIOSL5 -> destination",
+      "target": "AR",
+      "source": "synthetic Fiege behavior feed"
+    },
+    {
+      "parcelId": "9100000007",
+      "orderId": "92000000000000007",
+      "trackingId": "TRK9100000007",
+      "scenario": "07-no-read",
+      "title": "No-read routed to NIO",
+      "expectedOutcome": "NIO",
+      "routeDescription": "SC_VL1 -> NR/NOREAD -> NIO chute 03091",
+      "target": "NR",
+      "source": "synthetic Fiege behavior feed"
+    },
+    {
+      "parcelId": "9100000008",
+      "orderId": "92000000000000008",
+      "trackingId": "TRK9100000008",
+      "scenario": "08-weight-error",
+      "title": "Weight error routed to NIO",
+      "expectedOutcome": "NIO",
+      "routeDescription": "SC_START -> SC_VL1 -> weight error -> NIO",
+      "target": "NR",
+      "source": "synthetic Fiege behavior feed"
+    },
+    {
+      "parcelId": "9100000009",
+      "orderId": "92000000000000009",
+      "trackingId": "TRK9100000009",
+      "scenario": "09-plausibility-error",
+      "title": "Plausibility error",
+      "expectedOutcome": "NIO",
+      "routeDescription": "SC_WAAP -> PF -> NIO",
+      "target": "PF",
+      "source": "synthetic Fiege behavior feed"
+    },
+    {
+      "parcelId": "9100000010",
+      "orderId": "92000000000000010",
+      "trackingId": "TRK9100000010",
+      "scenario": "10-no-data",
+      "title": "No-data parcel",
+      "expectedOutcome": "NIO",
+      "routeDescription": "SC_WAAP -> ND -> NIO",
+      "target": "ND",
+      "source": "synthetic Fiege behavior feed"
+    },
+    {
+      "parcelId": "9100000011",
+      "orderId": "92000000000000011",
+      "trackingId": "TRK9100000011",
+      "scenario": "11-empty-carrier",
+      "title": "Empty carrier",
+      "expectedOutcome": "NIO",
+      "routeDescription": "SC_WAAP -> LB -> NIO",
+      "target": "LB",
+      "source": "synthetic Fiege behavior feed"
+    },
+    {
+      "parcelId": "9100000012",
+      "orderId": "92000000000000012",
+      "trackingId": "TRK9100000012",
+      "scenario": "12-wrong-divert",
+      "title": "Wrong actual divert",
+      "expectedOutcome": "MISROUTE",
+      "routeDescription": "SC_VL1 target AR -> actual B2 at labeler output",
+      "target": "B2",
+      "source": "synthetic Fiege behavior feed"
+    },
+    {
+      "parcelId": "9100000013",
+      "orderId": "92000000000000013",
+      "trackingId": "TRK9100000013",
+      "scenario": "13-missing-ack",
+      "title": "PLC acknowledgement missing",
+      "expectedOutcome": "PENDING",
+      "routeDescription": "SC_VL1 -> target AR command -> no final acknowledgement",
+      "target": "AR",
+      "source": "synthetic Fiege behavior feed"
+    },
+    {
+      "parcelId": "9100000014",
+      "orderId": "92000000000000014",
+      "trackingId": "TRK9100000014",
+      "scenario": "14-missing-db-row",
+      "title": "Parcel missing from database",
+      "expectedOutcome": "EXCEPTION",
+      "routeDescription": "SC_VL1 -> no tudata row found",
+      "target": "\u2014",
+      "source": "synthetic Fiege behavior feed"
+    },
+    {
+      "parcelId": "9100000015",
+      "orderId": "92000000000000015",
+      "trackingId": "TRK9100000015",
+      "scenario": "15-repeat-at-wa",
+      "title": "WA circulation limit exceeded",
+      "expectedOutcome": "NIO",
+      "routeDescription": "SC_WAAP repeated 4 rounds -> NIO chute 03091",
+      "target": "NR",
+      "source": "synthetic Fiege behavior feed"
+    },
+    {
+      "parcelId": "9100000016",
+      "orderId": "92000000000000016",
+      "trackingId": "TRK9100000016",
+      "scenario": "16-late-reporting",
+      "title": "Late external reporting after close",
+      "expectedOutcome": "CLOSED",
+      "routeDescription": "SC_VL1 -> accepted divert -> close -> late LVS report",
+      "target": "AR",
+      "source": "synthetic Fiege behavior feed"
+    },
+    {
+      "parcelId": "9100000017",
+      "orderId": "92000000000000017",
+      "trackingId": "TRK9100000017",
+      "scenario": "17-duplicate-messages",
+      "title": "Duplicate technical messages",
+      "expectedOutcome": "CLOSED",
+      "routeDescription": "duplicate scan messages deduplicated -> accepted divert",
+      "target": "AR",
+      "source": "synthetic Fiege behavior feed"
+    },
+    {
+      "parcelId": "9100000018",
+      "orderId": "92000000000000018",
+      "trackingId": "TRK9100000018",
+      "scenario": "18-chute-return",
+      "title": "Hall 3 chute/return destination",
+      "expectedOutcome": "CLOSED",
+      "routeDescription": "SC_H3RU03 -> chute 03 / return destination",
+      "target": "03",
+      "source": "synthetic Fiege behavior feed"
+    }
+  ]
+}

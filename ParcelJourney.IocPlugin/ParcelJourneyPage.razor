@@ -1,0 +1,43 @@
+@page "/plugins/parcel-journey"
+@rendermode InteractiveServer
+@attribute [Authorize(Policy = ParcelJourneyModule.PageKey)]
+@inject IParcelJourneyBuilder JourneyBuilder
+
+<PageTitle>Parcel Journey</PageTitle>
+<div class="page-header"><div><h4><i class="bi bi-box-seam me-2 text-accent"></i>Parcel Journey</h4><p class="text-muted">Phase 1 diagnostic journey reconstruction</p></div></div>
+
+<div class="parcel-journey-card">
+    <div class="row g-2">
+        <div class="col-md-5"><label class="form-label">Log root</label><input class="form-control" @bind="logRoot" /></div>
+        <div class="col-md-3"><label class="form-label">Parcel / order / tracking ID</label><input class="form-control" @bind="searchTerm" /></div>
+        <div class="col-md-2"><label class="form-label">Pattern</label><input class="form-control" @bind="pattern" /></div>
+        <div class="col-md-2 d-flex align-items-end"><button class="btn btn-primary w-100" @onclick="SearchAsync" disabled="@busy">@(busy ? "Searching…" : "Search")</button></div>
+    </div>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(error)) { <div class="alert alert-danger mt-3">@error</div> }
+@if (journey is not null)
+{
+    <div class="parcel-journey-summary mt-3"><strong>@journey.Events.Count events</strong> · duration @journey.Duration · parcel @journey.ParcelId · order @journey.OrderId · tracking @journey.TrackingId</div>
+    <div class="table-responsive mt-3"><table class="table table-sm align-middle"><thead><tr><th>Time</th><th>Event</th><th>Phase</th><th>Location</th><th>Evidence</th></tr></thead><tbody>
+    @foreach (var item in journey.Events)
+    { <tr><td>@item.Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff")</td><td><strong>@item.EventType</strong><br /><small>@item.Summary</small></td><td>@item.Phase</td><td>@(item.LocationId ?? "—")</td><td>@item.Evidence.Count source line(s)</td></tr> }
+    </tbody></table></div>
+}
+
+@code {
+    private string logRoot = @"C:\IOC_MFR\FiegeU\Logs";
+    private string searchTerm = string.Empty;
+    private string pattern = "*.log";
+    private bool busy;
+    private string? error;
+    private ParcelJourney? journey;
+
+    private async Task SearchAsync()
+    {
+        error = null; journey = null; busy = true;
+        try { journey = await JourneyBuilder.BuildAsync(new JourneyQuery(searchTerm, logRoot, [pattern])); }
+        catch (Exception ex) { error = ex.Message; }
+        finally { busy = false; }
+    }
+}

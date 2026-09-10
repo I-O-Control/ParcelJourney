@@ -1,0 +1,40 @@
+{
+  "source": "Fiege Logistik source and Arbeits-DB.sql (read-only analysis)",
+  "confidence": "confirmed-from-source-or-fixture-history",
+  "scannerMappings": [
+    {"id":"1090-1","name":"SC_START","role":"induction"},
+    {"id":"1095-1","name":"SC_WAAP","role":"weighing"},
+    {"id":"1125-1","name":"SC_AP","role":"application/transfer"},
+    {"id":"2000-1","name":"SC_WAVL","role":"main conveyor"},
+    {"id":"2050-1","name":"SC_VL1","role":"main conveyor"},
+    {"id":"2095-1","name":"SC_VL2","role":"main conveyor"},
+    {"id":"3020-1","name":"SC_UMR","role":"transfer"},
+    {"id":"3195-1","name":"SC_BWL1","role":"weighing"},
+    {"id":"3205-1","name":"SC_ETIINL1","role":"labeler-in"},
+    {"id":"3215-1","name":"SC_ETIOSL1","role":"labeler-out"},
+    {"id":"3215-2","name":"SC_ETIOTL1","role":"labeler-top"},
+    {"id":"3130-1","name":"SC_BWL2","role":"weighing"},
+    {"id":"3140-1","name":"SC_ETIINL2","role":"labeler-in"},
+    {"id":"3150-1","name":"SC_ETIOSL2","role":"labeler-out"},
+    {"id":"3255-1","name":"SC_BWL3","role":"weighing"},
+    {"id":"3265-1","name":"SC_ETIINL3","role":"labeler-in"},
+    {"id":"3275-1","name":"SC_ETIOSL3","role":"labeler-out"},
+    {"id":"3325-1","name":"SC_BWL4","role":"weighing"},
+    {"id":"3335-1","name":"SC_ETIINL4","role":"labeler-in"},
+    {"id":"3345-1","name":"SC_ETIOSL4","role":"labeler-out"},
+    {"id":"3060-1","name":"SC_BWL5","role":"weighing"},
+    {"id":"3070-1","name":"SC_ETIINL5","role":"labeler-in"},
+    {"id":"3080-1","name":"SC_ETIOSL5","role":"labeler-out"},
+    {"id":"3080-2","name":"SC_ETIOTL5","role":"labeler-top"}
+  ],
+  "observedJourneySegments": [
+    {"from":"SC_START","to":"SC_WAAP","evidence":"scanner_history sample"},
+    {"from":"SC_WAAP","to":"SC_WAVL","evidence":"scanner_history sample"},
+    {"from":"SC_H4T1","to":"SC_H4T4","evidence":"scanner_history sample"},
+    {"from":"SC_H4T4","to":"SC_H4T5","evidence":"scanner_history sample"},
+    {"from":"SC_H4T5","to":"SC_H3RU","evidence":"scanner_history sample"},
+    {"from":"SC_H3RU","to":"SC_H4T6","evidence":"scanner_history sample"},
+    {"from":"SC_H4T6","to":"SC_H3T7","evidence":"scanner_history sample"}
+  ],
+  "note": "This is the missing semantic layer: scanner IDs/names and observed parcel transitions. It should be joined to SCADA coordinates by object/tag references, not by nearest-neighbor geometry."
+}

@@ -1,0 +1,27 @@
+{
+  "modelId": "fiege-ungarn",
+  "version": "2023-01-03-logical-seed",
+  "source": "Fiege_Ungarn_20230103.zap17",
+  "coordinateStatus": "not-yet-extracted",
+  "nodes": [
+    { "id": "position-2000", "type": "conveyor-position", "label": "Position 2000", "sourceTag": "Position 2000" },
+    { "id": "position-2005-1", "type": "conveyor-position", "label": "Position 2005-1", "sourceTag": "Position 2005-1" },
+    { "id": "position-2050-1", "type": "scanner", "label": "Scanner 2050-1", "sourceTag": "Position 2050-1" },
+    { "id": "position-2065-1", "type": "conveyor-position", "label": "Position 2065-1", "sourceTag": "Position 2065-1" },
+    { "id": "sorterzufuehrung", "type": "sorter-infeed", "label": "Sorterzuführung", "sourceTag": "Visu_Steuer_Sorterzuführung" },
+    { "id": "abtransport", "type": "outfeed", "label": "Abtransport", "sourceTag": "Visu_Steuer_Abtransport" }
+  ],
+  "connections": [],
+  "equipmentMappings": {
+    "2050-1": "position-2050-1",
+    "SC_VL1": "position-2050-1",
+    "2000": "position-2000",
+    "2005-1": "position-2005-1",
+    "2065-1": "position-2065-1"
+  },
+  "extractionNotes": [
+    "Coordinates and visual object geometry require a TIA Portal screen export or deeper AP17 decoding.",
+    "HMI tag logs contain logical names but also import warnings; they are evidence, not a complete tag database.",
+    "The logical seed is intentionally conservative and must be validated against the live installation drawing."
+  ]
+}

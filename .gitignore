@@ -1,0 +1,61 @@
+# Build output and IDE state
+**/bin/
+**/obj/
+.vs/
+.idea/
+*.user
+*.suo
+
+# Published/self-contained binaries
+/standalone/
+*.exe
+*.pdb
+*.dll
+*.deps.json
+*.runtimeconfig.json
+*.staticwebassets.endpoints.json
+*.web.config
+
+# Local generated reports, source extracts and temporary work
+/tmp/
+/analysis/zap17/
+/analysis/cad-layout-images/
+/analysis/rotation-layout-contact-sheet.png
+/analysis/rotated-plant-overview.png
+/analysis/rotation-layout-samples.json
+/analysis/route-direction-audit.json
+/analysis/*viewer.html
+/analysis/real-*.html
+/analysis/100-layout-simulations.json
+/analysis/assignment-search.txt
+/analysis/fiege-repo-behavior-search.txt
+/analysis/verified-real-journeys.*
+/analysis/temp-test-10-real-journeys.*
+/analysis/ten-parcel-routes.md
+/analysis/scenario-coverage.md
+/analysis/current-configuration/
+/analysis/cad-layout-images/
+/analysis/synthetic-replay-model.json
+/analysis/synthetic-replay-validation.json
+/analysis/synthetic-replay-notes.md
+/analysis/synthetic-scenarios.md
+/analysis/equipment-replay-model.json
+/analysis/equipment-replay-validation.json
+/analysis/equipment-replay-notes.md
+/analysis/fiege-behavior-model.json
+/analysis/inferred-operational-model.json
+/analysis/interpolated-position-model.json
+/analysis/cad-connected-layout.html
+/analysis/scada/
+/tools/__pycache__/
+
+# Generated scenario feed; keep only catalogue metadata
+/test-feed-parcel/*
+!/test-feed-parcel/README.md
+!/test-feed-parcel/manifest.json
+
+# Local customer data and copied logs
+*.log
+*.db
+*.plf
+*.zap17
