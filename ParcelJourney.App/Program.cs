@@ -24,6 +24,12 @@ app.Use(async (context, next) => {
     await next();
 });
 app.MapRazorPages();
+// Bundled resources keep the 3D prototype fully offline in the single-file release.
+app.MapGet("/3d", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.3d.Html"), "text/html"));
+app.MapGet("/3d/viewer.css", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.3d.Css"), "text/css"));
+app.MapGet("/3d/viewer.js", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.3d.Js"), "text/javascript"));
+app.MapGet("/3d/model.json", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.3d.Model"), "application/json"));
+app.MapGet("/3d/license", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.3d.License"), "text/plain"));
 app.MapGet("/api/health", () => new { application = "ParcelJourney", ready = true, mode = "synthetic", runtime = Environment.Version.ToString() });
 app.MapGet("/api/session", () => new { token });
 app.MapPost("/api/exit", (HttpContext context, IHostApplicationLifetime lifetime) => {
