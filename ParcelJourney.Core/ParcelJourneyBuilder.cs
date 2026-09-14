@@ -13,6 +13,10 @@ public sealed class ParcelJourneyBuilder : IParcelJourneyBuilder
     {
         cancellationToken.ThrowIfCancellationRequested();
         var result = await _engine.SearchAsync(new ParcelHistoryQuery(query.LogRootPath, query.SearchTerm, query.FilePatterns, ForceFullFileScan: query.ForceFullLogScan), cancellationToken);
+        // A foreign log folder may not have the optional tudata database. In that case
+        // fall back to the indexed full-log scan instead of returning an empty journey.
+        if (result.Events.Count == 0 && !query.ForceFullLogScan)
+            result = await _engine.SearchAsync(new ParcelHistoryQuery(query.LogRootPath, query.SearchTerm, query.FilePatterns, ForceFullFileScan: true), cancellationToken);
         if (result.Events.Count == 0) return global::ParcelJourney.Domain.ParcelJourney.Empty(query.SearchTerm);
 
         var events = result.Events.OrderBy(e => e.Timestamp).Select(e => new ParcelJourneyEvent(
