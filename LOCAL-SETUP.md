@@ -71,3 +71,6 @@ To publish into a host checkout's plugin folder, use the same command with `-c R
 Start IocOrchestrator, confirm the Parcel Journey navigation entry appears under Logistics, and open it. The adapter registers `IParcelJourneyBuilder`; it does not require the standalone executable.
 
 The project file no longer contains machine-specific absolute paths. `Directory.Build.props` supplies sibling defaults, while the command-line properties above are the portable option for CI or another developer workstation.
+
+### Large log folders
+Set PARCELJOURNEY_SOURCE_FOLDER before starting the app to warm the persistent identity index at startup. The UI also has **Choose folder…**, which opens a Windows folder picker. Index files are cached and reused when logs are unchanged; searches include subfolders and return events in timestamp order.

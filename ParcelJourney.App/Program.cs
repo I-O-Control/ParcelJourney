@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using ParcelHistoryExplorer.Core;
 using ParcelJourney.Core;
 using ParcelJourney.Domain;
+using ParcelJourney.App;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 
@@ -17,6 +18,7 @@ builder.WebHost.ConfigureKestrel(k => k.Listen(IPAddress.Loopback, 0));
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<LogHistoryQueryEngine>();
 builder.Services.AddSingleton<IParcelJourneyBuilder, ParcelJourneyBuilder>();
+builder.Services.AddHostedService<LogIndexWarmupService>();
 var app = builder.Build();
 var token = Convert.ToHexString(RandomNumberGenerator.GetBytes(32));
 app.Use(async (context, next) => {
@@ -37,13 +39,21 @@ app.MapGet("/3d/viewer.js", () => Results.Content(EmbeddedAssets.Read("ParcelJou
 app.MapGet("/3d/model.json", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.3d.Model"), "application/json"));
 app.MapGet("/3d/license", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.3d.License"), "text/plain"));
 app.MapGet("/api/health", () => new { application = "ParcelJourney", ready = true, mode = "real-logs", runtime = Environment.Version.ToString() });
+app.MapGet("/api/index/status", () => new { status = LogIndexWarmupService.Status });
+app.MapGet("/api/pick-folder", () =>
+{
+    using var dialog = new System.Windows.Forms.FolderBrowserDialog { Description = "Select the folder containing the log files", UseDescriptionForTitle = true, ShowNewFolderButton = false };
+    return dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK
+        ? Results.Ok(new { path = dialog.SelectedPath })
+        : Results.NoContent();
+});
 app.MapGet("/api/journey", async (HttpRequest request, IParcelJourneyBuilder builder, CancellationToken cancellationToken) => {
     var logs = request.Query["logs"].ToString();
     var id = request.Query["id"].ToString();
     var patterns = request.Query["pattern"].Where(p => !string.IsNullOrWhiteSpace(p)).Select(p => p!).DefaultIfEmpty("*.log").ToArray();
     if (string.IsNullOrWhiteSpace(logs) || string.IsNullOrWhiteSpace(id)) return Results.BadRequest(new { error = "Provide logs and id." });
     if (!Directory.Exists(logs)) return Results.NotFound(new { error = $"Log folder not found: {logs}" });
-    var journey = await builder.BuildAsync(new JourneyQuery(id, Path.GetFullPath(logs), patterns, ForceFullLogScan: true), null, cancellationToken);
+    var journey = await builder.BuildAsync(new JourneyQuery(id, Path.GetFullPath(logs), patterns, ForceFullLogScan: false), null, cancellationToken);
     return Results.Ok(journey);
 });
 app.MapGet("/api/session", () => new { token });
