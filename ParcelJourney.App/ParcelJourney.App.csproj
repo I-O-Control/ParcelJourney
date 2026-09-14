@@ -13,6 +13,7 @@
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
   </PropertyGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Viewer3d\theme.css" LogicalName="ParcelJourney.Theme" />
     <EmbeddedResource Include="Viewer3d\index.html" LogicalName="ParcelJourney.3d.Html" />
     <EmbeddedResource Include="Viewer3d\viewer.css" LogicalName="ParcelJourney.3d.Css" />
     <EmbeddedResource Include="Viewer3d\viewer.js" LogicalName="ParcelJourney.3d.Js" />

@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>ParcelJourney · Spatial replay</title><link rel="stylesheet" href="/3d/viewer.css"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>ParcelJourney · Spatial replay</title><link rel="stylesheet" href="/3d/viewer.css"><link rel="stylesheet" href="/theme.css"></head>
 <body>
-<header><a class="brand" href="/3d"><span class="brandmark">◈</span>Parcel<span>Journey</span></a><span class="divider"></span><span class="subtitle">SPATIAL REPLAY</span><div class="header-right"><span class="offline"><i></i> OFFLINE SIMULATION</span><a href="/">2D viewer ↗</a></div></header>
+<header><a class="brand" href="/3d"><span class="brandmark">◈</span>Parcel<span>Journey</span></a><span class="divider"></span><span class="subtitle">SPATIAL REPLAY</span><div class="header-right"><button id="theme" aria-label="Color theme" title="Dark, light or system theme">Theme: system</button><span class="offline"><i></i> OFFLINE SIMULATION</span><a href="/">2D viewer ↗</a></div></header>
 <main>
  <section class="workspace" aria-label="3D plant workspace">
-  <div id="viewport" tabindex="0" aria-label="3D conveyor network. Drag to orbit, right-drag to pan, scroll to zoom."></div>
-  <div class="map-heading"><span class="eyebrow">FIEGE / BUDAPEST</span><h1>A different perspective.</h1><p>One parcel. Every step of the journey.</p></div>
+  <div id="viewport" tabindex="0" aria-label="3D conveyor network. Drag to pan, Ctrl+drag or right-drag to rotate, scroll to zoom."></div>
+  <div class="map-heading"><span class="eyebrow">FIEGE / BUDAPEST</span><h1>Every station. In context.</h1><p>Follow the parcel. See what happens as it arrives.</p></div>
   <div class="view-tools" aria-label="Camera controls"><button id="iso" class="selected" aria-pressed="true">◈ Isometric</button><button id="top" aria-pressed="false">▦ Top</button><span></span><button id="fit">Fit plant</button><button id="focus">Focus parcel</button><button id="follow" aria-pressed="false">Follow</button></div>
-  <div id="route-key"><span class="key-visited">Visited</span><span class="key-current">Here now</span><span class="key-next">Next</span><span class="key-upcoming">Later</span><small id="route-count"></small></div>
-  <svg id="route-leaders" aria-hidden="true"></svg><div id="route-labels" aria-label="Stations on selected parcel route"></div>
+  <div id="section-labels" aria-label="Plant areas"></div>
+  <svg id="route-leaders" aria-hidden="true"></svg><div id="route-labels" aria-label="Nearby station"></div>
   <div id="tag-current" class="map-tag"></div><div id="tag-hover" class="map-tag hover" role="tooltip"></div>
-  <div class="map-footer"><span>DRAG TO ORBIT <b>·</b> RIGHT-DRAG TO PAN <b>·</b> SCROLL TO ZOOM</span><span id="render-info">Preparing scene…</span></div>
+  <div class="map-footer"><span>DRAG TO PAN <b>·</b> CTRL+DRAG TO ROTATE <b>·</b> SCROLL TO ZOOM</span><span id="render-info">Preparing scene…</span></div>
   <div id="loading" role="status">Building your plant…</div>
   <div id="error" role="alert" hidden><h2>3D view unavailable</h2><p id="error-message"></p><a href="/">Continue in the 2D viewer ↗</a></div>
  </section>

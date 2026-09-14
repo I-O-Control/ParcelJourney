@@ -27,20 +27,27 @@ pixel ratio is capped at 1.5, and there are no realtime shadows/postprocessing.
 Rendering sleeps while paused until a view/control changes. Follow, parcel and
 trail use a single frame clock. Inspector text updates at 10 Hz during playback.
 
-Controls: drag to orbit, right-drag to pan, scroll to zoom; Isometric/Top change
+Controls: drag to pan, Ctrl+drag or right-drag to rotate, scroll to zoom; Isometric/Top change
 projection direction, Fit plant resets the view, Focus parcel zooms and follows.
 Manual camera interaction releases follow. Space toggles playback outside form
 fields. Select any timeline event or use the bottom scrubber to seek backwards.
 
-Selected-route stations have persistent HTML labels with SVG anchor lines, not
-extra WebGL objects. Visited / Here now / Next / Later states and observed results
-are derived from replay time, including repeat visits and backward seeks. Offscreen
-stations are counted in the legend; Fit plant restores the overview. Label placement
-prefers edge rails where possible and switches to compact slots when crowded.
+One contextual HTML callout with an SVG anchor line follows the relevant station.
+It appears within 3 replay seconds / 150 schematic units of arrival, remains during
+the dwell, and disappears after 1.25 seconds / 90 units of departure. The final
+station remains visible while the parcel is there. Results belong to the current
+visit only; backward seeking recomputes them. No permanent label rails remain.
 Hover other equipment for its name/code and route membership, or click equipment
-or a route label for the latest observed event in the inspector. Keyboard focus on
-route labels also reveals the tooltip. Hover picking is throttled, layout is reused
-between playback passes, and paused rendering still sleeps when there is no input.
+or the contextual card for the latest observed event in the inspector. Hidden cards
+cannot receive pointer or keyboard input. Hover picking is throttled, and paused
+rendering still sleeps when there is no input.
 
 The tests cover every synthetic scenario, no future result disclosure, repeat visits,
-and representative non-overlapping label layouts with a protected parcel area.
+and contextual arrival, departure and hidden transfer intervals.
+
+The shared 2D/3D palette lives in `ParcelJourney.App/Viewer3d/theme.css`. Theme cycles
+through system, light and dark and synchronizes across views on the same origin.
+Projected section labels occupy floor gutters and remain legible over equipment.
+The floor, clipped grid and camera fit use a convex footprint of the plant and its
+sections with 0.9 world units of padding, excluding unused rectangular corners.
+See `3D-NEXT-STEPS.md` for the original requirements and implementation details.

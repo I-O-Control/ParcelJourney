@@ -2,7 +2,8 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import ReplayEngine from '../replay-engine.js';
 import { buildTrailSegments } from './trail.mjs';
-import { routeEntries, routeStatus, arrangeLabels } from './route-labels.mjs';
+import { routeEntries, routeStatus, contextualStation } from './route-labels.mjs';
+import { footprint, gridSlice } from './footprint.mjs';
 
 const $ = id => document.getElementById(id);
 const fmt = s => `${Math.floor(s / 60).toString().padStart(2, '0')}:${Math.floor(s % 60).toString().padStart(2, '0')}`;
@@ -27,6 +28,8 @@ async function boot() {
   const camera = new THREE.OrthographicCamera(-30, 30, 30, -30, .1, 500);
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = false;
+  controls.mouseButtons.LEFT=THREE.MOUSE.PAN;
+  controls.mouseButtons.RIGHT=THREE.MOUSE.ROTATE;
   controls.minPolarAngle = .005;
   controls.maxPolarAngle = Math.PI * .47;
   controls.minZoom = .45;
@@ -46,22 +49,32 @@ async function boot() {
     groups.get(color).push([x, y, z, w, h, d, rotation]);
   }
   const sections = [
-    ['ENTRY & QUALITY', 8, -12, 20, 15, 0x22363d],
+    ['ENTRY & QUALITY', 8, -12, 20, 2.5, 0x22363d],
     ['SEALING', 15, 2.7, 43, 13.8, 0x25313b],
     ['PACKAGING', 7, 15, 37, 26.8, 0x283339],
     ['HALL 04', 3.2, 29.5, 36, 36, 0x21383a],
     ['HALL 03', 3.2, 36.7, 36, 42.8, 0x213039],
     ['HALL 02', 3.2, 43.5, 39, 49, 0x25323b]
   ];
+  const plantBounds=new THREE.Box3();
+  const footprintPoints=[...model.nodes.map(n=>[n.x*S,n.y*S]),...model.edges.flatMap(e=>e.points.map(p=>[p[0]*S,p[1]*S])),...sections.flatMap(([,x1,z1,x2,z2])=>[[x1,z1],[x1,z2],[x2,z1],[x2,z2]])];
+  const outline=footprint(footprintPoints);
+  for(const n of model.nodes)plantBounds.expandByPoint(world([n.x,n.y],1.3));
+  for(const e of model.edges)for(const p of e.points)plantBounds.expandByPoint(world(p,0));
+  for(const [,x1,z1,x2,z2] of sections){plantBounds.expandByPoint(new THREE.Vector3(x1,0,z1));plantBounds.expandByPoint(new THREE.Vector3(x2,0,z2));}
+  plantBounds.expandByVector(new THREE.Vector3(.9,.2,.9));
+  const plantCenter=plantBounds.getCenter(new THREE.Vector3());
   const floorMaterial = new THREE.MeshStandardMaterial({ color: 0x16252e, roughness: 1 });
-  const floor = new THREE.Mesh(new THREE.BoxGeometry(52, .16, 67), floorMaterial);
-  floor.position.set(22, -.4, 18);
-  scene.add(floor);
-  for (const [, x1, z1, x2, z2, color] of sections) box(color, (x1+x2)/2, -.27, (z1+z2)/2, x2-x1, .12, z2-z1);
-  const grid = new THREE.GridHelper(66, 66, 0x29414c, 0x22353f);
-  grid.position.set(22, -.19, 18);
+  const floorShape=new THREE.Shape(outline.map(([x,z])=>new THREE.Vector2(x,-z)));
+  const floor=new THREE.Mesh(new THREE.ExtrudeGeometry(floorShape,{depth:.16,bevelEnabled:false}),floorMaterial);
+  floor.rotation.x=-Math.PI/2;floor.position.y=-.48;scene.add(floor);
+  for(const [,x1,z1,x2,z2,color] of sections)box(color,(x1+x2)/2,-.27,(z1+z2)/2,x2-x1,.12,z2-z1);
+  const gridPoints=[];
+  for(let x=Math.ceil(plantBounds.min.x);x<=plantBounds.max.x;x++){const span=gridSlice(outline,0,x);if(span)gridPoints.push(new THREE.Vector3(x,-.19,span[0]),new THREE.Vector3(x,-.19,span[1]));}
+  for(let z=Math.ceil(plantBounds.min.z);z<=plantBounds.max.z;z++){const span=gridSlice(outline,1,z);if(span)gridPoints.push(new THREE.Vector3(span[0],-.19,z),new THREE.Vector3(span[1],-.19,z));}
+  const grid=new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(gridPoints),new THREE.LineBasicMaterial({color:0x435778,transparent:true,opacity:.16}));
   scene.add(grid);
-
+  const staticMaterials=new Map();
   // Paths share physical stretches: deduplicate exact segments before creating belts.
   const segments = new Map();
   for (const e of model.edges) for (let i = 1; i < e.points.length; i++) {
@@ -87,7 +100,7 @@ async function boot() {
       box(0x263640,a[0]*S+dx*f,-.09,a[1]*S+dz*f,.42,.4,.12,theta);
     }
   }
-  const equipmentColors = { scanner:0x70b5cb,scale:0xd3b46f,decision:0x9c91c6,sealer:0x60b6a3,strapper:0x60b6a3,printer:0xd29c68,exit:0x92b991,exception:0xd67777,junction:0x76939f };
+  const equipmentColors = { scanner:0x69bcff,scale:0xebc46b,decision:0xa78bfa,sealer:0x22c5a0,strapper:0x22c5a0,printer:0xf07840,exit:0x84cc86,exception:0xef6676,junction:0x8fa3be };
   const picks = [];
   for (const n of model.nodes) {
     const x=n.x*S,z=n.y*S,c=equipmentColors[n.kind];
@@ -113,16 +126,14 @@ async function boot() {
     instances.forEach(([x,y,z,w,h,d,rotation],i)=>{
       transform.position.set(x,y,z);transform.scale.set(w,h,d);transform.rotation.set(0,rotation,0);transform.updateMatrix();mesh.setMatrixAt(i,transform.matrix);
     });
-    mesh.computeBoundingSphere();scene.add(mesh);
+    mesh.computeBoundingSphere();scene.add(mesh);staticMaterials.set(color,mesh.material);
   }
-  // Six floor labels, drawn once into local textures.
-  for (const [name,x1,z1,x2] of sections) {
-    const canvas=document.createElement('canvas');canvas.width=512;canvas.height=64;
-    const ctx=canvas.getContext('2d');ctx.font='500 28px Segoe UI';ctx.fillStyle='#78929e';ctx.fillText(name,12,42);
-    const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;
-    const label=new THREE.Mesh(new THREE.PlaneGeometry(Math.min(10,x2-x1),1.25),new THREE.MeshBasicMaterial({map:texture,transparent:true,depthWrite:false}));
-    label.rotation.x=-Math.PI/2;label.position.set(x1+5,-.12,z1+.9);scene.add(label);
-  }
+  // Project section names from their floor gutters. HTML stays legible above geometry.
+  const sectionItems=sections.map(([name,x1,z1,x2,z2])=>{
+    const el=document.createElement('span');el.className='section-label';el.textContent=name;
+    $('section-labels').append(el);
+    return {el,point:name==='ENTRY & QUALITY'?new THREE.Vector3(x1+4,.35,z1+.5):new THREE.Vector3(x2-3,.35,z2-.45)};
+  });
   const parcel = new THREE.Group();
   const carton = new THREE.Mesh(new THREE.BoxGeometry(.55,.46,.65),new THREE.MeshStandardMaterial({color:0xf5b86e,roughness:.85}));
   const tape = new THREE.Mesh(new THREE.BoxGeometry(.12,.465,.655),new THREE.MeshStandardMaterial({color:0xffdfad}));
@@ -156,27 +167,43 @@ async function boot() {
   let chosen=model.parcels[0],t=0,playing=false,following=false,isTop=false,lastTime=performance.now(),lastUI=-Infinity,activeIndex=-1,state,hovered=null;
   let frameId=0,dirty=true,inFrame=false,frames=0,statsTime=performance.now(),fps=0;
   const routeButtons=[];
+  let overview=true,baseSpan=36,palette={};
   function requestFrame(){dirty=true;if(!frameId&&!inFrame)frameId=requestAnimationFrame(frame);}
   function setFollow(value){following=value;$('follow').classList.toggle('selected',value);$('follow').setAttribute('aria-pressed',String(value));}
   function centerOn(point){const shift=point.clone().sub(controls.target);camera.position.add(shift);controls.target.copy(point);controls.update();}
+  function safeTop(){const toolbar=document.querySelector('.view-tools');return toolbar.offsetTop+toolbar.offsetHeight+12;}
+  function fitCamera(){
+    camera.zoom=1;camera.updateMatrixWorld(true);
+    const corners=[];
+    for(const [x,z] of outline)for(const y of [0,1.5])corners.push(new THREE.Vector3(x,y,z).applyMatrix4(camera.matrixWorldInverse));
+    const xs=corners.map(p=>p.x),ys=corners.map(p=>p.y),w=host.clientWidth,h=host.clientHeight;
+    const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
+    const usableW=Math.max(1,w-32),usableH=Math.max(1,h-safeTop()-35);
+    const units=Math.max((maxX-minX)/usableW,(maxY-minY)/usableH)*1.04;
+    baseSpan=units*h/2;
+    const right=new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld,0),up=new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld,1);
+    const shift=right.multiplyScalar((minX+maxX)/2).add(up.multiplyScalar((minY+maxY)/2+(safeTop()-35)*units/2));
+    camera.position.add(shift);controls.target.add(shift);
+    camera.left=-units*w/2;camera.right=units*w/2;camera.top=baseSpan;camera.bottom=-baseSpan;
+    camera.updateProjectionMatrix();controls.update();requestFrame();
+  }
   function setView(top,full=false){
     isTop=top;
     $('iso').classList.toggle('selected',!top);$('top').classList.toggle('selected',top);
     $('iso').setAttribute('aria-pressed',String(!top));$('top').setAttribute('aria-pressed',String(top));
-    if(full){setFollow(false);controls.target.set(21,0,18);camera.zoom=1;}
-    const delta=top?new THREE.Vector3(0,85,.01):new THREE.Vector3(48,65,60);
-    camera.position.copy(controls.target).add(delta);camera.updateProjectionMatrix();controls.update();requestFrame();
+    if(full){setFollow(false);controls.target.copy(plantCenter);camera.zoom=1;overview=true;}
+    const delta=top?new THREE.Vector3(0,85,.01):new THREE.Vector3(14,90,65);
+    camera.position.copy(controls.target).add(delta);camera.updateProjectionMatrix();controls.update();
+    if(overview)fitCamera();requestFrame();
   }
   function resize(){
     const w=host.clientWidth,h=host.clientHeight;renderer.setSize(w,h);
-    const tools=document.querySelector('.view-tools');
-    $('route-key').style.top=`${tools.offsetTop+tools.offsetHeight+10}px`;
-    const aspect=w/h,span=Math.max(36,37/Math.max(.4,aspect));
-    camera.left=-span*aspect;camera.right=span*aspect;camera.top=span;camera.bottom=-span;camera.updateProjectionMatrix();requestFrame();
+    if(overview)fitCamera();
+    else{camera.left=-baseSpan*w/h;camera.right=baseSpan*w/h;camera.top=baseSpan;camera.bottom=-baseSpan;camera.updateProjectionMatrix();requestFrame();}
   }
   new ResizeObserver(resize).observe(host);
   controls.addEventListener('change',requestFrame);
-  controls.addEventListener('start',()=>setFollow(false));
+  controls.addEventListener('start',()=>{setFollow(false);overview=false;});
   const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
   let down=null,pendingPointer=null,dragging=false,lastHoverTime=0;
   function pickAt(clientX,clientY){
@@ -199,7 +226,13 @@ async function boot() {
   host.addEventListener('pointercancel',()=>{down=null;dragging=false;hovered=null;});
   const routeLayer=$('route-labels'),leaders=$('route-leaders');
   const typeNames={scanner:'Scanner',scale:'Weight check',decision:'Routing decision',sealer:'Processing',strapper:'Strapper',printer:'Label printer',exit:'Exit',exception:'Exception',junction:'Transfer'};
-  let routeMap=new Map(),labelItems=[],labelLayoutKey='',lastLayoutTime=-Infinity,lastRouteStatusKey='',inspected=null;
+  let routeMap=new Map(),inspected=null,calloutKey='',calloutContent='',cardHeight=140;
+  const card=document.createElement('button');card.className='station-callout';card.tabIndex=-1;
+  const badge=document.createElement('span'),name=document.createElement('strong'),code=document.createElement('small'),result=document.createElement('p'),destination=document.createElement('p');
+  badge.className='callout-phase';destination.className='callout-next';card.append(badge,name,code,result,destination);routeLayer.append(card);
+  const leader=document.createElementNS('http://www.w3.org/2000/svg','path');leader.classList.add('context-leader');leaders.append(leader);
+  let activeContext=null;
+  card.onclick=()=>{if(activeContext)inspectStation(activeContext.node);};
   const projectPoint=(point)=>{const v=point.clone().project(camera);return {x:(v.x+1)/2*host.clientWidth,y:(1-v.y)/2*host.clientHeight,depth:v.z};};
   function inspectStation(node){
     inspected=node;
@@ -213,76 +246,53 @@ async function boot() {
   $('station-close').onclick=()=>{inspected=null;$('station-detail').hidden=true;};
   function createRouteLabels(){
     routeMap=new Map(routeEntries(chosen,nodes).map(entry=>[entry.node.id,entry]));
-    labelItems=[];routeLayer.replaceChildren();leaders.replaceChildren();
-    for(const [id,entry] of routeMap){
-      const button=document.createElement('button');button.className='route-label';button.dataset.node=id;
-      const name=document.createElement('strong');name.textContent=entry.node.label;
-      const code=document.createElement('span');code.className='route-code';code.textContent=id;
-      const status=document.createElement('span');status.className='route-status';
-      button.append(name,code,status);
-      button.onclick=()=>inspectStation(entry.node);
-      button.onpointerenter=()=>{hovered=entry.node;pendingPointer=null;requestFrame();};
-      button.onpointerleave=()=>{hovered=null;requestFrame();};
-      button.onfocus=()=>{hovered=entry.node;requestFrame();};
-      button.onblur=()=>{hovered=null;requestFrame();};
-      const line=document.createElementNS('http://www.w3.org/2000/svg','path');line.classList.add('route-leader');
-      const dot=document.createElementNS('http://www.w3.org/2000/svg','circle');dot.setAttribute('r','2.5');
-      leaders.append(line,dot);routeLayer.append(button);
-      labelItems.push({id,entry,button,status,line,dot,point:world([entry.node.x,entry.node.y],1.1),previous:null});
-    }
-    lastRouteStatusKey='';labelLayoutKey='';lastLayoutTime=-Infinity;
+    calloutKey='';calloutContent='';card.classList.remove('visible');card.tabIndex=-1;
   }
-  function updateRouteLabels(now){
-    const statusKey=[state.index,state.stop.arrival,state.leg?.b||'',state.done,chosen.id].join('|');
-    if(statusKey!==lastRouteStatusKey){
-      for(const item of labelItems){
-        const info=routeStatus(item.entry,state);item.info=info;
-        item.button.dataset.state=info.status;
-        item.status.textContent=`${info.caption}${info.visits>1?' ×'+info.visits:''}${info.result?' · '+info.result:''}`;
-        item.button.title=`${item.entry.node.label} · ${item.id}${item.entry.node.equipment?' · '+item.entry.node.equipment:''}\n${info.last?.Summary||'Later on this synthetic route'}\nClick for event details`;
-        item.line.dataset.state=info.status;item.dot.dataset.state=info.status;
+  function updateRouteLabels(){
+    const context=contextualStation(chosen,state,nodes);activeContext=context;
+    const width=host.clientWidth,height=host.clientHeight,top=safeTop();
+    if(inspected)inspectStation(inspected);
+    const anchor=context?projectPoint(world([context.node.x,context.node.y],1.1)):null;
+    const visible=anchor&&anchor.depth>=-1&&anchor.depth<=1&&anchor.x>=0&&anchor.x<=width&&anchor.y>=top&&anchor.y<=height-30;
+    card.classList.toggle('visible',!!visible);card.tabIndex=visible?0:-1;
+    card.setAttribute('aria-hidden',String(!visible));leader.style.display=visible?'':'none';
+    let cardBox=null;
+    if(visible){
+      const textKey=[context.key,context.phase,context.last?.t,Math.ceil(context.remaining),state.done].join('|');
+      if(textKey!==calloutContent){
+        badge.textContent=context.phase==='approaching'?'APPROACHING · '+Math.ceil(context.remaining)+'s':context.phase==='departed-grace'?'JUST PASSED':state.done?'FINAL STATION':'AT STATION';
+        name.textContent=context.node.label;
+        code.textContent=[typeNames[context.node.kind]||context.node.kind,context.node.equipment||context.node.id,'Visit '+context.visit].join(' · ');
+        result.textContent=context.last?.Summary||(context.phase==='approaching'?'Awaiting this station’s event.':'No recorded event yet.');
+        destination.textContent=context.next?'Next → '+nodes.get(context.next.id).label:'End of the recorded journey';
+        const error=/WEIGHTERR|→\\s*(NR|PF|ND)\\b|NIO/.test(context.last?.Summary||'');
+        card.dataset.tone=error?'exception':/PENDING/.test(context.last?.Summary||'')?'warning':'active';
+        if(context.key!==calloutKey&&playing&&!reduced.matches){card.getAnimations().forEach(a=>a.cancel());card.animate([{opacity:0},{opacity:1}],{duration:160});}
+        calloutKey=context.key;calloutContent=textKey;cardHeight=card.offsetHeight;
       }
-      if(inspected)inspectStation(inspected);
-      lastRouteStatusKey=statusKey;
+      const cw=card.offsetWidth,ch=cardHeight,px=projectPoint(parcel.position);
+      const choices=[{x:anchor.x-cw/2,y:anchor.y-ch-40},{x:anchor.x+24,y:anchor.y-ch/2},{x:anchor.x-cw-24,y:anchor.y-ch/2},{x:anchor.x-cw/2,y:anchor.y+60}];
+      const clamp=c=>({x:Math.max(10,Math.min(width-cw-10,c.x)),y:Math.max(top,Math.min(height-ch-30,c.y))});
+      const candidates=choices.map(clamp);
+      const score=c=>(px.x>c.x-25&&px.x<c.x+cw+25&&px.y>c.y-35&&px.y<c.y+ch+20?10000:0)+Math.hypot(c.x+cw/2-anchor.x,c.y+ch/2-anchor.y);
+      candidates.sort((a,b)=>score(a)-score(b));const p=candidates[0];cardBox={...p,w:cw,h:ch};
+      card.style.left=p.x+'px';card.style.top=p.y+'px';
+      leader.setAttribute('d','M'+anchor.x+','+anchor.y+' L'+Math.max(p.x,Math.min(p.x+cw,anchor.x))+','+Math.max(p.y,Math.min(p.y+ch,anchor.y)));
     }
-    const width=host.clientWidth,height=host.clientHeight;
-    const top=$('route-key').offsetTop+$('route-key').offsetHeight+12;
-    const current=projectPoint(parcel.position);
-    const visible=[];
-    for(const item of labelItems){
-      item.screen=projectPoint(item.point);
-      const {x,y,depth}=item.screen;
-      item.visible=depth>=-1&&depth<=1&&x>=0&&x<=width&&y>=top&&y<=height-35;
-      item.button.hidden=!item.visible;item.line.style.display=item.visible?'':'none';item.dot.style.display=item.visible?'':'none';
-      if(item.visible)visible.push(item);
+    const placed=[];
+    for(const item of sectionItems){
+      const p=projectPoint(item.point),w=item.el.offsetWidth||96,h=22;
+      let x=p.x-w/2,y=p.y;
+      if(placed.some(b=>Math.abs(b.x-x)<w&&Math.abs(b.y-y)<h))y+=h+3;
+      const overlapsCard=cardBox&&x<cardBox.x+cardBox.w&&x+w>cardBox.x&&y<cardBox.y+cardBox.h&&y+h>cardBox.y;
+      item.el.hidden=p.depth<-1||p.depth>1||x<8||x+w>width-8||y<top||y+h>height-30||!!overlapsCard;
+      item.el.style.transform='translate('+x+'px,'+y+'px)';placed.push({x,y});
     }
-    const priority={current:0,next:1,visited:2,upcoming:3};
-    visible.sort((a,b)=>priority[a.info.status]-priority[b.info.status]);
-    const key=[width,height,top,...visible.map(item=>item.id),statusKey,camera.zoom.toFixed(3)].join('|');
-    // Reuse DOM and label offsets between layout passes; project anchors every drawn frame.
-    if(key!==labelLayoutKey||now-lastLayoutTime>=160||!playing){
-      const blocked=current.x>=0&&current.x<=width?[{x:current.x-43,y:current.y-36,w:86,h:60}]:[];
-      const placed=arrangeLabels(visible.map(item=>({id:item.id,...item.screen,previous:item.previous})),width,height,top,blocked);
-      for(const box of placed){const item=visible.find(item=>item.id===box.id);item.previous=box;item.box=box;item.button.classList.toggle('compact',box.compact);}
-      labelLayoutKey=key;lastLayoutTime=now;
-    }
-    for(const item of visible){
-      if(!item.previous)continue;
-      const {x:ax,y:ay}=item.screen,w=item.box.w,h=item.box.h;
-      const {x,y}=item.box;
-      item.button.style.transform=`translate(${x}px,${y}px)`;
-      const endX=Math.max(x,Math.min(x+w,ax)),endY=Math.max(y,Math.min(y+h,ay));
-      item.line.setAttribute('d',`M${ax},${ay} L${endX},${endY}`);
-      item.line.classList.toggle('highlighted',hovered?.id===item.id);
-      item.dot.setAttribute('cx',ax);item.dot.setAttribute('cy',ay);
-    }
-    const countsText=`${visible.length}/${labelItems.length} route stations in view`;
-    if($('route-count').textContent!==countsText)$('route-count').textContent=countsText;
   }
   function placeTag(id, point, text){
     const tag=$(id);if(!point){tag.style.display='none';return;}
     const v=point.clone().project(camera),x=(v.x+1)/2*host.clientWidth,y=(1-v.y)/2*host.clientHeight-20;
-    if(v.z<-1||v.z>1||x<90||x>host.clientWidth-90||y<190||y>host.clientHeight-50){tag.style.display='none';return;}
+    if(v.z<-1||v.z>1||x<90||x>host.clientWidth-90||y<safeTop()||y>host.clientHeight-50){tag.style.display='none';return;}
     tag.style.display='block';tag.style.left=`${x}px`;tag.style.top=`${y}px`;if(tag.textContent!==text)tag.textContent=text;
   }
   function updateLabels(now){
@@ -311,8 +321,8 @@ async function boot() {
   function update(){
     state=ReplayEngine.sample(model,chosen,t);
     parcel.position.copy(world(state.xy,.535));halo.position.copy(world(state.xy,.30));
-    const color=state.done?(state.phase==='completed'?0x74dbc2:state.phase==='held'?0xf5d675:0xef8585):0xffc481;
-    halo.material.color.setHex(color);trail.material.color.setHex(color);
+    const color=state.done?(state.phase==='completed'?palette.success:state.phase==='held'?palette.warning:palette.exception):palette.trace;
+    halo.material.color.set(color);trail.material.color.set(color);
     if(state.leg){const e=edges.get(state.leg.edges[0]),f=Math.min(1,(t-state.leg.start)/(state.leg.end-state.leg.start)+.0001),q=ReplayEngine.at(e.points,f);const dx=q[0]-state.xy[0],dz=q[1]-state.xy[1];if(Math.hypot(dx,dz)>.00001)parcel.rotation.y=Math.atan2(dx,dz);}
     updateTrail(t);
     if(following)centerOn(world(state.xy,0));
@@ -356,13 +366,33 @@ async function boot() {
   $('iso').onclick=()=>setView(false);
   $('top').onclick=()=>setView(true);
   $('fit').onclick=()=>setView(isTop,true);
-  $('focus').onclick=()=>{camera.zoom=3;camera.updateProjectionMatrix();centerOn(world(state.xy,0));setFollow(true);requestFrame();};
+  $('focus').onclick=()=>{overview=false;camera.zoom=3;camera.updateProjectionMatrix();centerOn(world(state.xy,0));setFollow(true);requestFrame();};
   $('follow').onclick=()=>{setFollow(!following);requestFrame();};
   document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();lastTime=performance.now();});
   document.addEventListener('keydown',e=>{if(['INPUT','SELECT','BUTTON','TEXTAREA'].includes(e.target.tagName))return;if(e.code==='Space'){e.preventDefault();$('play').click();}if(e.key==='Home')$('fit').click();});
   renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();pause();fail(new Error('The graphics context was lost. Reload this page or use the 2D viewer.'));});
   reduced.addEventListener('change',requestFrame);
-  resize();setView(false,true);load(0);
+  const systemTheme=matchMedia('(prefers-color-scheme: light)');
+  let themeChoice='system';try{themeChoice=localStorage.getItem('parceljourney-theme')||'system';}catch{}
+  function applyTheme(){
+    const light=themeChoice==='light'||themeChoice==='system'&&systemTheme.matches;
+    document.body.classList.toggle('light',light);document.body.dataset.theme=light?'light':'dark';
+    $('theme').textContent='Theme: '+themeChoice;
+    const css=getComputedStyle(document.body);
+    palette=Object.fromEntries(['map','surface','control','line','tube','trace','success','warning','exception'].map(k=>[k,css.getPropertyValue('--'+k).trim()]));
+    renderer.setClearColor(palette.map);floorMaterial.color.set(palette.tube);grid.material.color.set(palette.line);
+    for(const [original,material] of staticMaterials){
+      if(sections.some(s=>s[5]===original))material.color.set(palette.surface).lerp(new THREE.Color(palette.tube),.65);
+      else if([0x344752,0x263640,0x172b35,0x273b44].includes(original))material.color.set(palette.control);
+      else if([0x58717a,0x7b9195,0x728789].includes(original))material.color.set(light?'#7899b5':'#526b89');
+    }
+    carton.material.color.set(palette.trace);
+    requestFrame();
+  }
+  $('theme').onclick=()=>{themeChoice=themeChoice==='system'?'light':themeChoice==='light'?'dark':'system';try{if(themeChoice==='system')localStorage.removeItem('parceljourney-theme');else localStorage.setItem('parceljourney-theme',themeChoice);}catch{}applyTheme();};
+  systemTheme.addEventListener('change',()=>{if(themeChoice==='system')applyTheme();});
+  addEventListener('storage',e=>{if(e.key==='parceljourney-theme'){themeChoice=e.newValue||'system';applyTheme();}});
+  applyTheme();resize();setView(false,true);load(0);
   $('scenario').disabled=false;$('play').disabled=false;$('loading').hidden=true;
 }
 function fail(error){$('loading').hidden=true;$('error').hidden=false;$('error-message').textContent=error.message||'WebGL2 is required for this view.';console.error(error);}

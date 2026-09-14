@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
-import { routeEntries, routeStatus, arrangeLabels } from './route-labels.mjs';
+import { routeEntries, routeStatus, contextualStation } from './route-labels.mjs';
 const require=createRequire(import.meta.url), engine=require('../replay-engine.js');
 const model=JSON.parse(await readFile(new URL('../../analysis/synthetic-replay-model.json',import.meta.url),'utf8'));
 const nodes=new Map(model.nodes.map(n=>[n.id,n]));
@@ -29,21 +29,24 @@ for(const p of model.parcels){
     }
   }
 }
-const overlaps=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
-let layouts=0;
-for(const [width,height,top,count] of [[668,768,208,17],[1100,756,215,42],[668,768,208,42],[390,630,208,17]]){
-  const items=Array.from({length:count},(_,i)=>({id:String(i),x:width/2+Math.sin(i)*80,y:top+80+i*4}));
-  const blocked=[{x:width/2-43,y:height/2-36,w:86,h:60}];
-  const boxes=arrangeLabels(items,width,height,top,blocked);
-  assert.equal(boxes.length,count);
-  assert.equal(new Set(boxes.map(b=>b.id)).size,count);
-  for(const [i,b] of boxes.entries()){
-    assert(b.x>=8&&b.y>=top&&b.x+b.w<=width-8&&b.y+b.h<=height-35,'Label within viewport');
-    assert(!blocked.some(a=>overlaps(a,b)),'Parcel remains visible');
-    assert(!boxes.slice(i+1).some(a=>overlaps(a,b)),`No label overlaps: ${width}x${height}, ${count} stations, ${b.id}`);
+
+let contexts=0,gaps=0;
+for(const p of model.parcels){
+  const times=[0,p.duration,...p.stops.flatMap(s=>[s.arrival,s.departure]),...p.legs.flatMap(l=>[l.start+.001,(l.start+l.end)/2,l.end-.001])];
+  for(const time of [...times,...times.toReversed()]){
+    const state=engine.sample(model,p,time),context=contextualStation(p,state,nodes);
+    if(!context){assert(state.leg);gaps++;continue;}
+    contexts++;
+    if(context.phase==='approaching'){
+      assert(state.leg);assert.equal(context.node.id,state.leg.b);
+      assert(context.remaining<=3.001);assert.equal(context.last,null);
+    }else{
+      assert(context.stop.arrival<=state.t);
+      assert(!context.last||context.last.t>=context.stop.arrival&&context.last.t<=state.t);
+      if(context.phase==='departed-grace')assert(state.leg&&state.t-state.leg.start<=1.251);
+    }
+    assert(context.visit>=1);
   }
-  const repeat=arrangeLabels(items.map((item,i)=>({...item,previous:boxes[i]})),width,height,top,blocked);
-  assert.deepEqual(repeat,boxes,'Stationary layout is stable');
-  layouts++;
 }
-console.log(`PASS: ${samples} route-label states across ${model.parcels.length} scenarios; ${loopChecks} repeat-visit checks, forward/backward replay; ${layouts} non-overlapping desktop/mobile layouts.`);
+assert(gaps>0,'Long transfers hide station callouts');
+console.log(`PASS: ${samples} route-label states across ${model.parcels.length} scenarios; ${contexts} contextual callouts, ${gaps} hidden transfer intervals; ${loopChecks} repeat-visit checks.`);

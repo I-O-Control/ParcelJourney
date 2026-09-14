@@ -1,5 +1,22 @@
 # ParcelJourney 3D viewer — next steps
 
+Implemented locally on 2026-09-14: contextual station callouts, shared dark/light
+palette with the 2D viewer, projected section labels in floor gutters, and bounds-based
+floor/grid/camera fitting. Plain drag now pans; Ctrl+drag or right-drag rotates.
+The requirements below are retained as the design record.
+
+Current timing defaults are a 3-second approach window (within 150 schematic units)
+and a 1.25-second departure grace period (within 90 units), configured in
+`tools/viewer3d/route-labels.mjs`. Arrival/dwell keeps the card visible, and a final
+station stays visible while the parcel remains there. A new visit never reuses
+the previous visit's result. High playback speeds shorten these replay-time windows.
+
+Section names are HTML projected from floor anchors; they stay legible over geometry,
+yield to the active callout, and are culled outside the viewport. The shared palette
+is `ParcelJourney.App/Viewer3d/theme.css`, served to both views at `/theme.css`.
+Theme preference persists for the app's current origin; a new standalone process
+uses a new port and therefore defaults to the system theme unless selected again.
+
 This file records the next visual iteration for the `/3d` spatial replay. It is
 intentionally kept in the repository so the plan travels with the implementation.
 

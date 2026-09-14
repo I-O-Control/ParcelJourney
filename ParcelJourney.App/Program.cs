@@ -24,6 +24,7 @@ app.Use(async (context, next) => {
     await next();
 });
 app.MapRazorPages();
+app.MapGet("/theme.css", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.Theme"), "text/css"));
 // Bundled resources keep the 3D prototype fully offline in the single-file release.
 app.MapGet("/3d", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.3d.Html"), "text/html"));
 app.MapGet("/3d/viewer.css", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.3d.Css"), "text/css"));

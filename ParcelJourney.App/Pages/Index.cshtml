@@ -2,6 +2,18 @@
 @model ParcelJourney.App.Pages.IndexModel
 @{ Layout = null; }
 @Html.Raw(Model.Viewer)
+<link rel="stylesheet" href="/theme.css">
+<script>
+(() => {
+  const button=document.getElementById('theme'),system=matchMedia('(prefers-color-scheme: light)');
+  let saved,syncing=false;try{saved=localStorage.getItem('parceljourney-theme');}catch{}
+  const apply=light=>{syncing=true;try{if(button&&document.body.classList.contains('light')!==light)button.click();}finally{syncing=false;}};
+  apply(saved?saved==='light':system.matches);
+  button?.addEventListener('click',()=>{if(syncing)return;saved=document.body.classList.contains('light')?'light':'dark';try{localStorage.setItem('parceljourney-theme',saved);}catch{}});
+  system.addEventListener('change',()=>{if(!saved)apply(system.matches);});
+  addEventListener('storage',e=>{if(e.key==='parceljourney-theme'){saved=e.newValue;apply(saved?saved==='light':system.matches);}});
+})();
+</script>
 <a href="/3d" style="position:fixed;right:12px;bottom:12px;z-index:10;background:#194b49;color:white;padding:10px 16px;border-radius:8px">Explore 3D ↗</a>
 
 <style>
