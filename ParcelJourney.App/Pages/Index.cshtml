@@ -2,6 +2,10 @@
 @model ParcelJourney.App.Pages.IndexModel
 @{ Layout = null; }
 @Html.Raw(Model.Viewer)
+<section id="live-query" aria-label="Read a different log folder">
+  <form id="live-query-form"><strong>Load another log folder</strong><input id="live-logs" placeholder="C:\path\to\logs" aria-label="Log folder" required><input id="live-id" placeholder="ParcelID / order / tracking ID" aria-label="Parcel or order ID" required><input id="live-pattern" value="*.log" aria-label="Log file pattern"><button>Read logs</button><span id="live-status" role="status"></span></form>
+  <pre id="live-result" hidden></pre>
+</section>
 <link rel="stylesheet" href="/theme.css">
 <script>
 (() => {
@@ -15,6 +19,9 @@
 })();
 </script>
 <a href="/3d" style="position:fixed;right:12px;bottom:12px;z-index:10;background:#194b49;color:white;padding:10px 16px;border-radius:8px">Explore 3D ↗</a>
+<style>#live-query{position:fixed;left:12px;right:12px;bottom:12px;z-index:9;padding:10px 12px;border:1px solid #435778;border-radius:10px;background:#142338f2;color:#e2e8f0;box-shadow:0 8px 24px #0005}#live-query-form{display:flex;gap:8px;align-items:center;flex-wrap:wrap}#live-query input{min-width:180px;padding:7px;border:1px solid #435778;border-radius:6px;background:#243250;color:inherit}#live-query button{padding:7px 12px;border:1px solid #f07840;border-radius:6px;background:#50342d;color:inherit}#live-status{color:#ffbd9a}#live-result{max-height:220px;overflow:auto;white-space:pre-wrap;background:#0f172af5;padding:10px;border-radius:6px;margin:8px 0 0}@@media(max-width:700px){#live-query{position:relative;left:auto;right:auto;bottom:auto;margin:8px}}
+</style>
+<script>(()=>{const form=document.getElementById('live-query-form'),status=document.getElementById('live-status'),out=document.getElementById('live-result');form?.addEventListener('submit',async e=>{e.preventDefault();status.textContent='Reading…';out.hidden=true;const q=new URLSearchParams({logs:document.getElementById('live-logs').value,id:document.getElementById('live-id').value,pattern:document.getElementById('live-pattern').value});try{const r=await fetch('/api/journey?'+q);const data=await r.json();if(!r.ok)throw new Error(data.error||'Read failed');out.textContent=JSON.stringify(data,null,2);out.hidden=false;status.textContent=`${data.Events?.length||0} events read from the selected folder.`}catch(err){status.textContent=err.message}})})();</script>
 
 <style>
   /* Presentation-layer enhancements for the replay viewer. The generated viewer remains the source of truth for data and controls. */

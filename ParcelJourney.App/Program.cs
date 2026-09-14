@@ -2,6 +2,9 @@ using System.Diagnostics;
 using System.Net;
 using System.Reflection;
 using System.Security.Cryptography;
+using ParcelHistoryExplorer.Core;
+using ParcelJourney.Core;
+using ParcelJourney.Domain;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 
@@ -12,6 +15,8 @@ builder.Logging.ClearProviders();
 // Loopback only, with an OS-assigned free port. No source shares or DB access.
 builder.WebHost.ConfigureKestrel(k => k.Listen(IPAddress.Loopback, 0));
 builder.Services.AddRazorPages();
+builder.Services.AddSingleton<LogHistoryQueryEngine>();
+builder.Services.AddSingleton<IParcelJourneyBuilder, ParcelJourneyBuilder>();
 var app = builder.Build();
 var token = Convert.ToHexString(RandomNumberGenerator.GetBytes(32));
 app.Use(async (context, next) => {
@@ -32,6 +37,15 @@ app.MapGet("/3d/viewer.js", () => Results.Content(EmbeddedAssets.Read("ParcelJou
 app.MapGet("/3d/model.json", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.3d.Model"), "application/json"));
 app.MapGet("/3d/license", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.3d.License"), "text/plain"));
 app.MapGet("/api/health", () => new { application = "ParcelJourney", ready = true, mode = "real-logs", runtime = Environment.Version.ToString() });
+app.MapGet("/api/journey", async (HttpRequest request, IParcelJourneyBuilder builder, CancellationToken cancellationToken) => {
+    var logs = request.Query["logs"].ToString();
+    var id = request.Query["id"].ToString();
+    var patterns = request.Query["pattern"].Where(p => !string.IsNullOrWhiteSpace(p)).DefaultIfEmpty("*.log").ToArray();
+    if (string.IsNullOrWhiteSpace(logs) || string.IsNullOrWhiteSpace(id)) return Results.BadRequest(new { error = "Provide logs and id." });
+    if (!Directory.Exists(logs)) return Results.NotFound(new { error = $"Log folder not found: {logs}" });
+    var journey = await builder.BuildAsync(new JourneyQuery(id, Path.GetFullPath(logs), patterns, ForceFullLogScan: true), null, cancellationToken);
+    return Results.Ok(journey);
+});
 app.MapGet("/api/session", () => new { token });
 app.MapPost("/api/exit", (HttpContext context, IHostApplicationLifetime lifetime) => {
     if (context.Request.Headers["X-ParcelJourney-Session"] != token) return Results.StatusCode(403);
