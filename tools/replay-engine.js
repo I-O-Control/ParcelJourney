@@ -26,6 +26,7 @@ const ReplayEngine = (() => {
     const event=parcel.events[index], upcoming=parcel.events[index+1]||null;
     const leg=parcel.legs.find(l=>t>=l.start&&t<l.end)||null;
     const visited=parcel.stops.filter(s=>s.arrival<=t),stop=visited[visited.length-1];
+    const nextStop=parcel.stops.find(s=>s.arrival>t)||null;
     const done=t>=parcel.duration;
     const xy=leg?at(edges[leg.edges[0]].points,(t-leg.start)/(leg.end-leg.start)):[nodes[stop.id].x,nodes[stop.id].y];
     const history=[];let liquid=[];
@@ -45,8 +46,8 @@ const ReplayEngine = (() => {
     const bright=done?history:(liquid.length?[liquid]:[]);
     const phase=done?parcel.outcome||'completed':leg?'travelling':'processing';
     const current=done?parcel.completeness:leg?`Moving: ${nodes[leg.a].label} → ${nodes[leg.b].label}`:event.Summary;
-    const next=done?'Replay ended here. No further movement is implied.':leg?`Next in ${(leg.end-t).toFixed(1)}s: ${upcoming?.Summary||nodes[leg.b].label}`:upcoming?`At this station for ${Math.max(0,stop.departure-t).toFixed(1)}s more. Then: ${nodes[upcoming.LocationId].label}`:`Final operation: ${Math.max(0,parcel.duration-t).toFixed(1)}s remaining.`;
-    return {t,xy,index,event,upcoming,leg,stop,done,phase,current,next,history,liquid,bright};
+    const next=done?'Replay ended here. No further movement is implied.':nextStop?`Next recorded position in ${(nextStop.arrival-t).toFixed(1)}s: ${nodes[nextStop.id].label}`:`Final observations: ${Math.max(0,parcel.duration-t).toFixed(1)}s remaining.`;
+    return {t,xy,index,event,upcoming,leg,stop,nextStop,done,phase,current,next,history,liquid,bright};
   }
   return {sample,at,slice,length};
 })();

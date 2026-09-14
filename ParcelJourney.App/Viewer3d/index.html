@@ -2,7 +2,7 @@
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>ParcelJourney · Spatial replay</title><link rel="stylesheet" href="/3d/viewer.css"><link rel="stylesheet" href="/theme.css"></head>
 <body>
-<header><a class="brand" href="/3d"><span class="brandmark">◈</span>Parcel<span>Journey</span></a><span class="divider"></span><span class="subtitle">SPATIAL REPLAY</span><div class="header-right"><button id="theme" aria-label="Color theme" title="Dark, light or system theme">Theme: system</button><span class="offline"><i></i> OFFLINE SIMULATION</span><a href="/">2D viewer ↗</a></div></header>
+<header><a class="brand" href="/3d"><span class="brandmark">◈</span>Parcel<span>Journey</span></a><span class="divider"></span><span class="subtitle">SPATIAL REPLAY</span><div class="header-right"><button id="theme" aria-label="Color theme" title="Dark, light or system theme">Theme: system</button><span class="offline"><i></i> REAL LOG REPLAY</span><a href="/">2D viewer ↗</a></div></header>
 <main>
  <section class="workspace" aria-label="3D plant workspace">
   <div id="viewport" tabindex="0" aria-label="3D conveyor network. Drag to pan, Ctrl+drag or right-drag to rotate, scroll to zoom."></div>
@@ -18,7 +18,7 @@
  <aside>
   <div class="section-title"><span>JOURNEY INSPECTOR</span><span class="chip">3D PREVIEW</span></div>
   <label for="scenario">Scenario</label><select id="scenario" disabled></select>
-  <form id="search-form"><input id="search" placeholder="Find parcel · SIM-001-1" aria-label="Synthetic parcel ID"><button>Find</button></form><p id="search-status" role="status"></p>
+  <form id="search-form"><input id="search" placeholder="Parcel ID or tracking ID" aria-label="Parcel ID or tracking ID"><button>Find</button></form><p id="search-status" role="status"></p>
   <div class="parcel-card"><div class="parcel-symbol">▰</div><div><span class="eyebrow">SELECTED PARCEL</span><h2 id="parcel-id">—</h2><p id="parcel-name">Loading…</p></div></div>
   <div class="state-line"><span id="state-badge">READY</span><span id="percent">0%</span></div>
   <div class="progress"><div id="progress-fill"></div></div>
@@ -27,9 +27,9 @@
   <section id="station-detail" hidden aria-label="Equipment details"><div class="section-title"><span>EQUIPMENT DETAILS</span><button id="station-close" aria-label="Close equipment details">×</button></div><h3 id="station-title"></h3><p id="station-code"></p><p id="station-visits"></p><p id="station-result"></p></section>
   <div class="section-title timeline-title"><span>EVENT TIMELINE</span><span id="event-count"></span></div>
   <div id="timeline"></div>
-  <details><summary>About this simulation</summary><p>Schematic topology and simulated timings. Equipment shapes and heights are illustrative. No live PLC or database connection.</p><a href="/3d/license">Three.js license</a></details>
+  <details><summary>About these real journeys</summary><p>Real Fiege logs · 11 September 2026. Recorded event times; schematic geometry and interpolated motion between scanners. Unobserved equipment is retained without log confirmation. No live connection.</p><a href="/3d/license">Three.js license</a></details>
  </aside>
 </main>
-<footer class="transport"><div class="transport-buttons"><button id="restart" title="Restart">↺</button><button id="previous" title="Previous event">▏‹</button><button id="play" class="primary" disabled>▶ Play</button><button id="next-event" title="Next event">›▕</button></div><output id="time">00:00</output><input id="seek" type="range" min="0" max="1" value="0" step="0.01" aria-label="Replay time"><output id="duration">00:00</output><label class="speed-label">Speed<select id="speed"><option value="1">1×</option><option value="5">5×</option><option value="10">10×</option><option value="20">20×</option><option value="100">100×</option></select></label></footer>
+<footer class="transport"><div class="transport-buttons"><button id="restart" title="Restart">↺</button><button id="previous" title="Previous event">▏‹</button><button id="play" class="primary" disabled>▶ Play</button><button id="next-event" title="Next event">›▕</button></div><output id="time">00:00</output><input id="seek" type="range" min="0" max="1" value="0" step="any" aria-label="Replay time"><output id="duration">00:00</output><label class="speed-label">Speed<select id="speed"><option value="1">1×</option><option value="5">5×</option><option value="10">10×</option><option value="20">20×</option><option value="100">100×</option></select></label></footer>
 <script src="/3d/viewer.js" defer></script>
 </body></html>

@@ -1,0 +1,7 @@
+<Project>
+  <PropertyGroup>
+    <!-- Override these on a new machine; defaults assume sibling checkouts. -->
+    <ParcelHistoryExplorerRoot Condition="'$(ParcelHistoryExplorerRoot)' == ''">$(MSBuildThisFileDirectory)..\ParcelHistoryExplorer</ParcelHistoryExplorerRoot>
+    <IocOrchestratorRoot Condition="'$(IocOrchestratorRoot)' == ''">$(MSBuildThisFileDirectory)..\IocOrchestrator</IocOrchestratorRoot>
+  </PropertyGroup>
+</Project>

@@ -135,6 +135,6 @@ button:hover{background:var(--selected);border-color:var(--trace)}
 #station-detail{margin:0 0 22px;padding:14px 12px;border:1px solid var(--line);border-radius:7px;background:var(--control)}
 #station-detail .section-title{margin-bottom:10px;font-size:8px}#station-close{padding:0 5px;font-size:18px;background:transparent;border:0}
 #station-detail h3{font-size:14px;margin:0 0 7px}#station-detail p{font-size:10px;line-height:1.5;margin:6px 0;color:var(--muted)}
-#station-detail #station-result{color:var(--text)}
+#station-detail #station-result{color:var(--text);white-space:pre-wrap;overflow-wrap:anywhere;max-height:220px;overflow:auto}
 @media(max-width:700px){.station-callout{width:260px;padding:10px 12px}.station-callout strong{font-size:14px}.station-callout p{font-size:11px;margin-top:6px}.header-right{gap:8px}#theme{font-size:10px}.map-heading p{display:none}.view-tools{top:76px}.workspace{min-height:540px}.map-footer{left:12px;right:12px}.section-label{font-size:8px}}
 @media(prefers-reduced-motion:reduce){.station-callout,button{animation:none!important;transition:none!important;transform:none!important}}

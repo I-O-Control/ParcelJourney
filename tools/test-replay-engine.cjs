@@ -1,6 +1,6 @@
 const fs=require('node:fs'),assert=require('node:assert/strict');
 const engine=require('./replay-engine.js');
-const m=JSON.parse(fs.readFileSync(require('node:path').join(__dirname,'../analysis/synthetic-replay-model.json'),'utf8'));
+const m=JSON.parse(fs.readFileSync(require('node:path').join(__dirname,'../analysis/fiege-replay-model.json'),'utf8'));
 const near=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1])<.001;
 let samples=0,boundaries=0;
 for(const p of m.parcels){

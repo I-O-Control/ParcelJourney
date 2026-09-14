@@ -15,7 +15,7 @@ cd ../..
 dotnet publish ./ParcelJourney.App -c Release -o ./standalone
 ```
 
-The build restores ignored synthetic JSON artifacts from the committed offline
+The build restores real JSON artifacts from the committed offline
 HTML viewer, so it does not need the original machine's customer source folders.
 Commit the generated `ParcelJourney.App/Viewer3d/viewer.js` and license along with
 source changes. HTML and CSS in that directory are authored directly.
@@ -42,7 +42,7 @@ or the contextual card for the latest observed event in the inspector. Hidden ca
 cannot receive pointer or keyboard input. Hover picking is throttled, and paused
 rendering still sleeps when there is no input.
 
-The tests cover every synthetic scenario, no future result disclosure, repeat visits,
+The tests cover every real parcel, no future result disclosure, repeat visits,
 and contextual arrival, departure and hidden transfer intervals.
 
 The shared 2D/3D palette lives in `ParcelJourney.App/Viewer3d/theme.css`. Theme cycles

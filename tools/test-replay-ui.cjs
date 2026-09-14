@@ -21,8 +21,8 @@ let frame,clock=0;const window={addEventListener(){}};
 const context=vm.createContext({document,window,location:{protocol:'file:'},DOMPoint:class{constructor(x,y){this.x=x;this.y=y}matrixTransform(){return this}},performance:{now:()=>clock},requestAnimationFrame:fn=>frame=fn,console});
 vm.runInContext(html.match(/<script>([\s\S]*?)<\/script>/)[1],context);
 const ui=window.replayTest;
-assert.equal(registry.get('pick').children.length,204);
-for(let i=0;i<204;i++){
+assert.equal(registry.get('pick').children.length,10);
+for(let i=0;i<10;i++){
  ui.load(i);assert.equal(ui.state.t,0);
  registry.get('play').click();clock+=1000;frame(clock);assert.equal(ui.state.t,1);
  const p=ui.model.parcels[i];ui.seek(p.duration);assert(registry.get('current').textContent.includes(p.completeness));
@@ -30,10 +30,10 @@ for(let i=0;i<204;i++){
  assert.equal(registry.get('mission-next').textContent,'End of this replay');
  registry.get('reset').click();assert.equal(ui.state.t,0);assert.equal(registry.get('trail').children.length,0);
  assert.equal(registry.get('mission-current').textContent,'Entry scan + start scale');
- assert.equal(registry.get('mission-next').textContent,'Workstation decision');
+ assert(registry.get('mission-next').textContent);
  registry.get('next').click();assert(ui.state.t>0);registry.get('previous').click();assert.equal(ui.state.t,0);
 }
-registry.get('search').value='SIM-068-3';registry.get('find').click();assert.equal(registry.get('pick').value,203);
+registry.get('search').value=ui.model.parcels[9].id;registry.get('find').click();assert.equal(registry.get('pick').value,9);
 registry.get('fit').click();assert.equal(ui.state.following,false);
 registry.get('follow').click();assert.equal(ui.state.following,true);
 registry.get('history').checked=false;registry.get('history').onchange();
@@ -52,4 +52,4 @@ registry.get('rotate-reset').click();assert.equal(registry.get('pipes').attribut
 registry.get('theme').click();assert(document.body.classes.has('light'));
 registry.get('theme').click();assert(!document.body.classes.has('light'));
 assert(!registry.get('status').textContent);
-console.log('PASS: complete generated script initializes; 204 scenario Play/Restart/Next/Previous/end-state cycles; ID lookup; fit/follow/history controls. DOM contract only, not visual browser QA.');
+console.log('PASS: complete generated script initializes; 10 real parcel Play/Restart/Next/Previous/end-state cycles; ID lookup; fit/follow/history controls. DOM contract only, not visual browser QA.');

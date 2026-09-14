@@ -215,6 +215,6 @@ brand=Path(r'C:\Users\porfy\source\repos\IocOrchestrator\wwwroot\images\site-log
 template=template.replace('__BRAND_IMAGE__','data:image/png;base64,'+base64.b64encode(brand.read_bytes()).decode('ascii'))
 engine=(ROOT/'tools/replay-engine.js').read_text(encoding='utf-8')
 engine+='\n'+(ROOT/'tools/label-layout.js').read_text(encoding='utf-8')
-(ROOT/'analysis/equipment-replay.html').write_text(template.replace('__ENGINE__',engine).replace('__MODEL__',json.dumps(model,ensure_ascii=False)),encoding='utf-8')
+(ROOT/'analysis/synthetic-equipment-replay.html').write_text(template.replace('__ENGINE__',engine).replace('__MODEL__',json.dumps(model,ensure_ascii=False)),encoding='utf-8')
 (ROOT/'analysis/synthetic-scenarios.md').write_text('# Synthetic parcel catalogue\n\n'+report['scope']+'\n\nCoordinates, durations, operator releases and configuration inputs are simulated. Each case runs three times. Exceptions stop where recovery is not established.\n\n'+'\n'.join(f"- `{p['id']}` — {p['name']} — {p['completeness']}" for p in parcels)+'\n\nUnresolved: '+', '.join(report['unresolved']),encoding='utf-8')
 print(json.dumps(report,indent=2))

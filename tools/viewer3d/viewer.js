@@ -240,7 +240,7 @@ async function boot() {
     $('station-title').textContent=node.label;
     $('station-code').textContent=`${node.id}${node.equipment?' · '+node.equipment:''} · ${typeNames[node.kind]||node.kind}`;
     const entry=routeMap.get(node.id),info=entry?routeStatus(entry,state):null;
-    $('station-result').textContent=info?(info.last?`${fmt(info.last.t)} · ${info.last.Summary}`:'Later on this synthetic route. No event has occurred here yet.'):'Not on the selected parcel’s route.';
+    $('station-result').textContent=info?(info.last?`${fmt(info.last.t)} · ${info.last.Summary}\n${info.last.Timestamp||''}\n${(info.last.Evidence||[]).map(e=>e.FileName+':'+e.LineNumber+'\n'+e.RawLine).join('\n')}`:'Later on this recorded route. No event has occurred here yet.'):'Not on the selected parcel’s route.';
     $('station-visits').textContent=info?`${info.visits} visit${info.visits===1?'':'s'} so far${info.result?' · '+info.result:''}`:'';
   }
   $('station-close').onclick=()=>{inspected=null;$('station-detail').hidden=true;};
@@ -311,7 +311,7 @@ async function boot() {
     $('progress-fill').style.width=`${t/chosen.duration*100}%`;
     $('current').textContent=state.done?chosen.completeness:state.leg?'Conveyor transfer':nodes.get(state.stop.id).label;
     $('description').textContent=state.leg?`${nodes.get(state.leg.a).label} → ${nodes.get(state.leg.b).label}`:state.event.Summary;
-    $('next').textContent=state.done?'End of this replay':nodes.get(state.leg?.b||state.upcoming?.LocationId)?.label||'Final operation';
+    $('next').textContent=state.done?'End of this replay':nodes.get(state.leg?.b||state.nextStop?.id)?.label||'Final operation';
     $('expectation').textContent=state.next;$('seek').value=t;$('time').textContent=fmt(t);
     if(activeIndex!==state.index){
       routeButtons.forEach((b,i)=>{b.classList.toggle('active',i===state.index);b.classList.toggle('past',i<state.index);b.setAttribute('aria-current',i===state.index?'step':'false');});activeIndex=state.index;
@@ -356,7 +356,7 @@ async function boot() {
   }
   model.parcels.forEach((p,i)=>{const o=document.createElement('option');o.value=i;o.textContent=`${p.id} · ${p.name}`;$('scenario').append(o);});
   $('scenario').onchange=()=>load(Number($('scenario').value));
-  $('search-form').onsubmit=e=>{e.preventDefault();const i=model.parcels.findIndex(p=>p.id.toLowerCase()===$('search').value.trim().toLowerCase());$('search-status').textContent=i<0?'Parcel ID not found.':'';if(i>=0)load(i);};
+  $('search-form').onsubmit=e=>{e.preventDefault();const i=model.parcels.findIndex(p=>[p.id,...(p.aliases||[])].some(id=>id.toLowerCase()===$('search').value.trim().toLowerCase()));$('search-status').textContent=i<0?'Parcel ID not found.':'';if(i>=0)load(i);};
   $('play').onclick=()=>{if(t>=chosen.duration){t=0;prepareTrail(chosen);}playing=!playing;lastTime=performance.now();statsTime=lastTime;frames=0;lastUI=-Infinity;requestFrame();};
   $('restart').onclick=()=>load(Number($('scenario').value));
   $('seek').oninput=()=>seek(Number($('seek').value));

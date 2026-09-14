@@ -3,11 +3,11 @@
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <ProjectReference Include="..\ParcelJourney.Core\ParcelJourney.Core.csproj" />
-    <ProjectReference Include="C:\Users\porfy\source\repos\IocOrchestrator\IocOrchestrator.Abstractions\IocOrchestrator.Abstractions.csproj"><Private>false</Private></ProjectReference>
+    <ProjectReference Include="$(IocOrchestratorRoot)\IocOrchestrator.Abstractions\IocOrchestrator.Abstractions.csproj"><Private>false</Private></ProjectReference>
   </ItemGroup>
   <ItemGroup><None Update="plugin.json" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
-  <Target Name="DeployToHostPlugins" AfterTargets="Build">
-    <PropertyGroup><HostPluginsDir>C:\Users\porfy\source\repos\IocOrchestrator\bin\$(Configuration)\net8.0-windows\plugins\parcel-journey\</HostPluginsDir></PropertyGroup>
+    <Target Name="DeployToHostPlugins" AfterTargets="Build">
+    <PropertyGroup><HostPluginsDir>$(IocOrchestratorRoot)\bin\$(Configuration)\net8.0-windows\plugins\parcel-journey\</HostPluginsDir></PropertyGroup>
     <ItemGroup><PluginAssets Include="$(MSBuildThisFileDirectory)wwwroot\**\*" /></ItemGroup>
     <MakeDir Directories="$(HostPluginsDir)" ContinueOnError="true" />
     <Copy SourceFiles="$(TargetPath);$(TargetDir)plugin.json;$(TargetDir)$(AssemblyName).deps.json" DestinationFolder="$(HostPluginsDir)" SkipUnchangedFiles="true" ContinueOnError="true" />

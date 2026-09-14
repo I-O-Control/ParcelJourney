@@ -13,8 +13,12 @@ try {
     $address = Get-Content -LiteralPath $sessionPath -Raw
     $health = Invoke-RestMethod "$address/api/health"
     if (!$health.ready) { throw 'Health check failed' }
+    if ($health.mode -ne 'real-logs') { throw 'Release is not using real logs' }
+    $model = Invoke-RestMethod "$address/3d/model.json"
+    if ($model.parcels.Count -ne 10 -or $model.validation.mode -ne 'real-logs') { throw '3D model is not the real 10-case dataset' }
+    if ($model.parcels[0].events[0].Evidence.Count -lt 1) { throw 'Source evidence missing' }
     $page = Invoke-WebRequest $address -UseBasicParsing
-    if ($page.StatusCode -ne 200 -or !$page.Content.Contains('const ReplayEngine') -or !$page.Content.Contains('SIM-068-3')) { throw 'Razor page missing bundled replay' }
+    if ($page.StatusCode -ne 200 -or !$page.Content.Contains('const ReplayEngine') -or !$page.Content.Contains('0015698027')) { throw 'Razor page missing bundled replay' }
     if (!$page.Content.Contains('function setRotation') -or !$page.Content.Contains('SC_START')) { throw 'Rotation update not bundled' }
     if ($page.Content.Contains('class="mission"') -and !$health.runtime.StartsWith('8.')) { throw 'Corporate release must align with IocOrchestrator .NET 8' }
     if (!$page.Headers['Content-Security-Policy']) { throw 'Missing security headers' }
@@ -24,7 +28,7 @@ try {
     $session = Invoke-RestMethod "$address/api/session"
     Invoke-RestMethod "$address/api/exit" -Method Post -Headers @{'X-ParcelJourney-Session'=$session.token} | Out-Null
     if (!$process.WaitForExit(10000)) { throw 'Application failed to shut down' }
-    Write-Output "PASS: self-contained EXE starts; .NET $($health.runtime); Razor page HTTP 200; bundled 204 scenarios; protected exit; clean shutdown."
+    Write-Output "PASS: self-contained EXE starts; .NET $($health.runtime); Razor page HTTP 200; bundled 10 real parcels; protected exit; clean shutdown."
 } finally {
     if (!$process.HasExited) { Stop-Process -Id $process.Id }
 }

@@ -1,0 +1,3876 @@
+{
+  "nodes": [
+    {
+      "id": "SC_START",
+      "label": "Entry scan + start scale",
+      "x": 740,
+      "y": -470,
+      "kind": "scale",
+      "equipment": "1090-1",
+      "note": "",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "section": "entry"
+    },
+    {
+      "id": "SC_WAAP",
+      "label": "Workstation decision",
+      "x": 740,
+      "y": -260,
+      "kind": "decision",
+      "equipment": "1095-1",
+      "note": "",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "section": "entry"
+    },
+    {
+      "id": "SC_AP",
+      "label": "Workstation allocation",
+      "x": 560,
+      "y": -260,
+      "kind": "decision",
+      "equipment": "1125-1",
+      "note": "",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "section": "entry"
+    },
+    {
+      "id": "SC_UMR",
+      "label": "Quality / manual-close decision",
+      "x": 560,
+      "y": 0,
+      "kind": "decision",
+      "equipment": "3020-1",
+      "note": "Version conflict: PLC name table maps 3020-1; current SC1 logic describes quality point 1460. Placement is provisional.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "section": "entry"
+    },
+    {
+      "id": "SC_WAVL",
+      "label": "Sealer-loop entry decision",
+      "x": 740,
+      "y": 170,
+      "kind": "decision",
+      "equipment": "2000-1",
+      "note": "",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "section": "entry"
+    },
+    {
+      "id": "SC_VL1",
+      "label": "Select sealer 1\u20134",
+      "x": 820,
+      "y": 170,
+      "kind": "decision",
+      "equipment": "2050-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_VL2",
+      "label": "Select sealer 5\u20137",
+      "x": 1460,
+      "y": 170,
+      "kind": "decision",
+      "equipment": "2095-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "RETURN",
+      "label": "No compatible sealer: return",
+      "x": 2040,
+      "y": 550,
+      "kind": "junction",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "MERGE",
+      "label": "Sealed / bypass merge",
+      "x": 2040,
+      "y": 650,
+      "kind": "junction",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SEAL1",
+      "label": "Sealer 1",
+      "x": 900,
+      "y": 380,
+      "kind": "sealer",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SEAL2",
+      "label": "Sealer 2",
+      "x": 1055,
+      "y": 380,
+      "kind": "sealer",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SEAL3",
+      "label": "Sealer 3",
+      "x": 1210,
+      "y": 380,
+      "kind": "sealer",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SEAL4",
+      "label": "Sealer 4",
+      "x": 1365,
+      "y": 380,
+      "kind": "sealer",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SEAL5",
+      "label": "Sealer 5",
+      "x": 1520,
+      "y": 380,
+      "kind": "sealer",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SEAL6",
+      "label": "Sealer 6",
+      "x": 1675,
+      "y": 380,
+      "kind": "sealer",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SEAL7",
+      "label": "Sealer 7",
+      "x": 1830,
+      "y": 380,
+      "kind": "sealer",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "NOREAD",
+      "label": "Target 08 \u00b7 no-read",
+      "x": 2040,
+      "y": 380,
+      "kind": "exception",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "PACK",
+      "label": "Packaging distribution",
+      "x": 400,
+      "y": 770,
+      "kind": "decision",
+      "equipment": null,
+      "note": "Packaging distribution is separate from the version-dependent SC_UMR quality role.",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "OUT",
+      "label": "Packaging output merge",
+      "x": 1730,
+      "y": 1250,
+      "kind": "junction",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "STRAP5",
+      "label": "Strapper 5",
+      "x": 570,
+      "y": 850,
+      "kind": "strapper",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_BWL5",
+      "label": "Gross scale 5",
+      "x": 790,
+      "y": 850,
+      "kind": "scale",
+      "equipment": "3060-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_ETIINL5",
+      "label": "Print trigger 5",
+      "x": 1010,
+      "y": 850,
+      "kind": "scanner",
+      "equipment": "3070-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "PRINT5",
+      "label": "Label applicator 5",
+      "x": 1220,
+      "y": 850,
+      "kind": "printer",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_ETIOSL5",
+      "label": "Side verification 5",
+      "x": 1430,
+      "y": 850,
+      "kind": "scanner",
+      "equipment": "3080-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_ETIOTL5",
+      "label": "Top verification 5",
+      "x": 1620,
+      "y": 850,
+      "kind": "scanner",
+      "equipment": "3080-2",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "STRAP2",
+      "label": "Strapper 2",
+      "x": 570,
+      "y": 950,
+      "kind": "strapper",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_BWL2",
+      "label": "Gross scale 2",
+      "x": 790,
+      "y": 950,
+      "kind": "scale",
+      "equipment": "3130-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_ETIINL2",
+      "label": "Print trigger 2",
+      "x": 1010,
+      "y": 950,
+      "kind": "scanner",
+      "equipment": "3140-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "PRINT2",
+      "label": "Label applicator 2",
+      "x": 1220,
+      "y": 950,
+      "kind": "printer",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_ETIOSL2",
+      "label": "Side verification 2",
+      "x": 1430,
+      "y": 950,
+      "kind": "scanner",
+      "equipment": "3150-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_ETIOTL2",
+      "label": "Top verification 2",
+      "x": 1620,
+      "y": 950,
+      "kind": "scanner",
+      "equipment": "3150-2",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "STRAP1",
+      "label": "Strapper 1",
+      "x": 570,
+      "y": 1050,
+      "kind": "strapper",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_BWL1",
+      "label": "Gross scale 1",
+      "x": 790,
+      "y": 1050,
+      "kind": "scale",
+      "equipment": "3195-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_ETIINL1",
+      "label": "Print trigger 1",
+      "x": 1010,
+      "y": 1050,
+      "kind": "scanner",
+      "equipment": "3205-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "PRINT1",
+      "label": "Label applicator 1",
+      "x": 1220,
+      "y": 1050,
+      "kind": "printer",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_ETIOSL1",
+      "label": "Side verification 1",
+      "x": 1430,
+      "y": 1050,
+      "kind": "scanner",
+      "equipment": "3215-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_ETIOTL1",
+      "label": "Top verification 1",
+      "x": 1620,
+      "y": 1050,
+      "kind": "scanner",
+      "equipment": "3215-2",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "STRAP3",
+      "label": "Strapper 3",
+      "x": 570,
+      "y": 1150,
+      "kind": "strapper",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_BWL3",
+      "label": "Gross scale 3",
+      "x": 790,
+      "y": 1150,
+      "kind": "scale",
+      "equipment": "3255-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_ETIINL3",
+      "label": "Print trigger 3",
+      "x": 1010,
+      "y": 1150,
+      "kind": "scanner",
+      "equipment": "3265-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "PRINT3",
+      "label": "Label applicator 3",
+      "x": 1220,
+      "y": 1150,
+      "kind": "printer",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_ETIOSL3",
+      "label": "Side verification 3",
+      "x": 1430,
+      "y": 1150,
+      "kind": "scanner",
+      "equipment": "3275-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_ETIOTL3",
+      "label": "Top verification 3",
+      "x": 1620,
+      "y": 1150,
+      "kind": "scanner",
+      "equipment": "3275-2",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "STRAP4",
+      "label": "Strapper 4",
+      "x": 570,
+      "y": 1250,
+      "kind": "strapper",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_BWL4",
+      "label": "Gross scale 4",
+      "x": 790,
+      "y": 1250,
+      "kind": "scale",
+      "equipment": "3325-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_ETIINL4",
+      "label": "Print trigger 4",
+      "x": 1010,
+      "y": 1250,
+      "kind": "scanner",
+      "equipment": "3335-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "PRINT4",
+      "label": "Label applicator 4",
+      "x": 1220,
+      "y": 1250,
+      "kind": "printer",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_ETIOSL4",
+      "label": "Side verification 4",
+      "x": 1430,
+      "y": 1250,
+      "kind": "scanner",
+      "equipment": "3345-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_ETIOTL4",
+      "label": "Top verification 4",
+      "x": 1620,
+      "y": 1250,
+      "kind": "scanner",
+      "equipment": "3345-2",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SHIP",
+      "label": "Shipping loop infeed",
+      "x": 250,
+      "y": 1450,
+      "kind": "junction",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H4T1",
+      "label": "H4 divert scanner 1",
+      "x": 250,
+      "y": 1540,
+      "kind": "decision",
+      "equipment": "4110-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H4_EXIT1",
+      "label": "Hall 4 telescope 1",
+      "x": 250,
+      "y": 1670,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H4T2",
+      "label": "H4 divert scanner 2",
+      "x": 430,
+      "y": 1540,
+      "kind": "decision",
+      "equipment": "4120-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H4_EXIT2",
+      "label": "Hall 4 telescope 2",
+      "x": 430,
+      "y": 1670,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H4T3",
+      "label": "H4 divert scanner 3",
+      "x": 610,
+      "y": 1540,
+      "kind": "decision",
+      "equipment": "4130-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H4_EXIT3",
+      "label": "Hall 4 telescope 3",
+      "x": 610,
+      "y": 1670,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H4T4",
+      "label": "H4 divert scanner 4",
+      "x": 790,
+      "y": 1540,
+      "kind": "decision",
+      "equipment": "4140-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H4_EXIT4",
+      "label": "Hall 4 telescope 4",
+      "x": 790,
+      "y": 1670,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H4T5",
+      "label": "H4 divert scanner 5",
+      "x": 970,
+      "y": 1540,
+      "kind": "decision",
+      "equipment": "4150-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H4_EXIT5",
+      "label": "Hall 4 telescope 5",
+      "x": 970,
+      "y": 1670,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H4T6",
+      "label": "H4 divert scanner 6",
+      "x": 1150,
+      "y": 1540,
+      "kind": "decision",
+      "equipment": "4160-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H4_EXIT6",
+      "label": "Hall 4 telescope 6",
+      "x": 1150,
+      "y": 1670,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H4T7",
+      "label": "H4 divert scanner 7",
+      "x": 1330,
+      "y": 1540,
+      "kind": "decision",
+      "equipment": "4170-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H4_EXIT7",
+      "label": "Hall 4 telescope 7",
+      "x": 1330,
+      "y": 1670,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H4T8",
+      "label": "H4 divert scanner 8",
+      "x": 1510,
+      "y": 1540,
+      "kind": "decision",
+      "equipment": "4180-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H4_EXIT8",
+      "label": "Hall 4 telescope 8",
+      "x": 1510,
+      "y": 1670,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H4RU",
+      "label": "Hall 4 chute decision",
+      "x": 1780,
+      "y": 1540,
+      "kind": "decision",
+      "equipment": "4190-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H4_CHUTE1",
+      "label": "H4 chute 1",
+      "x": 1660,
+      "y": 1770,
+      "kind": "exception",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H4_CHUTE2",
+      "label": "H4 chute 2",
+      "x": 1750,
+      "y": 1770,
+      "kind": "exception",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H4_CHUTE3",
+      "label": "H4 chute 3",
+      "x": 1840,
+      "y": 1770,
+      "kind": "exception",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H4_CHUTE4",
+      "label": "H4 chute 4",
+      "x": 1930,
+      "y": 1770,
+      "kind": "exception",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H3T1",
+      "label": "H3 divert scanner 1",
+      "x": 250,
+      "y": 1880,
+      "kind": "decision",
+      "equipment": "4280-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H3_EXIT1",
+      "label": "Hall 3 telescope 1",
+      "x": 250,
+      "y": 2010,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H3T2",
+      "label": "H3 divert scanner 2",
+      "x": 430,
+      "y": 1880,
+      "kind": "decision",
+      "equipment": "4295-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H3_EXIT2",
+      "label": "Hall 3 telescope 2",
+      "x": 430,
+      "y": 2010,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H3T3",
+      "label": "H3 divert scanner 3",
+      "x": 610,
+      "y": 1880,
+      "kind": "decision",
+      "equipment": "4305-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H3_EXIT3",
+      "label": "Hall 3 telescope 3",
+      "x": 610,
+      "y": 2010,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H3T4",
+      "label": "H3 divert scanner 4",
+      "x": 790,
+      "y": 1880,
+      "kind": "decision",
+      "equipment": "4315-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H3_EXIT4",
+      "label": "Hall 3 telescope 4",
+      "x": 790,
+      "y": 2010,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H3T5",
+      "label": "H3 divert scanner 5",
+      "x": 970,
+      "y": 1880,
+      "kind": "decision",
+      "equipment": "4325-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H3_EXIT5",
+      "label": "Hall 3 telescope 5",
+      "x": 970,
+      "y": 2010,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H3T6",
+      "label": "H3 divert scanner 6",
+      "x": 1150,
+      "y": 1880,
+      "kind": "decision",
+      "equipment": "4335-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H3_EXIT6",
+      "label": "Hall 3 telescope 6",
+      "x": 1150,
+      "y": 2010,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H3T7",
+      "label": "H3 divert scanner 7",
+      "x": 1330,
+      "y": 1880,
+      "kind": "decision",
+      "equipment": "4345-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H3_EXIT7",
+      "label": "Hall 3 telescope 7",
+      "x": 1330,
+      "y": 2010,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H3RU",
+      "label": "Hall 3 chute decision",
+      "x": 1780,
+      "y": 1880,
+      "kind": "decision",
+      "equipment": "4240-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H3_CHUTE1",
+      "label": "H3 chute 1 / NIO",
+      "x": 1660,
+      "y": 2110,
+      "kind": "exception",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H3_CHUTE2",
+      "label": "H3 chute 2",
+      "x": 1750,
+      "y": 2110,
+      "kind": "exception",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H3_CHUTE3",
+      "label": "H3 chute 3",
+      "x": 1840,
+      "y": 2110,
+      "kind": "exception",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H2T1",
+      "label": "H2 divert scanner 1",
+      "x": 250,
+      "y": 2220,
+      "kind": "decision",
+      "equipment": "4820-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H2_EXIT1",
+      "label": "Hall 2 telescope 1",
+      "x": 250,
+      "y": 2350,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H2T2",
+      "label": "H2 divert scanner 2",
+      "x": 430,
+      "y": 2220,
+      "kind": "decision",
+      "equipment": "4830-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H2_EXIT2",
+      "label": "Hall 2 telescope 2",
+      "x": 430,
+      "y": 2350,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H2T3",
+      "label": "H2 divert scanner 3",
+      "x": 610,
+      "y": 2220,
+      "kind": "decision",
+      "equipment": "4840-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H2_EXIT3",
+      "label": "Hall 2 telescope 3",
+      "x": 610,
+      "y": 2350,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H2T4",
+      "label": "H2 divert scanner 4",
+      "x": 790,
+      "y": 2220,
+      "kind": "decision",
+      "equipment": "4850-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H2_EXIT4",
+      "label": "Hall 2 telescope 4",
+      "x": 790,
+      "y": 2350,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H2T5",
+      "label": "H2 divert scanner 5",
+      "x": 970,
+      "y": 2220,
+      "kind": "decision",
+      "equipment": "4860-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H2_EXIT5",
+      "label": "Hall 2 telescope 5",
+      "x": 970,
+      "y": 2350,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H2T6",
+      "label": "H2 divert scanner 6",
+      "x": 1150,
+      "y": 2220,
+      "kind": "decision",
+      "equipment": "4870-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H2_EXIT6",
+      "label": "Hall 2 telescope 6",
+      "x": 1150,
+      "y": 2350,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H2T7",
+      "label": "H2 divert scanner 7",
+      "x": 1330,
+      "y": 2220,
+      "kind": "decision",
+      "equipment": "4880-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H2_EXIT7",
+      "label": "Hall 2 telescope 7",
+      "x": 1330,
+      "y": 2350,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H2T8",
+      "label": "H2 divert scanner 8",
+      "x": 1510,
+      "y": 2220,
+      "kind": "decision",
+      "equipment": "4890-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H2_EXIT8",
+      "label": "Hall 2 telescope 8",
+      "x": 1510,
+      "y": 2350,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "SC_H2T9",
+      "label": "H2 divert scanner 9",
+      "x": 1690,
+      "y": 2220,
+      "kind": "decision",
+      "equipment": "4900-1",
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "H2_EXIT9",
+      "label": "Hall 2 telescope 9",
+      "x": 1690,
+      "y": 2350,
+      "kind": "exit",
+      "equipment": null,
+      "note": "",
+      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+    },
+    {
+      "id": "AP1",
+      "label": "Desk 1",
+      "x": 440,
+      "y": -510,
+      "kind": "sealer",
+      "equipment": null,
+      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "section": "entry"
+    },
+    {
+      "id": "AP2",
+      "label": "Desk 2",
+      "x": 440,
+      "y": -449,
+      "kind": "sealer",
+      "equipment": null,
+      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "section": "entry"
+    },
+    {
+      "id": "AP3",
+      "label": "Desk 3",
+      "x": 440,
+      "y": -388,
+      "kind": "sealer",
+      "equipment": null,
+      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "section": "entry"
+    },
+    {
+      "id": "AP4",
+      "label": "Desk 4",
+      "x": 440,
+      "y": -327,
+      "kind": "sealer",
+      "equipment": null,
+      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "section": "entry"
+    },
+    {
+      "id": "AP5",
+      "label": "Desk 5",
+      "x": 440,
+      "y": -266,
+      "kind": "sealer",
+      "equipment": null,
+      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "section": "entry"
+    },
+    {
+      "id": "AP6",
+      "label": "Desk 6",
+      "x": 440,
+      "y": -205,
+      "kind": "sealer",
+      "equipment": null,
+      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "section": "entry"
+    },
+    {
+      "id": "AP7",
+      "label": "Desk 7",
+      "x": 440,
+      "y": -144,
+      "kind": "sealer",
+      "equipment": null,
+      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "section": "entry"
+    },
+    {
+      "id": "AP8",
+      "label": "Desk 8",
+      "x": 440,
+      "y": -83,
+      "kind": "sealer",
+      "equipment": null,
+      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "section": "entry"
+    },
+    {
+      "id": "AP9",
+      "label": "Desk 9",
+      "x": 440,
+      "y": -22,
+      "kind": "sealer",
+      "equipment": null,
+      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "section": "entry"
+    },
+    {
+      "id": "AP10",
+      "label": "Desk 10",
+      "x": 440,
+      "y": 39,
+      "kind": "sealer",
+      "equipment": null,
+      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "section": "entry"
+    }
+  ],
+  "edges": [
+    {
+      "id": "SC_START>SC_WAAP",
+      "a": "SC_START",
+      "b": "SC_WAAP",
+      "points": [
+        [
+          740,
+          -470
+        ],
+        [
+          740,
+          -260
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_WAAP>SC_WAVL",
+      "a": "SC_WAAP",
+      "b": "SC_WAVL",
+      "points": [
+        [
+          740,
+          -260
+        ],
+        [
+          740,
+          170
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_WAAP>SC_AP",
+      "a": "SC_WAAP",
+      "b": "SC_AP",
+      "points": [
+        [
+          740,
+          -260
+        ],
+        [
+          560,
+          -260
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_AP>SC_UMR",
+      "a": "SC_AP",
+      "b": "SC_UMR",
+      "points": [
+        [
+          560,
+          -260
+        ],
+        [
+          560,
+          0
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_UMR>SC_WAVL",
+      "a": "SC_UMR",
+      "b": "SC_WAVL",
+      "points": [
+        [
+          560,
+          0
+        ],
+        [
+          560,
+          80
+        ],
+        [
+          740,
+          80
+        ],
+        [
+          740,
+          170
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "PACK>STRAP5",
+      "a": "PACK",
+      "b": "STRAP5",
+      "points": [
+        [
+          400,
+          770
+        ],
+        [
+          400,
+          850
+        ],
+        [
+          570,
+          850
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "STRAP5>SC_BWL5",
+      "a": "STRAP5",
+      "b": "SC_BWL5",
+      "points": [
+        [
+          570,
+          850
+        ],
+        [
+          790,
+          850
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_BWL5>SC_ETIINL5",
+      "a": "SC_BWL5",
+      "b": "SC_ETIINL5",
+      "points": [
+        [
+          790,
+          850
+        ],
+        [
+          1010,
+          850
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_ETIINL5>PRINT5",
+      "a": "SC_ETIINL5",
+      "b": "PRINT5",
+      "points": [
+        [
+          1010,
+          850
+        ],
+        [
+          1220,
+          850
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "PRINT5>SC_ETIOSL5",
+      "a": "PRINT5",
+      "b": "SC_ETIOSL5",
+      "points": [
+        [
+          1220,
+          850
+        ],
+        [
+          1430,
+          850
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_ETIOSL5>SC_ETIOTL5",
+      "a": "SC_ETIOSL5",
+      "b": "SC_ETIOTL5",
+      "points": [
+        [
+          1430,
+          850
+        ],
+        [
+          1620,
+          850
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_ETIOTL5>OUT",
+      "a": "SC_ETIOTL5",
+      "b": "OUT",
+      "points": [
+        [
+          1620,
+          850
+        ],
+        [
+          1730,
+          850
+        ],
+        [
+          1730,
+          1250
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "PACK>STRAP2",
+      "a": "PACK",
+      "b": "STRAP2",
+      "points": [
+        [
+          400,
+          770
+        ],
+        [
+          400,
+          950
+        ],
+        [
+          570,
+          950
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "STRAP2>SC_BWL2",
+      "a": "STRAP2",
+      "b": "SC_BWL2",
+      "points": [
+        [
+          570,
+          950
+        ],
+        [
+          790,
+          950
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_BWL2>SC_ETIINL2",
+      "a": "SC_BWL2",
+      "b": "SC_ETIINL2",
+      "points": [
+        [
+          790,
+          950
+        ],
+        [
+          1010,
+          950
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_ETIINL2>PRINT2",
+      "a": "SC_ETIINL2",
+      "b": "PRINT2",
+      "points": [
+        [
+          1010,
+          950
+        ],
+        [
+          1220,
+          950
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "PRINT2>SC_ETIOSL2",
+      "a": "PRINT2",
+      "b": "SC_ETIOSL2",
+      "points": [
+        [
+          1220,
+          950
+        ],
+        [
+          1430,
+          950
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_ETIOSL2>SC_ETIOTL2",
+      "a": "SC_ETIOSL2",
+      "b": "SC_ETIOTL2",
+      "points": [
+        [
+          1430,
+          950
+        ],
+        [
+          1620,
+          950
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_ETIOTL2>OUT",
+      "a": "SC_ETIOTL2",
+      "b": "OUT",
+      "points": [
+        [
+          1620,
+          950
+        ],
+        [
+          1730,
+          950
+        ],
+        [
+          1730,
+          1250
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "PACK>STRAP1",
+      "a": "PACK",
+      "b": "STRAP1",
+      "points": [
+        [
+          400,
+          770
+        ],
+        [
+          400,
+          1050
+        ],
+        [
+          570,
+          1050
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "STRAP1>SC_BWL1",
+      "a": "STRAP1",
+      "b": "SC_BWL1",
+      "points": [
+        [
+          570,
+          1050
+        ],
+        [
+          790,
+          1050
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_BWL1>SC_ETIINL1",
+      "a": "SC_BWL1",
+      "b": "SC_ETIINL1",
+      "points": [
+        [
+          790,
+          1050
+        ],
+        [
+          1010,
+          1050
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_ETIINL1>PRINT1",
+      "a": "SC_ETIINL1",
+      "b": "PRINT1",
+      "points": [
+        [
+          1010,
+          1050
+        ],
+        [
+          1220,
+          1050
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "PRINT1>SC_ETIOSL1",
+      "a": "PRINT1",
+      "b": "SC_ETIOSL1",
+      "points": [
+        [
+          1220,
+          1050
+        ],
+        [
+          1430,
+          1050
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_ETIOSL1>SC_ETIOTL1",
+      "a": "SC_ETIOSL1",
+      "b": "SC_ETIOTL1",
+      "points": [
+        [
+          1430,
+          1050
+        ],
+        [
+          1620,
+          1050
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_ETIOTL1>OUT",
+      "a": "SC_ETIOTL1",
+      "b": "OUT",
+      "points": [
+        [
+          1620,
+          1050
+        ],
+        [
+          1730,
+          1050
+        ],
+        [
+          1730,
+          1250
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "PACK>STRAP3",
+      "a": "PACK",
+      "b": "STRAP3",
+      "points": [
+        [
+          400,
+          770
+        ],
+        [
+          400,
+          1150
+        ],
+        [
+          570,
+          1150
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "STRAP3>SC_BWL3",
+      "a": "STRAP3",
+      "b": "SC_BWL3",
+      "points": [
+        [
+          570,
+          1150
+        ],
+        [
+          790,
+          1150
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_BWL3>SC_ETIINL3",
+      "a": "SC_BWL3",
+      "b": "SC_ETIINL3",
+      "points": [
+        [
+          790,
+          1150
+        ],
+        [
+          1010,
+          1150
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_ETIINL3>PRINT3",
+      "a": "SC_ETIINL3",
+      "b": "PRINT3",
+      "points": [
+        [
+          1010,
+          1150
+        ],
+        [
+          1220,
+          1150
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "PRINT3>SC_ETIOSL3",
+      "a": "PRINT3",
+      "b": "SC_ETIOSL3",
+      "points": [
+        [
+          1220,
+          1150
+        ],
+        [
+          1430,
+          1150
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_ETIOSL3>SC_ETIOTL3",
+      "a": "SC_ETIOSL3",
+      "b": "SC_ETIOTL3",
+      "points": [
+        [
+          1430,
+          1150
+        ],
+        [
+          1620,
+          1150
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_ETIOTL3>OUT",
+      "a": "SC_ETIOTL3",
+      "b": "OUT",
+      "points": [
+        [
+          1620,
+          1150
+        ],
+        [
+          1730,
+          1150
+        ],
+        [
+          1730,
+          1250
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "PACK>STRAP4",
+      "a": "PACK",
+      "b": "STRAP4",
+      "points": [
+        [
+          400,
+          770
+        ],
+        [
+          400,
+          1250
+        ],
+        [
+          570,
+          1250
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "STRAP4>SC_BWL4",
+      "a": "STRAP4",
+      "b": "SC_BWL4",
+      "points": [
+        [
+          570,
+          1250
+        ],
+        [
+          790,
+          1250
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_BWL4>SC_ETIINL4",
+      "a": "SC_BWL4",
+      "b": "SC_ETIINL4",
+      "points": [
+        [
+          790,
+          1250
+        ],
+        [
+          1010,
+          1250
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_ETIINL4>PRINT4",
+      "a": "SC_ETIINL4",
+      "b": "PRINT4",
+      "points": [
+        [
+          1010,
+          1250
+        ],
+        [
+          1220,
+          1250
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "PRINT4>SC_ETIOSL4",
+      "a": "PRINT4",
+      "b": "SC_ETIOSL4",
+      "points": [
+        [
+          1220,
+          1250
+        ],
+        [
+          1430,
+          1250
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_ETIOSL4>SC_ETIOTL4",
+      "a": "SC_ETIOSL4",
+      "b": "SC_ETIOTL4",
+      "points": [
+        [
+          1430,
+          1250
+        ],
+        [
+          1620,
+          1250
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_ETIOTL4>OUT",
+      "a": "SC_ETIOTL4",
+      "b": "OUT",
+      "points": [
+        [
+          1620,
+          1250
+        ],
+        [
+          1730,
+          1250
+        ],
+        [
+          1730,
+          1250
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "OUT>SHIP",
+      "a": "OUT",
+      "b": "SHIP",
+      "points": [
+        [
+          1730,
+          1250
+        ],
+        [
+          1800,
+          1250
+        ],
+        [
+          1800,
+          1390
+        ],
+        [
+          250,
+          1390
+        ],
+        [
+          250,
+          1450
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement",
+      "purpose": "Transfer from packaging to shipping"
+    },
+    {
+      "id": "SHIP>SC_H4T1",
+      "a": "SHIP",
+      "b": "SC_H4T1",
+      "points": [
+        [
+          250,
+          1450
+        ],
+        [
+          250,
+          1540
+        ],
+        [
+          250,
+          1540
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H4T1>H4_EXIT1",
+      "a": "SC_H4T1",
+      "b": "H4_EXIT1",
+      "points": [
+        [
+          250,
+          1540
+        ],
+        [
+          250,
+          1670
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H4T1>SC_H4T2",
+      "a": "SC_H4T1",
+      "b": "SC_H4T2",
+      "points": [
+        [
+          250,
+          1540
+        ],
+        [
+          430,
+          1540
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H4T2>H4_EXIT2",
+      "a": "SC_H4T2",
+      "b": "H4_EXIT2",
+      "points": [
+        [
+          430,
+          1540
+        ],
+        [
+          430,
+          1670
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H4T2>SC_H4T3",
+      "a": "SC_H4T2",
+      "b": "SC_H4T3",
+      "points": [
+        [
+          430,
+          1540
+        ],
+        [
+          610,
+          1540
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H4T3>H4_EXIT3",
+      "a": "SC_H4T3",
+      "b": "H4_EXIT3",
+      "points": [
+        [
+          610,
+          1540
+        ],
+        [
+          610,
+          1670
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H4T3>SC_H4T4",
+      "a": "SC_H4T3",
+      "b": "SC_H4T4",
+      "points": [
+        [
+          610,
+          1540
+        ],
+        [
+          790,
+          1540
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H4T4>H4_EXIT4",
+      "a": "SC_H4T4",
+      "b": "H4_EXIT4",
+      "points": [
+        [
+          790,
+          1540
+        ],
+        [
+          790,
+          1670
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H4T4>SC_H4T5",
+      "a": "SC_H4T4",
+      "b": "SC_H4T5",
+      "points": [
+        [
+          790,
+          1540
+        ],
+        [
+          970,
+          1540
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H4T5>H4_EXIT5",
+      "a": "SC_H4T5",
+      "b": "H4_EXIT5",
+      "points": [
+        [
+          970,
+          1540
+        ],
+        [
+          970,
+          1670
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H4T5>SC_H4T6",
+      "a": "SC_H4T5",
+      "b": "SC_H4T6",
+      "points": [
+        [
+          970,
+          1540
+        ],
+        [
+          1150,
+          1540
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H4T6>H4_EXIT6",
+      "a": "SC_H4T6",
+      "b": "H4_EXIT6",
+      "points": [
+        [
+          1150,
+          1540
+        ],
+        [
+          1150,
+          1670
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H4T6>SC_H4T7",
+      "a": "SC_H4T6",
+      "b": "SC_H4T7",
+      "points": [
+        [
+          1150,
+          1540
+        ],
+        [
+          1330,
+          1540
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H4T7>H4_EXIT7",
+      "a": "SC_H4T7",
+      "b": "H4_EXIT7",
+      "points": [
+        [
+          1330,
+          1540
+        ],
+        [
+          1330,
+          1670
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H4T7>SC_H4T8",
+      "a": "SC_H4T7",
+      "b": "SC_H4T8",
+      "points": [
+        [
+          1330,
+          1540
+        ],
+        [
+          1510,
+          1540
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H4T8>H4_EXIT8",
+      "a": "SC_H4T8",
+      "b": "H4_EXIT8",
+      "points": [
+        [
+          1510,
+          1540
+        ],
+        [
+          1510,
+          1670
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H4T8>SC_H4RU",
+      "a": "SC_H4T8",
+      "b": "SC_H4RU",
+      "points": [
+        [
+          1510,
+          1540
+        ],
+        [
+          1780,
+          1540
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H4RU>H4_CHUTE1",
+      "a": "SC_H4RU",
+      "b": "H4_CHUTE1",
+      "points": [
+        [
+          1780,
+          1540
+        ],
+        [
+          1780,
+          1595
+        ],
+        [
+          1660,
+          1595
+        ],
+        [
+          1660,
+          1770
+        ]
+      ],
+      "basis": "Schematic branch after chute decision; avoids reverse travel over upstream scanners.",
+      "purpose": "Leave shipping belt for chute bank"
+    },
+    {
+      "id": "SC_H4RU>H4_CHUTE2",
+      "a": "SC_H4RU",
+      "b": "H4_CHUTE2",
+      "points": [
+        [
+          1780,
+          1540
+        ],
+        [
+          1780,
+          1595
+        ],
+        [
+          1750,
+          1595
+        ],
+        [
+          1750,
+          1770
+        ]
+      ],
+      "basis": "Schematic branch after chute decision; avoids reverse travel over upstream scanners.",
+      "purpose": "Leave shipping belt for chute bank"
+    },
+    {
+      "id": "SC_H4RU>H4_CHUTE3",
+      "a": "SC_H4RU",
+      "b": "H4_CHUTE3",
+      "points": [
+        [
+          1780,
+          1540
+        ],
+        [
+          1780,
+          1595
+        ],
+        [
+          1840,
+          1595
+        ],
+        [
+          1840,
+          1770
+        ]
+      ],
+      "basis": "Schematic branch after chute decision; avoids reverse travel over upstream scanners.",
+      "purpose": "Leave shipping belt for chute bank"
+    },
+    {
+      "id": "SC_H4RU>H4_CHUTE4",
+      "a": "SC_H4RU",
+      "b": "H4_CHUTE4",
+      "points": [
+        [
+          1780,
+          1540
+        ],
+        [
+          1780,
+          1595
+        ],
+        [
+          1930,
+          1595
+        ],
+        [
+          1930,
+          1770
+        ]
+      ],
+      "basis": "Schematic branch after chute decision; avoids reverse travel over upstream scanners.",
+      "purpose": "Leave shipping belt for chute bank"
+    },
+    {
+      "id": "SC_H4RU>SC_H3T1",
+      "a": "SC_H4RU",
+      "b": "SC_H3T1",
+      "points": [
+        [
+          1780,
+          1540
+        ],
+        [
+          1970,
+          1540
+        ],
+        [
+          1970,
+          1815
+        ],
+        [
+          190,
+          1815
+        ],
+        [
+          190,
+          1880
+        ],
+        [
+          250,
+          1880
+        ]
+      ],
+      "basis": "Schematic transfer corridor: removes same-belt reversal; exact physical return corridor unverified.",
+      "purpose": "Transfer to next shipping hall"
+    },
+    {
+      "id": "SC_H3T1>H3_EXIT1",
+      "a": "SC_H3T1",
+      "b": "H3_EXIT1",
+      "points": [
+        [
+          250,
+          1880
+        ],
+        [
+          250,
+          2010
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H3T1>SC_H3T2",
+      "a": "SC_H3T1",
+      "b": "SC_H3T2",
+      "points": [
+        [
+          250,
+          1880
+        ],
+        [
+          430,
+          1880
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H3T2>H3_EXIT2",
+      "a": "SC_H3T2",
+      "b": "H3_EXIT2",
+      "points": [
+        [
+          430,
+          1880
+        ],
+        [
+          430,
+          2010
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H3T2>SC_H3T3",
+      "a": "SC_H3T2",
+      "b": "SC_H3T3",
+      "points": [
+        [
+          430,
+          1880
+        ],
+        [
+          610,
+          1880
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H3T3>H3_EXIT3",
+      "a": "SC_H3T3",
+      "b": "H3_EXIT3",
+      "points": [
+        [
+          610,
+          1880
+        ],
+        [
+          610,
+          2010
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H3T3>SC_H3T4",
+      "a": "SC_H3T3",
+      "b": "SC_H3T4",
+      "points": [
+        [
+          610,
+          1880
+        ],
+        [
+          790,
+          1880
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H3T4>H3_EXIT4",
+      "a": "SC_H3T4",
+      "b": "H3_EXIT4",
+      "points": [
+        [
+          790,
+          1880
+        ],
+        [
+          790,
+          2010
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H3T4>SC_H3T5",
+      "a": "SC_H3T4",
+      "b": "SC_H3T5",
+      "points": [
+        [
+          790,
+          1880
+        ],
+        [
+          970,
+          1880
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H3T5>H3_EXIT5",
+      "a": "SC_H3T5",
+      "b": "H3_EXIT5",
+      "points": [
+        [
+          970,
+          1880
+        ],
+        [
+          970,
+          2010
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H3T5>SC_H3T6",
+      "a": "SC_H3T5",
+      "b": "SC_H3T6",
+      "points": [
+        [
+          970,
+          1880
+        ],
+        [
+          1150,
+          1880
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H3T6>H3_EXIT6",
+      "a": "SC_H3T6",
+      "b": "H3_EXIT6",
+      "points": [
+        [
+          1150,
+          1880
+        ],
+        [
+          1150,
+          2010
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H3T6>SC_H3T7",
+      "a": "SC_H3T6",
+      "b": "SC_H3T7",
+      "points": [
+        [
+          1150,
+          1880
+        ],
+        [
+          1330,
+          1880
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H3T7>H3_EXIT7",
+      "a": "SC_H3T7",
+      "b": "H3_EXIT7",
+      "points": [
+        [
+          1330,
+          1880
+        ],
+        [
+          1330,
+          2010
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H3T7>SC_H3RU",
+      "a": "SC_H3T7",
+      "b": "SC_H3RU",
+      "points": [
+        [
+          1330,
+          1880
+        ],
+        [
+          1780,
+          1880
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H3RU>H3_CHUTE1",
+      "a": "SC_H3RU",
+      "b": "H3_CHUTE1",
+      "points": [
+        [
+          1780,
+          1880
+        ],
+        [
+          1780,
+          1935
+        ],
+        [
+          1660,
+          1935
+        ],
+        [
+          1660,
+          2110
+        ]
+      ],
+      "basis": "Schematic branch after chute decision; avoids reverse travel over upstream scanners.",
+      "purpose": "Leave shipping belt for chute bank"
+    },
+    {
+      "id": "SC_H3RU>H3_CHUTE2",
+      "a": "SC_H3RU",
+      "b": "H3_CHUTE2",
+      "points": [
+        [
+          1780,
+          1880
+        ],
+        [
+          1780,
+          1935
+        ],
+        [
+          1750,
+          1935
+        ],
+        [
+          1750,
+          2110
+        ]
+      ],
+      "basis": "Schematic branch after chute decision; avoids reverse travel over upstream scanners.",
+      "purpose": "Leave shipping belt for chute bank"
+    },
+    {
+      "id": "SC_H3RU>H3_CHUTE3",
+      "a": "SC_H3RU",
+      "b": "H3_CHUTE3",
+      "points": [
+        [
+          1780,
+          1880
+        ],
+        [
+          1780,
+          1935
+        ],
+        [
+          1840,
+          1935
+        ],
+        [
+          1840,
+          2110
+        ]
+      ],
+      "basis": "Schematic branch after chute decision; avoids reverse travel over upstream scanners.",
+      "purpose": "Leave shipping belt for chute bank"
+    },
+    {
+      "id": "SC_H3RU>SC_H2T1",
+      "a": "SC_H3RU",
+      "b": "SC_H2T1",
+      "points": [
+        [
+          1780,
+          1880
+        ],
+        [
+          1970,
+          1880
+        ],
+        [
+          1970,
+          2155
+        ],
+        [
+          190,
+          2155
+        ],
+        [
+          190,
+          2220
+        ],
+        [
+          250,
+          2220
+        ]
+      ],
+      "basis": "Schematic transfer corridor: removes same-belt reversal; exact physical return corridor unverified.",
+      "purpose": "Transfer to next shipping hall"
+    },
+    {
+      "id": "SC_H2T1>H2_EXIT1",
+      "a": "SC_H2T1",
+      "b": "H2_EXIT1",
+      "points": [
+        [
+          250,
+          2220
+        ],
+        [
+          250,
+          2350
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H2T1>SC_H2T2",
+      "a": "SC_H2T1",
+      "b": "SC_H2T2",
+      "points": [
+        [
+          250,
+          2220
+        ],
+        [
+          430,
+          2220
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H2T2>H2_EXIT2",
+      "a": "SC_H2T2",
+      "b": "H2_EXIT2",
+      "points": [
+        [
+          430,
+          2220
+        ],
+        [
+          430,
+          2350
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H2T2>SC_H2T3",
+      "a": "SC_H2T2",
+      "b": "SC_H2T3",
+      "points": [
+        [
+          430,
+          2220
+        ],
+        [
+          610,
+          2220
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H2T3>H2_EXIT3",
+      "a": "SC_H2T3",
+      "b": "H2_EXIT3",
+      "points": [
+        [
+          610,
+          2220
+        ],
+        [
+          610,
+          2350
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H2T3>SC_H2T4",
+      "a": "SC_H2T3",
+      "b": "SC_H2T4",
+      "points": [
+        [
+          610,
+          2220
+        ],
+        [
+          790,
+          2220
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H2T4>H2_EXIT4",
+      "a": "SC_H2T4",
+      "b": "H2_EXIT4",
+      "points": [
+        [
+          790,
+          2220
+        ],
+        [
+          790,
+          2350
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H2T4>SC_H2T5",
+      "a": "SC_H2T4",
+      "b": "SC_H2T5",
+      "points": [
+        [
+          790,
+          2220
+        ],
+        [
+          970,
+          2220
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H2T5>H2_EXIT5",
+      "a": "SC_H2T5",
+      "b": "H2_EXIT5",
+      "points": [
+        [
+          970,
+          2220
+        ],
+        [
+          970,
+          2350
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H2T5>SC_H2T6",
+      "a": "SC_H2T5",
+      "b": "SC_H2T6",
+      "points": [
+        [
+          970,
+          2220
+        ],
+        [
+          1150,
+          2220
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H2T6>H2_EXIT6",
+      "a": "SC_H2T6",
+      "b": "H2_EXIT6",
+      "points": [
+        [
+          1150,
+          2220
+        ],
+        [
+          1150,
+          2350
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H2T6>SC_H2T7",
+      "a": "SC_H2T6",
+      "b": "SC_H2T7",
+      "points": [
+        [
+          1150,
+          2220
+        ],
+        [
+          1330,
+          2220
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H2T7>H2_EXIT7",
+      "a": "SC_H2T7",
+      "b": "H2_EXIT7",
+      "points": [
+        [
+          1330,
+          2220
+        ],
+        [
+          1330,
+          2350
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H2T7>SC_H2T8",
+      "a": "SC_H2T7",
+      "b": "SC_H2T8",
+      "points": [
+        [
+          1330,
+          2220
+        ],
+        [
+          1510,
+          2220
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H2T8>H2_EXIT8",
+      "a": "SC_H2T8",
+      "b": "H2_EXIT8",
+      "points": [
+        [
+          1510,
+          2220
+        ],
+        [
+          1510,
+          2350
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H2T8>SC_H2T9",
+      "a": "SC_H2T8",
+      "b": "SC_H2T9",
+      "points": [
+        [
+          1510,
+          2220
+        ],
+        [
+          1690,
+          2220
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H2T9>H2_EXIT9",
+      "a": "SC_H2T9",
+      "b": "H2_EXIT9",
+      "points": [
+        [
+          1690,
+          2220
+        ],
+        [
+          1690,
+          2350
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_H2T9>SHIP",
+      "a": "SC_H2T9",
+      "b": "SHIP",
+      "points": [
+        [
+          1690,
+          2220
+        ],
+        [
+          2020,
+          2220
+        ],
+        [
+          2020,
+          1450
+        ],
+        [
+          250,
+          1450
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement",
+      "purpose": "Shipping recirculation to infeed"
+    },
+    {
+      "id": "SC_WAVL>SC_VL1",
+      "a": "SC_WAVL",
+      "b": "SC_VL1",
+      "points": [
+        [
+          740,
+          170
+        ],
+        [
+          820,
+          170
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_VL1>SC_VL2",
+      "a": "SC_VL1",
+      "b": "SC_VL2",
+      "points": [
+        [
+          820,
+          170
+        ],
+        [
+          1460,
+          170
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_VL2>RETURN",
+      "a": "SC_VL2",
+      "b": "RETURN",
+      "points": [
+        [
+          1460,
+          170
+        ],
+        [
+          2040,
+          170
+        ],
+        [
+          2040,
+          550
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "RETURN>SC_WAVL",
+      "a": "RETURN",
+      "b": "SC_WAVL",
+      "points": [
+        [
+          2040,
+          550
+        ],
+        [
+          720,
+          550
+        ],
+        [
+          720,
+          170
+        ],
+        [
+          740,
+          170
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement",
+      "purpose": "Sealer recirculation to allocation"
+    },
+    {
+      "id": "SC_WAVL>MERGE",
+      "a": "SC_WAVL",
+      "b": "MERGE",
+      "points": [
+        [
+          740,
+          170
+        ],
+        [
+          700,
+          170
+        ],
+        [
+          700,
+          650
+        ],
+        [
+          2040,
+          650
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "MERGE>PACK",
+      "a": "MERGE",
+      "b": "PACK",
+      "points": [
+        [
+          2040,
+          650
+        ],
+        [
+          2100,
+          650
+        ],
+        [
+          2100,
+          710
+        ],
+        [
+          400,
+          710
+        ],
+        [
+          400,
+          770
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement",
+      "purpose": "Transfer from sealing to packaging"
+    },
+    {
+      "id": "SC_VL1>SEAL1",
+      "a": "SC_VL1",
+      "b": "SEAL1",
+      "points": [
+        [
+          820,
+          170
+        ],
+        [
+          900,
+          170
+        ],
+        [
+          900,
+          380
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SEAL1>MERGE",
+      "a": "SEAL1",
+      "b": "MERGE",
+      "points": [
+        [
+          900,
+          380
+        ],
+        [
+          900,
+          650
+        ],
+        [
+          2040,
+          650
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_VL1>SEAL2",
+      "a": "SC_VL1",
+      "b": "SEAL2",
+      "points": [
+        [
+          820,
+          170
+        ],
+        [
+          1055,
+          170
+        ],
+        [
+          1055,
+          380
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SEAL2>MERGE",
+      "a": "SEAL2",
+      "b": "MERGE",
+      "points": [
+        [
+          1055,
+          380
+        ],
+        [
+          1055,
+          650
+        ],
+        [
+          2040,
+          650
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_VL1>SEAL3",
+      "a": "SC_VL1",
+      "b": "SEAL3",
+      "points": [
+        [
+          820,
+          170
+        ],
+        [
+          1210,
+          170
+        ],
+        [
+          1210,
+          380
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SEAL3>MERGE",
+      "a": "SEAL3",
+      "b": "MERGE",
+      "points": [
+        [
+          1210,
+          380
+        ],
+        [
+          1210,
+          650
+        ],
+        [
+          2040,
+          650
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_VL1>SEAL4",
+      "a": "SC_VL1",
+      "b": "SEAL4",
+      "points": [
+        [
+          820,
+          170
+        ],
+        [
+          1365,
+          170
+        ],
+        [
+          1365,
+          380
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SEAL4>MERGE",
+      "a": "SEAL4",
+      "b": "MERGE",
+      "points": [
+        [
+          1365,
+          380
+        ],
+        [
+          1365,
+          650
+        ],
+        [
+          2040,
+          650
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_VL2>SEAL5",
+      "a": "SC_VL2",
+      "b": "SEAL5",
+      "points": [
+        [
+          1460,
+          170
+        ],
+        [
+          1520,
+          170
+        ],
+        [
+          1520,
+          380
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SEAL5>MERGE",
+      "a": "SEAL5",
+      "b": "MERGE",
+      "points": [
+        [
+          1520,
+          380
+        ],
+        [
+          1520,
+          650
+        ],
+        [
+          2040,
+          650
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_VL2>SEAL6",
+      "a": "SC_VL2",
+      "b": "SEAL6",
+      "points": [
+        [
+          1460,
+          170
+        ],
+        [
+          1675,
+          170
+        ],
+        [
+          1675,
+          380
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SEAL6>MERGE",
+      "a": "SEAL6",
+      "b": "MERGE",
+      "points": [
+        [
+          1675,
+          380
+        ],
+        [
+          1675,
+          650
+        ],
+        [
+          2040,
+          650
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_VL2>SEAL7",
+      "a": "SC_VL2",
+      "b": "SEAL7",
+      "points": [
+        [
+          1460,
+          170
+        ],
+        [
+          1830,
+          170
+        ],
+        [
+          1830,
+          380
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SEAL7>MERGE",
+      "a": "SEAL7",
+      "b": "MERGE",
+      "points": [
+        [
+          1830,
+          380
+        ],
+        [
+          1830,
+          650
+        ],
+        [
+          2040,
+          650
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_VL1>NOREAD",
+      "a": "SC_VL1",
+      "b": "NOREAD",
+      "points": [
+        [
+          820,
+          170
+        ],
+        [
+          2040,
+          170
+        ],
+        [
+          2040,
+          380
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_VL2>NOREAD",
+      "a": "SC_VL2",
+      "b": "NOREAD",
+      "points": [
+        [
+          1460,
+          170
+        ],
+        [
+          2040,
+          170
+        ],
+        [
+          2040,
+          380
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_AP>AP1",
+      "a": "SC_AP",
+      "b": "AP1",
+      "points": [
+        [
+          560,
+          -260
+        ],
+        [
+          500,
+          -260
+        ],
+        [
+          500,
+          -510
+        ],
+        [
+          440,
+          -510
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "AP1>SC_UMR",
+      "a": "AP1",
+      "b": "SC_UMR",
+      "points": [
+        [
+          440,
+          -510
+        ],
+        [
+          400,
+          -510
+        ],
+        [
+          400,
+          0
+        ],
+        [
+          560,
+          0
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_AP>AP2",
+      "a": "SC_AP",
+      "b": "AP2",
+      "points": [
+        [
+          560,
+          -260
+        ],
+        [
+          500,
+          -260
+        ],
+        [
+          500,
+          -449
+        ],
+        [
+          440,
+          -449
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "AP2>SC_UMR",
+      "a": "AP2",
+      "b": "SC_UMR",
+      "points": [
+        [
+          440,
+          -449
+        ],
+        [
+          400,
+          -449
+        ],
+        [
+          400,
+          0
+        ],
+        [
+          560,
+          0
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_AP>AP3",
+      "a": "SC_AP",
+      "b": "AP3",
+      "points": [
+        [
+          560,
+          -260
+        ],
+        [
+          500,
+          -260
+        ],
+        [
+          500,
+          -388
+        ],
+        [
+          440,
+          -388
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "AP3>SC_UMR",
+      "a": "AP3",
+      "b": "SC_UMR",
+      "points": [
+        [
+          440,
+          -388
+        ],
+        [
+          400,
+          -388
+        ],
+        [
+          400,
+          0
+        ],
+        [
+          560,
+          0
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_AP>AP4",
+      "a": "SC_AP",
+      "b": "AP4",
+      "points": [
+        [
+          560,
+          -260
+        ],
+        [
+          500,
+          -260
+        ],
+        [
+          500,
+          -327
+        ],
+        [
+          440,
+          -327
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "AP4>SC_UMR",
+      "a": "AP4",
+      "b": "SC_UMR",
+      "points": [
+        [
+          440,
+          -327
+        ],
+        [
+          400,
+          -327
+        ],
+        [
+          400,
+          0
+        ],
+        [
+          560,
+          0
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_AP>AP5",
+      "a": "SC_AP",
+      "b": "AP5",
+      "points": [
+        [
+          560,
+          -260
+        ],
+        [
+          500,
+          -260
+        ],
+        [
+          500,
+          -266
+        ],
+        [
+          440,
+          -266
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "AP5>SC_UMR",
+      "a": "AP5",
+      "b": "SC_UMR",
+      "points": [
+        [
+          440,
+          -266
+        ],
+        [
+          400,
+          -266
+        ],
+        [
+          400,
+          0
+        ],
+        [
+          560,
+          0
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_AP>AP6",
+      "a": "SC_AP",
+      "b": "AP6",
+      "points": [
+        [
+          560,
+          -260
+        ],
+        [
+          500,
+          -260
+        ],
+        [
+          500,
+          -205
+        ],
+        [
+          440,
+          -205
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "AP6>SC_UMR",
+      "a": "AP6",
+      "b": "SC_UMR",
+      "points": [
+        [
+          440,
+          -205
+        ],
+        [
+          400,
+          -205
+        ],
+        [
+          400,
+          0
+        ],
+        [
+          560,
+          0
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_AP>AP7",
+      "a": "SC_AP",
+      "b": "AP7",
+      "points": [
+        [
+          560,
+          -260
+        ],
+        [
+          500,
+          -260
+        ],
+        [
+          500,
+          -144
+        ],
+        [
+          440,
+          -144
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "AP7>SC_UMR",
+      "a": "AP7",
+      "b": "SC_UMR",
+      "points": [
+        [
+          440,
+          -144
+        ],
+        [
+          400,
+          -144
+        ],
+        [
+          400,
+          0
+        ],
+        [
+          560,
+          0
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_AP>AP8",
+      "a": "SC_AP",
+      "b": "AP8",
+      "points": [
+        [
+          560,
+          -260
+        ],
+        [
+          500,
+          -260
+        ],
+        [
+          500,
+          -83
+        ],
+        [
+          440,
+          -83
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "AP8>SC_UMR",
+      "a": "AP8",
+      "b": "SC_UMR",
+      "points": [
+        [
+          440,
+          -83
+        ],
+        [
+          400,
+          -83
+        ],
+        [
+          400,
+          0
+        ],
+        [
+          560,
+          0
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_AP>AP9",
+      "a": "SC_AP",
+      "b": "AP9",
+      "points": [
+        [
+          560,
+          -260
+        ],
+        [
+          500,
+          -260
+        ],
+        [
+          500,
+          -22
+        ],
+        [
+          440,
+          -22
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "AP9>SC_UMR",
+      "a": "AP9",
+      "b": "SC_UMR",
+      "points": [
+        [
+          440,
+          -22
+        ],
+        [
+          400,
+          -22
+        ],
+        [
+          400,
+          0
+        ],
+        [
+          560,
+          0
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "SC_AP>AP10",
+      "a": "SC_AP",
+      "b": "AP10",
+      "points": [
+        [
+          560,
+          -260
+        ],
+        [
+          500,
+          -260
+        ],
+        [
+          500,
+          39
+        ],
+        [
+          440,
+          39
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    },
+    {
+      "id": "AP10>SC_UMR",
+      "a": "AP10",
+      "b": "SC_UMR",
+      "points": [
+        [
+          440,
+          39
+        ],
+        [
+          400,
+          39
+        ],
+        [
+          400,
+          0
+        ],
+        [
+          560,
+          0
+        ]
+      ],
+      "basis": "Estimated connection from section arrangement"
+    }
+  ]
+}

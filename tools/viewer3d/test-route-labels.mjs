@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { routeEntries, routeStatus, contextualStation } from './route-labels.mjs';
 const require=createRequire(import.meta.url), engine=require('../replay-engine.js');
-const model=JSON.parse(await readFile(new URL('../../analysis/synthetic-replay-model.json',import.meta.url),'utf8'));
+const model=JSON.parse(await readFile(new URL('../../analysis/fiege-replay-model.json',import.meta.url),'utf8'));
 const nodes=new Map(model.nodes.map(n=>[n.id,n]));
 let samples=0,loopChecks=0;
 for(const p of model.parcels){

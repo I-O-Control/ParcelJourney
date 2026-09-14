@@ -16,7 +16,8 @@ const html = await readFile(path.join(root, 'analysis/equipment-replay.html'), '
 const match = html.match(/const M=(\{[^\r\n]+\});/);
 if (!match) throw new Error('Bundled replay model not found');
 const model = JSON.parse(match[1]);
-await writeFile(path.join(root, 'analysis/synthetic-replay-model.json'), JSON.stringify(model));
-await writeFile(path.join(root, 'analysis/synthetic-replay-validation.json'), JSON.stringify(model.validation, null, 2));
+if(model.validation?.mode !== 'real-logs' || model.parcels.length !== 10) throw new Error('Release requires the 10 audited real Fiege parcels. Run import_fiege_logs.py and build_fiege_replay.py.');
+await writeFile(path.join(root, 'analysis/fiege-replay-model.json'), JSON.stringify(model));
+await writeFile(path.join(root, 'analysis/fiege-replay-validation.json'), JSON.stringify(model.validation, null, 2));
 await writeFile(path.join(output, 'THREE-LICENSE.txt'), await readFile(new URL('./node_modules/three/LICENSE', import.meta.url), 'utf8'));
 console.log(`Bundled offline 3D viewer; ${model.parcels.length} scenarios.`);

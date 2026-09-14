@@ -2,10 +2,13 @@
 
 Standalone parcel journey replay and the future I/O Control GmbH host module.
 
-The current standalone build is a synthetic, schematic plant replay. It contains
-source-rule scenarios and a fixed offline viewer so development does not require
-customer logs or a database. Customer source folders and logs are intentionally
-not part of this repository.
+The standalone build replays 10 completed real Fiege parcels from 11 September
+2026. Both 2D and 3D use recorded scanner, PLC and database events with source
+file/line evidence. Parcel IDs and linked tracking IDs are searchable. Geometry
+and motion between observations remain schematic. The supplied 226 logs were
+checked for later occurrences; only final LVS exit notifications follow closure.
+See [the case audit](analysis/fiege-real-cases.md). Raw source logs stay outside
+the repository; the offline model includes relevant customer log excerpts.
 
 Phase 1 defines a shared parcel-journey contract and adapts the existing
 `ParcelHistoryExplorer.Core` timeline into it.
@@ -43,11 +46,19 @@ dotnet publish .\ParcelJourney.App\ParcelJourney.App.csproj -c Release -o .\stan
 Run the replay checks with:
 
 ```powershell
-python .\tools\build_synthetic_replay.py
+python .\tools\import_fiege_logs.py "C:\Users\porfy\Desktop\TempTest\Fiege_Manual_Unloading"
+python .\tools\build_fiege_replay.py
+node .\tools\test-fiege-import.cjs
 node .\tools\test-replay-engine.cjs
 node .\tools\test-replay-ui.cjs
-node .\tools\check-rotated-layout.cjs
+npm run build --prefix tools/viewer3d
+npm test --prefix tools/viewer3d
 ```
 
 The repository deliberately excludes published binaries, build output, copied
 customer databases/logs, CAD render caches and exploratory viewers.
+
+The committed offline HTML can restore the real JSON model with the 3D build,
+without access to source logs. `topology/replay-layout.json` retains the earlier
+schematic equipment inventory; only observed scanner transitions are animated.
+Legacy synthetic generators are development history and are not the release input.

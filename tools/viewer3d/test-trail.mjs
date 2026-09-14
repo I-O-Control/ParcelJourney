@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { buildTrailSegments } from './trail.mjs';
 const require=createRequire(import.meta.url), engine=require('../replay-engine.js');
-const model=JSON.parse(await readFile(new URL('../../analysis/synthetic-replay-model.json',import.meta.url),'utf8'));
+const model=JSON.parse(await readFile(new URL('../../analysis/fiege-replay-model.json',import.meta.url),'utf8'));
 const edges=new Map(model.edges.map(e=>[e.id,e]));
 let samples=0,maxSegments=0;
 for(const p of model.parcels){
