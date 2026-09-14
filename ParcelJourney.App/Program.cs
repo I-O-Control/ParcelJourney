@@ -40,12 +40,13 @@ app.MapGet("/3d/model.json", () => Results.Content(EmbeddedAssets.Read("ParcelJo
 app.MapGet("/3d/license", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.3d.License"), "text/plain"));
 app.MapGet("/api/health", () => new { application = "ParcelJourney", ready = true, mode = "real-logs", runtime = Environment.Version.ToString() });
 app.MapGet("/api/index/status", () => new { status = LogIndexWarmupService.Status });
-app.MapGet("/api/pick-folder", () =>
+app.MapGet("/api/pick-folder", async () =>
 {
-    using var dialog = new System.Windows.Forms.FolderBrowserDialog { Description = "Select the folder containing the log files", UseDescriptionForTitle = true, ShowNewFolderButton = false };
-    return dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK
-        ? Results.Ok(new { path = dialog.SelectedPath })
-        : Results.NoContent();
+    var tcs = new TaskCompletionSource<string?>(TaskCreationOptions.RunContinuationsAsynchronously);
+    var thread = new Thread(() => { try { using var dialog = new System.Windows.Forms.FolderBrowserDialog { Description = "Select the folder containing the log files", UseDescriptionForTitle = true, ShowNewFolderButton = false }; tcs.TrySetResult(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK ? dialog.SelectedPath : null); } catch (Exception ex) { tcs.TrySetException(ex); } }) { IsBackground = true };
+    thread.SetApartmentState(ApartmentState.STA); thread.Start();
+    try { var path = await tcs.Task.WaitAsync(TimeSpan.FromMinutes(5)); return path is null ? Results.NoContent() : Results.Ok(new { path }); }
+    catch (Exception ex) { return Results.Problem($"Folder picker failed: {ex.GetBaseException().Message}"); }
 });
 app.MapGet("/api/journey", async (HttpRequest request, IParcelJourneyBuilder builder, CancellationToken cancellationToken) => {
     var logs = request.Query["logs"].ToString();
