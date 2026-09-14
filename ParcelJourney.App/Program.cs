@@ -40,7 +40,7 @@ app.MapGet("/api/health", () => new { application = "ParcelJourney", ready = tru
 app.MapGet("/api/journey", async (HttpRequest request, IParcelJourneyBuilder builder, CancellationToken cancellationToken) => {
     var logs = request.Query["logs"].ToString();
     var id = request.Query["id"].ToString();
-    var patterns = request.Query["pattern"].Where(p => !string.IsNullOrWhiteSpace(p)).DefaultIfEmpty("*.log").ToArray();
+    var patterns = request.Query["pattern"].Where(p => !string.IsNullOrWhiteSpace(p)).Select(p => p!).DefaultIfEmpty("*.log").ToArray();
     if (string.IsNullOrWhiteSpace(logs) || string.IsNullOrWhiteSpace(id)) return Results.BadRequest(new { error = "Provide logs and id." });
     if (!Directory.Exists(logs)) return Results.NotFound(new { error = $"Log folder not found: {logs}" });
     var journey = await builder.BuildAsync(new JourneyQuery(id, Path.GetFullPath(logs), patterns, ForceFullLogScan: true), null, cancellationToken);
