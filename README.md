@@ -20,11 +20,17 @@ Projects:
 - `ParcelJourney.Standalone`: command-line test harness.
 - `ParcelJourney.IocPlugin`: `IocOrchestrator` module adapter.
 
-Standalone test:
+Standalone test against any compatible log folder:
 
 ```powershell
-dotnet run --project .\ParcelJourney.Standalone -- "C:\IOC_MFR\FiegeU\Logs" "0014709760" "ProcLogic*.log"
+dotnet run --project .\ParcelJourney.Standalone -- --logs "C:\path\to\logs" --id "0014709760" --pattern "ProcLogic*.log" --full
 ```
+
+The path is supplied at runtime. Rotated files, different dates, and different
+log prefixes are supported through glob patterns; the parser correlates the
+identifiers it finds in the selected folder instead of relying on the checked-in
+Fiege examples. Copy `ParcelJourney.Standalone/appsettings.example.json`, replace
+the path and ID, and run `--config path\to\your-settings.json` for repeatable use.
 
 The standalone harness uses full-log mode so it can replay copied/test logs
 without requiring the production `tudata` database. The output is JSON containing ordered events, normalized identifiers, source
@@ -46,7 +52,7 @@ dotnet publish .\ParcelJourney.App\ParcelJourney.App.csproj -c Release -o .\stan
 Run the replay checks with:
 
 ```powershell
-python .\tools\import_fiege_logs.py "C:\Users\porfy\Desktop\TempTest\Fiege_Manual_Unloading"
+python .\tools\import_fiege_logs.py "C:\path\to\logs"
 python .\tools\build_fiege_replay.py
 node .\tools\test-fiege-import.cjs
 node .\tools\test-replay-engine.cjs

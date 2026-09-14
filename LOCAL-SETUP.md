@@ -11,6 +11,23 @@ dotnet run --project .\ParcelJourney.App -- --no-browser
 
 The app prints a loopback URL. Open `/` for the 2D replay or `/3d` for the 3D replay. The checked-in model contains ten completed Fiege journeys and their source evidence; the original customer logs are intentionally excluded.
 
+The checked-in 10-case model is a portable demonstration dataset. For a live
+or different log capture, use the standalone reader and provide the actual
+folder at runtime:
+
+```powershell
+dotnet run --project .\ParcelJourney.Standalone -- `
+  --logs "C:\path\to\actual\logs" `
+  --id "parcel-or-order-id" `
+  --pattern "*.log" --full
+```
+
+The reader recursively handles rotated files matching the supplied patterns,
+normalizes identifiers from each log family, and preserves source file/line
+evidence. It does not assume the Fiege filenames, date, scanner count, carrier,
+or route used by the checked-in examples. Use `ParcelJourney.Standalone\appsettings.example.json`
+as a configuration template when the path and search ID should be stored locally.
+
 To rebuild the model from the original log capture, keep that capture outside this repository and run:
 
 ```powershell
