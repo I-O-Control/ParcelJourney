@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import ReplayEngine from '../replay-engine.js';
 import { buildTrailSegments } from './trail.mjs';
 import { routeEntries, routeStatus, contextualStation } from './route-labels.mjs';
+import { fields, meanings, stateAt, groupsAt, explain, millis } from './parcel-state.mjs';
 import { footprint, gridSlice } from './footprint.mjs';
 
 const $ = id => document.getElementById(id);
@@ -221,27 +222,68 @@ async function boot() {
     dragging=false;
     if(!down||Math.hypot(e.clientX-down[0],e.clientY-down[1])>5){down=null;return;}
     down=null;hovered=pickAt(e.clientX,e.clientY);
-    if(hovered)inspectStation(hovered);requestFrame();
+    if(raycaster.intersectObject(parcel,true).length){openParcelData();}else if(hovered){inspectStation(hovered);}requestFrame();
   });
   host.addEventListener('pointercancel',()=>{down=null;dragging=false;hovered=null;});
   const routeLayer=$('route-labels'),leaders=$('route-leaders');
   const typeNames={scanner:'Scanner',scale:'Weight check',decision:'Routing decision',sealer:'Processing',strapper:'Strapper',printer:'Label printer',exit:'Exit',exception:'Exception',junction:'Transfer'};
-  let routeMap=new Map(),inspected=null,calloutKey='',calloutContent='',cardHeight=140;
-  const card=document.createElement('button');card.className='station-callout';card.tabIndex=-1;
-  const badge=document.createElement('span'),name=document.createElement('strong'),code=document.createElement('small'),result=document.createElement('p'),destination=document.createElement('p');
-  badge.className='callout-phase';destination.className='callout-next';card.append(badge,name,code,result,destination);routeLayer.append(card);
+  let routeMap=new Map(),inspected=null,calloutKey='',calloutContent='',cardHeight=140,layerIndex=0,layerEvents=[];
+  const card=document.createElement('div');card.className='station-callout';card.tabIndex=0;card.setAttribute('role','button');
+  const explanationCard=document.createElement('div');explanationCard.className='station-explanation-callout';explanationCard.hidden=true;
+  explanationCard.setAttribute('role','dialog');explanationCard.setAttribute('aria-label','Parcel data at replay time');
+  const badge=document.createElement('span'),name=document.createElement('strong'),code=document.createElement('small'),result=document.createElement('div'),destination=document.createElement('p');
+  const layerNav=document.createElement('div');layerNav.className='layer-nav';layerNav.setAttribute('role','tablist');
+  badge.className='callout-phase';destination.className='callout-next';
+  card.append(layerNav,badge,name,code,result,destination);routeLayer.append(card,explanationCard);
   const leader=document.createElementNS('http://www.w3.org/2000/svg','path');leader.classList.add('context-leader');leaders.append(leader);
-  let activeContext=null;
-  card.onclick=()=>{if(activeContext)inspectStation(activeContext.node);};
+  let activeContext=null,selectedObservation=null;
   const projectPoint=(point)=>{const v=point.clone().project(camera);return {x:(v.x+1)/2*host.clientWidth,y:(1-v.y)/2*host.clientHeight,depth:v.z};};
+  function clockAt(){const first=chosen.events[0],base=millis(first.Timestamp);return Number.isFinite(base)?new Date(base+(t-first.t)*1000).toISOString().replace('T',' ').replace('Z',''):'Time unavailable';}
+  function openParcelData(){pause();explanationCard.hidden=false;renderParcelData();requestFrame();}
+  card.onclick=e=>{if(e.target.closest('button,details,summary'))return;openParcelData();};
+  card.onkeydown=e=>{if(e.target===card&&(e.key==='Enter'||e.key===' ')){e.preventDefault();openParcelData();}};
+  $('tag-current').style.pointerEvents='auto';$('tag-current').onclick=openParcelData;
+  document.addEventListener('pointerdown',e=>{if(!card.contains(e.target)&&!explanationCard.contains(e.target)&&!$('tag-current').contains(e.target)){explanationCard.hidden=true;requestFrame();}});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){explanationCard.hidden=true;requestFrame();}});
+  function renderParcelData(){
+    const snapshot=stateAt(chosen.observations||[],t);explanationCard.replaceChildren();
+    const heading=document.createElement('strong');heading.textContent='Parcel data · '+clockAt();explanationCard.append(heading);
+    const close=document.createElement('button');close.textContent='Close';close.onclick=()=>{explanationCard.hidden=true;requestFrame();};explanationCard.append(close);
+    const dl=document.createElement('dl');
+    const labels={PrincipalID:'Customer',OrderID:'Order',ParcelID:'Parcel',ControlFlag:'Control flag',GrossWeight:'Expected weight (g)',CarrierID:'Carrier',CartonType:'Carton type',LastScanPos:'Last recorded scan',WeightStart:'Start weight (g)',WeightBrutto:'Gross weight (g)',VRNewHeight:'Reducer height (source units)',PlcTarget:'Commanded target',TrackingId:'Tracking ID',Status:'Processing status'};
+    for(const key of fields){
+      const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=labels[key];
+      const value=snapshot.values[key];dd.textContent=value===undefined?'Not yet available':value===-1?'Not measured (source: -1)':value===''?'Empty in record':key==='Status'?(meanings[value]||'Unmapped status: '+value):String(value);
+      const source=snapshot.provenance[key];if(source)dd.title=source.timestamp+' · '+source.file+':'+source.line;
+      dl.append(dt,dd);
+    }
+    explanationCard.append(dl);
+    const group=layerEvents[layerIndex];
+    for(const entry of group?.entries||[]){
+      const detail=document.createElement('details'),summary=document.createElement('summary');summary.textContent='Evidence · '+entry.event.sourceFile+':'+entry.event.line;detail.append(summary);
+      const pre=document.createElement('pre');pre.textContent=entry.evidence.map(e=>e.Timestamp+' '+e.sourceFile+':'+e.line+'\n'+e.raw).join('\n\n');detail.append(pre);explanationCard.append(detail);
+    }
+    const known=(chosen.findings||[]).filter(f=>f.event.t<=t);if(known.length){const p=document.createElement('p');p.textContent=known.length+' recorded warnings up to this time. Latest: '+known.at(-1).message;explanationCard.append(p);}
+  }
+  function renderLayerEvent(){
+    const group=layerEvents[layerIndex];layerNav.replaceChildren();result.replaceChildren();
+    layerEvents.forEach((g,i)=>{const tab=document.createElement('button');tab.type='button';tab.className='layer-tab';tab.setAttribute('role','tab');tab.setAttribute('aria-selected',String(i===layerIndex));tab.textContent=g.layer;tab.dataset.layer=g.layer;
+      tab.onclick=e=>{e.stopPropagation();pause();layerIndex=i;renderLayerEvent();};layerNav.append(tab);});
+    for(const entry of group?.entries||[]){
+      const p=document.createElement('p');p.textContent=explain(entry.event);result.append(p);
+      if(entry.evidence.length>1){const details=document.createElement('details'),summary=document.createElement('summary');summary.textContent=entry.evidence.length+' identical observations in '+entry.event.system;details.append(summary);const text=document.createElement('p');text.textContent=entry.evidence.map(e=>e.sourceFile+':'+e.line).join('\n');details.append(text);result.append(details);}
+    }
+    if(!group)result.textContent='No station observation has been recorded at this moment.';
+    if(!explanationCard.hidden)renderParcelData();
+  }
+  // Equipment inspection remains separate from the parcel's replay-time record.
   function inspectStation(node){
-    inspected=node;
-    $('station-detail').hidden=false;
-    $('station-title').textContent=node.label;
-    $('station-code').textContent=`${node.id}${node.equipment?' · '+node.equipment:''} · ${typeNames[node.kind]||node.kind}`;
+    inspected=node;$('station-detail').hidden=false;$('station-title').textContent=node.label;
+    $('station-code').textContent=node.id+' · '+(typeNames[node.kind]||node.kind);
     const entry=routeMap.get(node.id),info=entry?routeStatus(entry,state):null;
-    $('station-result').textContent=info?(info.last?`${fmt(info.last.t)} · ${info.last.Summary}\n${info.last.Timestamp||''}\n${(info.last.Evidence||[]).map(e=>e.FileName+':'+e.LineNumber+'\n'+e.RawLine).join('\n')}`:'Later on this recorded route. No event has occurred here yet.'):'Not on the selected parcel’s route.';
-    $('station-visits').textContent=info?`${info.visits} visit${info.visits===1?'':'s'} so far${info.result?' · '+info.result:''}`:'';
+    $('station-result').textContent=info?.last?.Summary||'No observation at this equipment yet.';
+    $('station-visits').textContent=info?info.visits+' recorded visits':'';
+    $('station-explanation').textContent='';
   }
   $('station-close').onclick=()=>{inspected=null;$('station-detail').hidden=true;};
   function createRouteLabels(){
@@ -249,26 +291,30 @@ async function boot() {
     calloutKey='';calloutContent='';card.classList.remove('visible');card.tabIndex=-1;
   }
   function updateRouteLabels(){
-    const context=contextualStation(chosen,state,nodes);activeContext=context;
+    const selected=!playing&&selectedObservation&&Math.round(selectedObservation.t*1000)===Math.round(t*1000)?selectedObservation:null;
+    const moving=!!state.leg&&!selected;
+    const context=selected?{node:nodes.get(selected.LocationId),key:'event:'+selected.t,last:selected,next:chosen.stops.find(s=>s.arrival>t),phase:'recorded-event'}:moving?{node:nodes.get(state.leg.b),phase:'travelling',key:'leg:'+state.leg.start,next:{id:state.leg.b},remaining:state.leg.end-t,visit:0}:contextualStation(chosen,state,nodes);activeContext=context;
     const width=host.clientWidth,height=host.clientHeight,top=safeTop();
-    if(inspected)inspectStation(inspected);
-    const anchor=context?projectPoint(world([context.node.x,context.node.y],1.1)):null;
+    const anchor=context?projectPoint(moving?parcel.position:world([context.node.x,context.node.y],1.1)):null;
     const visible=anchor&&anchor.depth>=-1&&anchor.depth<=1&&anchor.x>=0&&anchor.x<=width&&anchor.y>=top&&anchor.y<=height-30;
     card.classList.toggle('visible',!!visible);card.tabIndex=visible?0:-1;
     card.setAttribute('aria-hidden',String(!visible));leader.style.display=visible?'':'none';
     let cardBox=null;
     if(visible){
-      const textKey=[context.key,context.phase,context.last?.t,Math.ceil(context.remaining),state.done].join('|');
+      const groupKey=context.key+'|'+(context.last?.t??'')+'|'+moving;
+      if(groupKey!==calloutKey){layerIndex=0;calloutKey=groupKey;}
+      layerEvents=moving?[]:groupsAt(chosen.observations||[],t,context.node.id);
+      if(layerIndex>=layerEvents.length)layerIndex=0;
+      const textKey=groupKey+'|'+t+'|'+layerIndex;
       if(textKey!==calloutContent){
-        badge.textContent=context.phase==='approaching'?'APPROACHING · '+Math.ceil(context.remaining)+'s':context.phase==='departed-grace'?'JUST PASSED':state.done?'FINAL STATION':'AT STATION';
-        name.textContent=context.node.label;
-        code.textContent=[typeNames[context.node.kind]||context.node.kind,context.node.equipment||context.node.id,'Visit '+context.visit].join(' · ');
-        result.textContent=context.last?.Summary||(context.phase==='approaching'?'Awaiting this station’s event.':'No recorded event yet.');
-        destination.textContent=context.next?'Next → '+nodes.get(context.next.id).label:'End of the recorded journey';
-        const error=/WEIGHTERR|→\\s*(NR|PF|ND)\\b|NIO/.test(context.last?.Summary||'');
-        card.dataset.tone=error?'exception':/PENDING/.test(context.last?.Summary||'')?'warning':'active';
-        if(context.key!==calloutKey&&playing&&!reduced.matches){card.getAnimations().forEach(a=>a.cancel());card.animate([{opacity:0},{opacity:1}],{duration:160});}
-        calloutKey=context.key;calloutContent=textKey;cardHeight=card.offsetHeight;
+        badge.textContent=clockAt();
+        name.textContent=moving?'Next target · '+context.node.label:context.node.label;
+        code.textContent=context.node.id+' · '+(typeNames[context.node.kind]||context.node.kind)+(selected?' · Recorded event context':'');
+        renderLayerEvent();
+        if(moving){layerNav.replaceChildren();result.textContent='Last confirmed position: '+(nodes.get(state.leg.a)?.label||state.leg.a)+'. Travelling toward '+context.node.label+'. Next recorded arrival in '+Math.max(0,context.remaining).toFixed(1)+' s. Movement is schematic.';}
+        destination.textContent=moving?'Next expected action: observation at '+context.node.label:context.next?'Next position → '+nodes.get(context.next.id).label:'End of the recorded journey';
+        card.dataset.tone=layerEvents[layerIndex]?.entries.some(x=>x.event.values?.Status==='WEIGHTERR')?'exception':'active';
+        calloutContent=textKey;cardHeight=card.offsetHeight;
       }
       const cw=card.offsetWidth,ch=cardHeight,px=projectPoint(parcel.position);
       const choices=[{x:anchor.x-cw/2,y:anchor.y-ch-40},{x:anchor.x+24,y:anchor.y-ch/2},{x:anchor.x-cw-24,y:anchor.y-ch/2},{x:anchor.x-cw/2,y:anchor.y+60}];
@@ -277,6 +323,7 @@ async function boot() {
       const score=c=>(px.x>c.x-25&&px.x<c.x+cw+25&&px.y>c.y-35&&px.y<c.y+ch+20?10000:0)+Math.hypot(c.x+cw/2-anchor.x,c.y+ch/2-anchor.y);
       candidates.sort((a,b)=>score(a)-score(b));const p=candidates[0];cardBox={...p,w:cw,h:ch};
       card.style.left=p.x+'px';card.style.top=p.y+'px';
+      if(!explanationCard.hidden){const gap=12;let ex=p.x+cw+gap,ey=p.y;if(ex+330>width-10){ex=Math.max(10,p.x-330-gap);}explanationCard.style.left=ex+'px';explanationCard.style.top=ey+'px';}
       leader.setAttribute('d','M'+anchor.x+','+anchor.y+' L'+Math.max(p.x,Math.min(p.x+cw,anchor.x))+','+Math.max(p.y,Math.min(p.y+ch,anchor.y)));
     }
     const placed=[];
@@ -345,9 +392,9 @@ async function boot() {
     } catch(error){inFrame=false;playing=false;fail(error);}
   }
   function pause(){playing=false;requestFrame();}
-  function seek(value){pause();t=Math.max(0,Math.min(chosen.duration,value));lastUI=-Infinity;requestFrame();}
+  function seek(value){pause();t=Math.max(0,Math.min(chosen.duration,value));selectedObservation=chosen.events.find(e=>Math.round(e.t*1000)===Math.round(t*1000))||null;lastUI=-Infinity;requestFrame();}
   function load(index){
-    pause();chosen=model.parcels[index];t=0;activeIndex=-1;hovered=null;inspected=null;pendingPointer=null;$('station-detail').hidden=true;prepareTrail(chosen);createRouteLabels();lastUI=-Infinity;
+    pause();chosen=model.parcels[index];selectedObservation=null;t=0;activeIndex=-1;hovered=null;inspected=null;pendingPointer=null;$('station-detail').hidden=true;explanationCard.hidden=true;prepareTrail(chosen);createRouteLabels();lastUI=-Infinity;
     $('scenario').value=index;$('parcel-id').textContent=chosen.id;$('parcel-name').textContent=chosen.name;
     $('seek').max=chosen.duration;$('duration').textContent=fmt(chosen.duration);$('event-count').textContent=`${chosen.events.length} events`;
     routeButtons.length=0;$('timeline').replaceChildren();

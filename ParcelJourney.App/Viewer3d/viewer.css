@@ -121,10 +121,14 @@ button:hover{background:var(--selected);border-color:var(--trace)}
 #route-labels{z-index:3}
 .station-callout{position:absolute;width:300px;max-width:calc(100% - 20px);padding:14px 16px;border-radius:9px;border:1px solid var(--line);border-left:3px solid var(--trace);background:var(--label-bg);color:var(--text);text-align:left;white-space:normal;box-shadow:0 7px 24px #0002;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(5px);transition:opacity .18s,transform .18s,visibility 0s .18s}
 .station-callout.visible{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0);transition-delay:0s}
+.station-explanation-callout{position:absolute;z-index:5;width:330px;max-width:calc(100% - 20px);padding:14px 16px;border:1px solid var(--accent);border-left:3px solid var(--accent);border-radius:9px;background:var(--label-bg);color:var(--text);font-size:12px;line-height:1.55;box-shadow:0 7px 24px #0003;white-space:normal;pointer-events:auto}
 .station-callout strong{display:block;font-size:16px;font-weight:600;line-height:1.3;margin:7px 0}
 .station-callout small{display:block;color:var(--muted);font-size:10px;line-height:1.5}
 .station-callout p{font-size:12px;line-height:1.5;margin:10px 0 0}
 .station-callout .callout-phase{font-size:9px;letter-spacing:1px;color:var(--trace);font-weight:650}
+.station-callout .layer-nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:9px 0 2px;border-top:1px solid var(--line);padding-top:7px;color:var(--muted);font-size:10px}
+.station-callout .layer-nav button{padding:1px 7px;border:1px solid var(--line);background:transparent;color:var(--text);font-size:16px;line-height:16px}
+.station-callout .layer-nav button:disabled{opacity:.3}
 .station-callout .callout-next{border-top:1px solid var(--line);padding-top:9px;color:var(--muted);font-size:11px}
 .station-callout[data-tone=exception]{border-left-color:var(--exception)}.station-callout[data-tone=exception] .callout-phase{color:var(--exception)}
 .station-callout[data-tone=warning]{border-left-color:var(--warning)}.station-callout[data-tone=warning] .callout-phase{color:var(--warning)}
@@ -136,5 +140,21 @@ button:hover{background:var(--selected);border-color:var(--trace)}
 #station-detail .section-title{margin-bottom:10px;font-size:8px}#station-close{padding:0 5px;font-size:18px;background:transparent;border:0}
 #station-detail h3{font-size:14px;margin:0 0 7px}#station-detail p{font-size:10px;line-height:1.5;margin:6px 0;color:var(--muted)}
 #station-detail #station-result{color:var(--text);white-space:pre-wrap;overflow-wrap:anywhere;max-height:220px;overflow:auto}
+#station-detail #station-explanation{color:var(--text);border-left:2px solid var(--accent);padding-left:9px}
 @media(max-width:700px){.station-callout{width:260px;padding:10px 12px}.station-callout strong{font-size:14px}.station-callout p{font-size:11px;margin-top:6px}.header-right{gap:8px}#theme{font-size:10px}.map-heading p{display:none}.view-tools{top:76px}.workspace{min-height:540px}.map-footer{left:12px;right:12px}.section-label{font-size:8px}}
 @media(prefers-reduced-motion:reduce){.station-callout,button{animation:none!important;transition:none!important;transform:none!important}}
+.station-callout{cursor:pointer;text-align:left;max-height:55vh;overflow:auto}
+.station-callout .layer-nav{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.layer-nav [role=tab]{padding:5px 8px;border:0;border-left:1px solid var(--line);border-bottom:3px solid #78909c;border-radius:0;cursor:pointer}
+.layer-nav [role=tab]:first-child{border-left:0}
+.layer-nav [aria-selected=true]{background:var(--control);outline:1px solid var(--accent)}
+.layer-nav [data-layer=Database]{border-bottom-color:#d8a343}
+.layer-nav [data-layer=Logic]{border-bottom-color:#8b9eff}
+.layer-nav [data-layer=PLC]{border-bottom-color:#4dd5b0}
+.layer-nav [data-layer=Transport]{border-bottom-color:#e298bd}
+.station-explanation-callout{max-height:65vh;overflow:auto;pointer-events:auto;overflow-wrap:anywhere}
+.station-explanation-callout dl{display:grid;grid-template-columns:1fr 1.3fr;gap:7px;font-size:11px;white-space:normal}
+.station-explanation-callout dt{color:var(--muted)}
+.station-explanation-callout dd{margin:0}
+.station-explanation-callout pre{white-space:pre-wrap;font-size:10px}
+.station-explanation-callout button{float:right}

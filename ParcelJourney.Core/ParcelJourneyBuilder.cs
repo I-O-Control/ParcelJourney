@@ -12,6 +12,13 @@ public sealed class ParcelJourneyBuilder : IParcelJourneyBuilder
     public async Task<global::ParcelJourney.Domain.ParcelJourney> BuildAsync(JourneyQuery query, JourneyBuildOptions? options = null, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
+        var datasetRoot = Environment.GetEnvironmentVariable("PARCELJOURNEY_DATASET_FOLDER");
+        var realRoot = !string.IsNullOrWhiteSpace(datasetRoot) ? datasetRoot : query.LogRootPath;
+        var compactPath = Environment.GetEnvironmentVariable("PARCELJOURNEY_COMPACT_FEED");
+        var fromCompact = await CompactJourneyReader.TryReadAsync(compactPath ?? (Directory.Exists(Path.Combine(realRoot, "parcels")) ? Path.Combine(realRoot, "parcels") : realRoot), query.SearchTerm, cancellationToken);
+        if (fromCompact is not null) return fromCompact;
+        var fromRealDataset = await RealDatasetJourneyReader.TryReadAsync(realRoot, query.SearchTerm, cancellationToken);
+        if (fromRealDataset is not null) return fromRealDataset;
         var result = await _engine.SearchAsync(new ParcelHistoryQuery(query.LogRootPath, query.SearchTerm, query.FilePatterns, ForceFullFileScan: query.ForceFullLogScan), cancellationToken);
         // A foreign log folder may not have the optional tudata database. In that case
         // fall back to the indexed full-log scan instead of returning an empty journey.

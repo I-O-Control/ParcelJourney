@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "purpose": "Lossless semantic parcel journey with compact dictionaries and optional raw evidence",
+  "identity": {"parcelId": "string", "orderId": "string", "trackingId": "string", "leadingZeroesPreserved": true},
+  "scalarTypes": {"weightGrams": "int32", "heightMm": "int32", "telegramCounter": "uint16", "payloadLength": "uint16", "timestampDeltaMs": "int64", "line": "int32"},
+  "enums": {
+    "telegramType": {"S": 0, "Q": 1},
+    "plcDataType": {"KeepAlive": 0, "SPSScanData": 1, "MFRPlcTarget": 2, "SPSPlcAcknowledge": 3, "MFRRequestWorkstationOccupancy": 4, "SPSWorkstationOccupancy": 5, "MFRRequestTelescopeSwitches": 6, "SPSTelelsopeSwitch": 7, "SPSWaageData": 8, "SPSVolumeReducer": 9},
+    "errorCode": {"NoError": 0, "ErrTeleCounter": 1, "ErrReceiverId": 2, "ErrDataLength": 3, "KeepAlive": 4, "ErrSameTeleCount": 5, "ErrUnknown": 11, "ErrData": 12, "ErrProcessing": 13, "ErrHeader": 14, "ErrDataType": 15, "ErrDataContent": 16},
+    "parcelStatus": {"NEW": 0, "PENDING": 1, "WEIGHTERR": 2, "WEIGHTOK": 3, "WORKSTATION": 4, "CLOSED": 9, "FAULTY": 99}
+  },
+  "event": {"dt": "timestampDeltaMs", "loc": "dictionaryId", "kind": "dictionaryId", "layer": "dictionaryId", "status": "enumOrExtensionId", "values": "sparse typed fields", "evidence": "fileId+line"},
+  "losslessness": {"semantic": true, "exactRaw": "requires source file and line references to remain available", "unknownValues": "stored in extension dictionaries, never discarded"}
+}

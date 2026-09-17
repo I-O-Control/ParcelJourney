@@ -1,0 +1,77 @@
+{
+  "scope": "Exact normalized JSON values including raw evidence; not original JSON whitespace",
+  "parcels": [
+    {
+      "parcel": "0015690683",
+      "events": 405,
+      "sourceBytes": 149792,
+      "compactGzipBytes": 10740,
+      "allFieldsEqual": true
+    },
+    {
+      "parcel": "0015692694",
+      "events": 700,
+      "sourceBytes": 262224,
+      "compactGzipBytes": 16998,
+      "allFieldsEqual": true
+    },
+    {
+      "parcel": "0015694972",
+      "events": 579,
+      "sourceBytes": 214826,
+      "compactGzipBytes": 14548,
+      "allFieldsEqual": true
+    },
+    {
+      "parcel": "0015695119",
+      "events": 2047,
+      "sourceBytes": 752152,
+      "compactGzipBytes": 44406,
+      "allFieldsEqual": true
+    },
+    {
+      "parcel": "0015695614",
+      "events": 434,
+      "sourceBytes": 162402,
+      "compactGzipBytes": 11529,
+      "allFieldsEqual": true
+    },
+    {
+      "parcel": "0015695935",
+      "events": 390,
+      "sourceBytes": 143997,
+      "compactGzipBytes": 10518,
+      "allFieldsEqual": true
+    },
+    {
+      "parcel": "0015696611",
+      "events": 407,
+      "sourceBytes": 147482,
+      "compactGzipBytes": 10914,
+      "allFieldsEqual": true
+    },
+    {
+      "parcel": "0015697697",
+      "events": 581,
+      "sourceBytes": 225436,
+      "compactGzipBytes": 14816,
+      "allFieldsEqual": true
+    },
+    {
+      "parcel": "0015697791",
+      "events": 1950,
+      "sourceBytes": 696005,
+      "compactGzipBytes": 41602,
+      "allFieldsEqual": true
+    },
+    {
+      "parcel": "0015698027",
+      "events": 2032,
+      "sourceBytes": 726847,
+      "compactGzipBytes": 44103,
+      "allFieldsEqual": true
+    }
+  ],
+  "sourceBytes": 3481163,
+  "compactGzipBytes": 220174
+}

@@ -1,0 +1,2873 @@
+{
+  "parcelId": "0015690683",
+  "aliases": [
+    "0015690683",
+    "658215741663000013601021"
+  ],
+  "firstSeen": "2026.09.11 13:00:56.056",
+  "lastSeen": "2026.09.11 13:21:16.597",
+  "status": "CLOSED",
+  "isLive": false,
+  "eventCount": 405,
+  "route": [
+    "SC_START",
+    "SC_WAAP",
+    "SC_WAVL",
+    "SC_VL1",
+    "SC_VL2",
+    "SC_BWL3",
+    "SC_ETIINL3",
+    "SC_ETIOSL3",
+    "SC_ETIOTL3",
+    "SC_H4T1",
+    "SC_H4T2",
+    "SC_H4T3",
+    "SC_H4T4",
+    "SC_H4T5",
+    "SC_H4T6",
+    "SC_H4T7",
+    "SC_H4T7",
+    "SC_H4T8"
+  ],
+  "events": [
+    {
+      "timestamp": "2026.09.11 13:00:56.056",
+      "sourceFile": "ConPLCtoMFRSC1_Connection_2026_09_11__13_10_04.log",
+      "line": 8218,
+      "raw": "2026.09.11 13:00:56.056 - Daten       - Received     (raw)(118): ASCII[<STX>S<HT>0250<HT>SPS   <HT>MFR   <HT>01<HT>11:05:03.167<HT>00<HT>0072<HT>1090-1<HT>SORTER    ZP 00157175350015690683           00005,45500EXPF     <ETX>]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:56.056",
+      "sourceFile": "ConPLCtoMFRSC1_Connection_2026_09_11__13_10_04.log",
+      "line": 8219,
+      "raw": "2026.09.11 13:00:56.056 - Daten       - Received (decoded)(116): ASCII[S<HT>0250<HT>SPS   <HT>MFR   <HT>01<HT>11:05:03.167<HT>00<HT>0072<HT>1090-1<HT>SORTER    ZP 00157175350015690683           00005,45500EXPF     ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:56.056",
+      "sourceFile": "ConPLCtoMFRSC1_Connection_2026_09_11__13_10_04.log",
+      "line": 8220,
+      "raw": "2026.09.11 13:00:56.056 - Daten       - Received (encoded)(116): ASCII[S<HT>0250<HT>SPS   <HT>MFR   <HT>01<HT>11:05:03.167<HT>00<HT>0072<HT>1090-1<HT>SORTER    ZP 00157175350015690683           00005,45500EXPF     ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:56.056",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 1780,
+      "raw": "2026.09.11 13:00:56.056 - Standard    - OnScannerData: received Data: '1090-1|SC_START|SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:56.056",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 11611,
+      "raw": "2026.09.11 13:00:56.056 - Standard    - OnPacketReceived - Received data 'S\t0250\tSPS   \tMFR   \t01\t11:05:03.167\t00\t0072\t1090-1\tSORTER    ZP 00157175350015690683           00005,45500EXPF     '. (port: ConPLCtoMFRSC1)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:56.056",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 11613,
+      "raw": "2026.09.11 13:00:56.056 - Standard    - OnSendAcknowledgeToPlc - 'S\t0250\tSPS   \tMFR   \t01\t11:05:03.167\t00\t0067\t1090-1\tSORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:56.056",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 11614,
+      "raw": "2026.09.11 13:00:56.056 - TelegrammInfo - SPS->MFR: Scanner Daten - #'1090-1'/1090-1 Barcode 'SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:56.056",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 11615,
+      "raw": "2026.09.11 13:00:56.056 - Test        - RPCCallSendScannerDataToLogicModule - ScannerID='1090-1' ScannerName='SC_START' Barcode='SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:56.071",
+      "sourceFile": "ProcCamera_Process_2026_09_11__13_02_56.log",
+      "line": 23965,
+      "raw": "2026.09.11 13:00:56.071 - Standard    - OnSendInfoStringToCamera - 'Scales1;0015717535;0015690683;5460g;'",
+      "layer": "Other"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:56.071",
+      "sourceFile": "ProcCamera_Process_2026_09_11__13_02_56.log",
+      "line": 23966,
+      "raw": "2026.09.11 13:00:56.071 - Standard    - OnSendInfoStringToCamera - 'Scales1;0015717535;0015690683;5460g;2026-09-11 13:00:56.071;",
+      "layer": "Other"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:56.071",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 1782,
+      "raw": "2026.09.11 13:00:56.071 - Ablaufinfo  - SaveToDB - 'INSERT (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_START, WeightStart=-1, WeightBrutto=-1, PlcTarget=, TrackingId=, Status=NEW, VRNewHeight=-1, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:56.071",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 1786,
+      "raw": "2026.09.11 13:00:56.071 - Standard    - BroadcastWaageDaten - Send WaageDaten to Management.UI: (WaageDaten='Waage|WaageID=1090-- / SC_START|ParcelID=0015690683|IstGewicht=5460|SollGewicht=5455|Toleranz=5|TimeStamp=11.09.2026 13:00:56')",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:56.071",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 1787,
+      "raw": "2026.09.11 13:00:56.071 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_START, WeightStart=5460, WeightBrutto=-1, PlcTarget=, TrackingId=, Status=WEIGHTOK, VRNewHeight=-1, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:56.071",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 1788,
+      "raw": "2026.09.11 13:00:56.071 - Standard    - WaageStart: ' ParcelID_WaageStart='0015690683' ErwartetesGewicht=5455 ToleranzInProzent=5 ToleranzInGramm=273 Status=WEIGHTOK'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:56.071",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 1789,
+      "raw": "2026.09.11 13:00:56.071 - Standard    - SendeInfoStringZurKamera - Sende InfoString ans Kamerasystem: 'Scales1;0015717535;0015690683;5460g;')",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:56.071",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 1790,
+      "raw": "2026.09.11 13:00:56.071 - Standard    - SendeInfoStringZurKamera - InfoString an ProcCamera gesendet: ZielMethode: OnSendInfoStringToCamera InfoString='Scales1;0015717535;0015690683;5460g;'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:56.071",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 11616,
+      "raw": "2026.09.11 13:00:56.071 - Standard    - RPC: Scanner Daten an Logikmodul gesendet: '1090-1|SC_START|SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:56.071",
+      "sourceFile": "RemoteManagement_Process_2026_09_11__13_01_18.log",
+      "line": 16914,
+      "raw": "2026.09.11 13:00:56.071 - Standard    - Sending Waage data to UI:Waage|WaageID=1090-- / SC_START|ParcelID=0015690683|IstGewicht=5460|SollGewicht=5455|Toleranz=5|TimeStamp=11.09.2026 13:00:56",
+      "layer": "Other"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.243",
+      "sourceFile": "ConPLCtoMFRSC1_Connection_2026_09_11__13_10_04.log",
+      "line": 8253,
+      "raw": "2026.09.11 13:00:58.243 - Daten       - Received     (raw)(118): ASCII[<STX>S<HT>0255<HT>SPS   <HT>MFR   <HT>01<HT>11:05:05.358<HT>00<HT>0072<HT>1095-1<HT>SORTER    ZP 00157175350015690683           00005,45500EXPF     <ETX>]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.243",
+      "sourceFile": "ConPLCtoMFRSC1_Connection_2026_09_11__13_10_04.log",
+      "line": 8254,
+      "raw": "2026.09.11 13:00:58.243 - Daten       - Received (decoded)(116): ASCII[S<HT>0255<HT>SPS   <HT>MFR   <HT>01<HT>11:05:05.358<HT>00<HT>0072<HT>1095-1<HT>SORTER    ZP 00157175350015690683           00005,45500EXPF     ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.243",
+      "sourceFile": "ConPLCtoMFRSC1_Connection_2026_09_11__13_10_04.log",
+      "line": 8255,
+      "raw": "2026.09.11 13:00:58.243 - Daten       - Received (encoded)(116): ASCII[S<HT>0255<HT>SPS   <HT>MFR   <HT>01<HT>11:05:05.358<HT>00<HT>0072<HT>1095-1<HT>SORTER    ZP 00157175350015690683           00005,45500EXPF     ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.243",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 1810,
+      "raw": "2026.09.11 13:00:58.243 - Standard    - OnScannerData: received Data: '1095-1|SC_WAAP|SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.243",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 11666,
+      "raw": "2026.09.11 13:00:58.243 - Standard    - OnPacketReceived - Received data 'S\t0255\tSPS   \tMFR   \t01\t11:05:05.358\t00\t0072\t1095-1\tSORTER    ZP 00157175350015690683           00005,45500EXPF     '. (port: ConPLCtoMFRSC1)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.243",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 11668,
+      "raw": "2026.09.11 13:00:58.243 - Standard    - OnSendAcknowledgeToPlc - 'S\t0255\tSPS   \tMFR   \t01\t11:05:05.358\t00\t0067\t1095-1\tSORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.243",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 11669,
+      "raw": "2026.09.11 13:00:58.243 - TelegrammInfo - SPS->MFR: Scanner Daten - #'1095-1'/1095-1 Barcode 'SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.243",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 11670,
+      "raw": "2026.09.11 13:00:58.243 - Test        - RPCCallSendScannerDataToLogicModule - ScannerID='1095-1' ScannerName='SC_WAAP' Barcode='SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.259",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 1812,
+      "raw": "2026.09.11 13:00:58.259 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_WAAP, WeightStart=5460, WeightBrutto=-1, PlcTarget=WG, TrackingId=, Status=WEIGHTOK, VRNewHeight=-1, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.259",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 1813,
+      "raw": "2026.09.11 13:00:58.259 - Standard    - ScanAbzweigungArbeitsplätze: ScanDaten '0015690683' : 'ControlFlag='' - Status='WEIGHTOK' - ManuelleVerschließung='False' kein Control Flag, kein WEIGHTERR, keine MF => Geradeaus' => Target:'1095-1|0015690683|WG'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.259",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 1815,
+      "raw": "2026.09.11 13:00:58.259 - Standard    - SendTaskToPlc - Send job to PlcSC1: ZielMethode: RPCFuncSendeFahrziel Parameter='1095-1|0015690683|WG')",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.259",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 11671,
+      "raw": "2026.09.11 13:00:58.259 - Test        - RPCFuncSendeFahrziel - Parameter='1095-1|0015690683|WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.259",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 11673,
+      "raw": "2026.09.11 13:00:58.259 - Standard    - RPC: Scanner Daten an Logikmodul gesendet: '1095-1|SC_WAAP|SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.274",
+      "sourceFile": "ConMFRtoPLCSC1_Connection_2026_09_11__13_33_00.log",
+      "line": 2072,
+      "raw": "2026.09.11 13:00:58.274 - Daten       - Send     (raw)(087): ASCII[S<HT>6010<HT>MFR   <HT>SPS   <HT>02<HT>13:00:58.274<HT>00<HT>0043<HT>1095-1<HT>0015690683                      <HT>WG]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.274",
+      "sourceFile": "ConMFRtoPLCSC1_Connection_2026_09_11__13_33_00.log",
+      "line": 2073,
+      "raw": "2026.09.11 13:00:58.274 - Daten       - Send (encoded)(089): ASCII[<STX>S<HT>6010<HT>MFR   <HT>SPS   <HT>02<HT>13:00:58.274<HT>00<HT>0043<HT>1095-1<HT>0015690683                      <HT>WG<ETX>]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.274",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 11675,
+      "raw": "2026.09.11 13:00:58.274 - Standard    - Void UpdateTask() - Sending data 'S\t6010\tMFR   \tSPS   \t02\t13:00:58.274\t00\t0043\t1095-1\t0015690683                      \tWG'. SendCounter=1. Current send queue (port: ConMFRtoPLCSC1) size is '1'.",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.790",
+      "sourceFile": "ConPLCtoMFRSC1_Connection_2026_09_11__13_10_04.log",
+      "line": 8278,
+      "raw": "2026.09.11 13:00:58.790 - Daten       - Received     (raw)(089): ASCII[<STX>S<HT>0259<HT>SPS   <HT>MFR   <HT>03<HT>11:05:05.908<HT>00<HT>0043<HT>1095-1<HT>0015690683                      <HT>WG<ETX>]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.790",
+      "sourceFile": "ConPLCtoMFRSC1_Connection_2026_09_11__13_10_04.log",
+      "line": 8279,
+      "raw": "2026.09.11 13:00:58.790 - Daten       - Received (decoded)(087): ASCII[S<HT>0259<HT>SPS   <HT>MFR   <HT>03<HT>11:05:05.908<HT>00<HT>0043<HT>1095-1<HT>0015690683                      <HT>WG]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.806",
+      "sourceFile": "ConPLCtoMFRSC1_Connection_2026_09_11__13_10_04.log",
+      "line": 8283,
+      "raw": "2026.09.11 13:00:58.806 - Daten       - Received (encoded)(087): ASCII[S<HT>0259<HT>SPS   <HT>MFR   <HT>03<HT>11:05:05.908<HT>00<HT>0043<HT>1095-1<HT>0015690683                      <HT>WG]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.806",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 1860,
+      "raw": "2026.09.11 13:00:58.806 - Standard    - OnPlcAcknowledge: received Data: '1095-1|SC_WAAP|0015690683|WG'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.806",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 1861,
+      "raw": "2026.09.11 13:00:58.806 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_WAAP, WeightStart=5460, WeightBrutto=-1, PlcTarget=WG, TrackingId=, Status=WEIGHTOK, VRNewHeight=-1, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.806",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 1862,
+      "raw": "2026.09.11 13:00:58.806 - Standard    - OnPlcAcknowledge: '0015690683' 'Keine Aktion!'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.806",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 11712,
+      "raw": "2026.09.11 13:00:58.806 - Standard    - OnPacketReceived - Received data 'S\t0259\tSPS   \tMFR   \t03\t11:05:05.908\t00\t0043\t1095-1\t0015690683                      \tWG'. (port: ConPLCtoMFRSC1)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.806",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 11714,
+      "raw": "2026.09.11 13:00:58.806 - Standard    - OnSendAcknowledgeToPlc - 'S\t0259\tSPS   \tMFR   \t03\t11:05:05.908\t00\t0043\t1095-1\t                      0015690683\tWG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.806",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 11715,
+      "raw": "2026.09.11 13:00:58.806 - TelegrammInfo - SPS->MFR: Ausschleuse Quittung - #'1095-1'/1095-1 Barcode '0015690683' IstZiel 'WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.806",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 11716,
+      "raw": "2026.09.11 13:00:58.806 - Test        - RPCCallSendAckDataToLogicModule - ScannerID='1095-1' ScannerName='SC_WAAP' Barcode='0015690683' IstZiel='WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:00:58.806",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 11717,
+      "raw": "2026.09.11 13:00:58.806 - Standard    - RPC: Ausschleuse Quittung an Logikmodul gesendet: '1095-1|SC_WAAP|0015690683|WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:10.217",
+      "sourceFile": "ConPLCtoMFRSC1_Connection_2026_09_11__13_10_04.log",
+      "line": 8526,
+      "raw": "2026.09.11 13:01:10.217 - Daten       - Received     (raw)(118): ASCII[<STX>S<HT>0287<HT>SPS   <HT>MFR   <HT>01<HT>11:05:17.339<HT>00<HT>0072<HT>2000-1<HT>SORTER    ZP 00157175350015690683           00005,45500EXPF     <ETX>]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:10.217",
+      "sourceFile": "ConPLCtoMFRSC1_Connection_2026_09_11__13_10_04.log",
+      "line": 8527,
+      "raw": "2026.09.11 13:01:10.217 - Daten       - Received (decoded)(116): ASCII[S<HT>0287<HT>SPS   <HT>MFR   <HT>01<HT>11:05:17.339<HT>00<HT>0072<HT>2000-1<HT>SORTER    ZP 00157175350015690683           00005,45500EXPF     ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:10.217",
+      "sourceFile": "ConPLCtoMFRSC1_Connection_2026_09_11__13_10_04.log",
+      "line": 8528,
+      "raw": "2026.09.11 13:01:10.217 - Daten       - Received (encoded)(116): ASCII[S<HT>0287<HT>SPS   <HT>MFR   <HT>01<HT>11:05:17.339<HT>00<HT>0072<HT>2000-1<HT>SORTER    ZP 00157175350015690683           00005,45500EXPF     ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:10.217",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 2140,
+      "raw": "2026.09.11 13:01:10.217 - Standard    - OnScannerData: received Data: '2000-1|SC_WAVL|SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:10.217",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12160,
+      "raw": "2026.09.11 13:01:10.217 - Standard    - OnPacketReceived - Received data 'S\t0287\tSPS   \tMFR   \t01\t11:05:17.339\t00\t0072\t2000-1\tSORTER    ZP 00157175350015690683           00005,45500EXPF     '. (port: ConPLCtoMFRSC1)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:10.217",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12162,
+      "raw": "2026.09.11 13:01:10.217 - Standard    - OnSendAcknowledgeToPlc - 'S\t0287\tSPS   \tMFR   \t01\t11:05:17.339\t00\t0067\t2000-1\tSORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:10.217",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12163,
+      "raw": "2026.09.11 13:01:10.217 - TelegrammInfo - SPS->MFR: Scanner Daten - #'2000-1'/2000-1 Barcode 'SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:10.217",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12164,
+      "raw": "2026.09.11 13:01:10.217 - Test        - RPCCallSendScannerDataToLogicModule - ScannerID='2000-1' ScannerName='SC_WAVL' Barcode='SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:10.232",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 2142,
+      "raw": "2026.09.11 13:01:10.232 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_WAVL, WeightStart=5460, WeightBrutto=-1, PlcTarget=AR, TrackingId=, Status=PENDING, VRNewHeight=-1, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:10.232",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 2143,
+      "raw": "2026.09.11 13:01:10.232 - Standard    - ScanAbzweigungVerschließerlinien: 'SC_WAVL' DS für ParcelId '0015690683' in tudata gefunden! => Target:'AR'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:10.232",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 2145,
+      "raw": "2026.09.11 13:01:10.232 - Standard    - SendTaskToPlc - Send job to PlcSC1: ZielMethode: RPCFuncSendeFahrziel Parameter='2000-1|0015690683|AR')",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:10.232",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12165,
+      "raw": "2026.09.11 13:01:10.232 - Test        - RPCFuncSendeFahrziel - Parameter='2000-1|0015690683|AR'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:10.232",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12167,
+      "raw": "2026.09.11 13:01:10.232 - Standard    - RPC: Scanner Daten an Logikmodul gesendet: '2000-1|SC_WAVL|SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:10.248",
+      "sourceFile": "ConMFRtoPLCSC1_Connection_2026_09_11__13_33_00.log",
+      "line": 2198,
+      "raw": "2026.09.11 13:01:10.248 - Daten       - Send     (raw)(087): ASCII[S<HT>6028<HT>MFR   <HT>SPS   <HT>02<HT>13:01:10.248<HT>00<HT>0043<HT>2000-1<HT>0015690683                      <HT>AR]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:10.248",
+      "sourceFile": "ConMFRtoPLCSC1_Connection_2026_09_11__13_33_00.log",
+      "line": 2199,
+      "raw": "2026.09.11 13:01:10.248 - Daten       - Send (encoded)(089): ASCII[<STX>S<HT>6028<HT>MFR   <HT>SPS   <HT>02<HT>13:01:10.248<HT>00<HT>0043<HT>2000-1<HT>0015690683                      <HT>AR<ETX>]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:10.248",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12169,
+      "raw": "2026.09.11 13:01:10.248 - Standard    - Void UpdateTask() - Sending data 'S\t6028\tMFR   \tSPS   \t02\t13:01:10.248\t00\t0043\t2000-1\t0015690683                      \tAR'. SendCounter=1. Current send queue (port: ConMFRtoPLCSC1) size is '1'.",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:14.187",
+      "sourceFile": "ConPLCtoMFRSC1_Connection_2026_09_11__13_10_04.log",
+      "line": 8603,
+      "raw": "2026.09.11 13:01:14.187 - Daten       - Received     (raw)(118): ASCII[<STX>S<HT>0298<HT>SPS   <HT>MFR   <HT>01<HT>11:05:21.301<HT>00<HT>0072<HT>2050-1<HT>SORTER    ZP 00157175350015690683           00005,45500EXPF     <ETX>]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:14.187",
+      "sourceFile": "ConPLCtoMFRSC1_Connection_2026_09_11__13_10_04.log",
+      "line": 8604,
+      "raw": "2026.09.11 13:01:14.187 - Daten       - Received (decoded)(116): ASCII[S<HT>0298<HT>SPS   <HT>MFR   <HT>01<HT>11:05:21.301<HT>00<HT>0072<HT>2050-1<HT>SORTER    ZP 00157175350015690683           00005,45500EXPF     ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:14.187",
+      "sourceFile": "ConPLCtoMFRSC1_Connection_2026_09_11__13_10_04.log",
+      "line": 8605,
+      "raw": "2026.09.11 13:01:14.187 - Daten       - Received (encoded)(116): ASCII[S<HT>0298<HT>SPS   <HT>MFR   <HT>01<HT>11:05:21.301<HT>00<HT>0072<HT>2050-1<HT>SORTER    ZP 00157175350015690683           00005,45500EXPF     ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:14.187",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 2237,
+      "raw": "2026.09.11 13:01:14.187 - Standard    - OnScannerData: received Data: '2050-1|SC_VL1|SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:14.187",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12299,
+      "raw": "2026.09.11 13:01:14.187 - Standard    - OnPacketReceived - Received data 'S\t0298\tSPS   \tMFR   \t01\t11:05:21.301\t00\t0072\t2050-1\tSORTER    ZP 00157175350015690683           00005,45500EXPF     '. (port: ConPLCtoMFRSC1)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:14.187",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12301,
+      "raw": "2026.09.11 13:01:14.187 - Standard    - OnSendAcknowledgeToPlc - 'S\t0298\tSPS   \tMFR   \t01\t11:05:21.301\t00\t0067\t2050-1\tSORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:14.187",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12302,
+      "raw": "2026.09.11 13:01:14.187 - TelegrammInfo - SPS->MFR: Scanner Daten - #'2050-1'/2050-1 Barcode 'SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:14.187",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12303,
+      "raw": "2026.09.11 13:01:14.187 - Test        - RPCCallSendScannerDataToLogicModule - ScannerID='2050-1' ScannerName='SC_VL1' Barcode='SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:14.202",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 2239,
+      "raw": "2026.09.11 13:01:14.202 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_VL1, WeightStart=5460, WeightBrutto=-1, PlcTarget=WG, TrackingId=, Status=PENDING, VRNewHeight=-1, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:14.202",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 2240,
+      "raw": "2026.09.11 13:01:14.202 - Standard    - ScanZuteilungVerschließerlinien: 'SC_VL1' DS für ParcelId '0015690683' in tudata gefunden! Linie=-1 => Target:'WG'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:14.202",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 2242,
+      "raw": "2026.09.11 13:01:14.202 - Standard    - SendTaskToPlc - Send job to PlcSC1: ZielMethode: RPCFuncSendeFahrziel Parameter='2050-1|0015690683|WG')",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:14.202",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12304,
+      "raw": "2026.09.11 13:01:14.202 - Test        - RPCFuncSendeFahrziel - Parameter='2050-1|0015690683|WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:14.202",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12306,
+      "raw": "2026.09.11 13:01:14.202 - Standard    - RPC: Scanner Daten an Logikmodul gesendet: '2050-1|SC_VL1|SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:14.218",
+      "sourceFile": "ConMFRtoPLCSC1_Connection_2026_09_11__13_33_00.log",
+      "line": 2233,
+      "raw": "2026.09.11 13:01:14.218 - Daten       - Send     (raw)(087): ASCII[S<HT>6033<HT>MFR   <HT>SPS   <HT>02<HT>13:01:14.218<HT>00<HT>0043<HT>2050-1<HT>0015690683                      <HT>WG]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:14.218",
+      "sourceFile": "ConMFRtoPLCSC1_Connection_2026_09_11__13_33_00.log",
+      "line": 2234,
+      "raw": "2026.09.11 13:01:14.218 - Daten       - Send (encoded)(089): ASCII[<STX>S<HT>6033<HT>MFR   <HT>SPS   <HT>02<HT>13:01:14.218<HT>00<HT>0043<HT>2050-1<HT>0015690683                      <HT>WG<ETX>]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:14.218",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12308,
+      "raw": "2026.09.11 13:01:14.218 - Standard    - Void UpdateTask() - Sending data 'S\t6033\tMFR   \tSPS   \t02\t13:01:14.218\t00\t0043\t2050-1\t0015690683                      \tWG'. SendCounter=1. Current send queue (port: ConMFRtoPLCSC1) size is '1'.",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:38.376",
+      "sourceFile": "ConPLCtoMFRSC1_Connection_2026_09_11__13_10_04.log",
+      "line": 8911,
+      "raw": "2026.09.11 13:01:38.376 - Daten       - Received     (raw)(118): ASCII[<STX>S<HT>0339<HT>SPS   <HT>MFR   <HT>01<HT>11:05:45.500<HT>00<HT>0072<HT>2095-1<HT>SORTER    ZP 00157175350015690683           00005,45500EXPF     <ETX>]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:38.376",
+      "sourceFile": "ConPLCtoMFRSC1_Connection_2026_09_11__13_10_04.log",
+      "line": 8912,
+      "raw": "2026.09.11 13:01:38.376 - Daten       - Received (decoded)(116): ASCII[S<HT>0339<HT>SPS   <HT>MFR   <HT>01<HT>11:05:45.500<HT>00<HT>0072<HT>2095-1<HT>SORTER    ZP 00157175350015690683           00005,45500EXPF     ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:38.376",
+      "sourceFile": "ConPLCtoMFRSC1_Connection_2026_09_11__13_10_04.log",
+      "line": 8913,
+      "raw": "2026.09.11 13:01:38.376 - Daten       - Received (encoded)(116): ASCII[S<HT>0339<HT>SPS   <HT>MFR   <HT>01<HT>11:05:45.500<HT>00<HT>0072<HT>2095-1<HT>SORTER    ZP 00157175350015690683           00005,45500EXPF     ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:38.376",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 2612,
+      "raw": "2026.09.11 13:01:38.376 - Standard    - OnScannerData: received Data: '2095-1|SC_VL2|SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:38.376",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12863,
+      "raw": "2026.09.11 13:01:38.376 - Standard    - OnPacketReceived - Received data 'S\t0339\tSPS   \tMFR   \t01\t11:05:45.500\t00\t0072\t2095-1\tSORTER    ZP 00157175350015690683           00005,45500EXPF     '. (port: ConPLCtoMFRSC1)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:38.376",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12865,
+      "raw": "2026.09.11 13:01:38.376 - Standard    - OnSendAcknowledgeToPlc - 'S\t0339\tSPS   \tMFR   \t01\t11:05:45.500\t00\t0067\t2095-1\tSORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:38.376",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12866,
+      "raw": "2026.09.11 13:01:38.376 - TelegrammInfo - SPS->MFR: Scanner Daten - #'2095-1'/2095-1 Barcode 'SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:38.376",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12867,
+      "raw": "2026.09.11 13:01:38.376 - Test        - RPCCallSendScannerDataToLogicModule - ScannerID='2095-1' ScannerName='SC_VL2' Barcode='SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:38.407",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 2614,
+      "raw": "2026.09.11 13:01:38.407 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_VL2, WeightStart=5460, WeightBrutto=-1, PlcTarget=05, TrackingId=, Status=PENDING, VRNewHeight=-1, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:38.407",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 2615,
+      "raw": "2026.09.11 13:01:38.407 - Standard    - ScanZuteilungVerschließerlinien: 'SC_VL2' DS für ParcelId '0015690683' in tudata gefunden! Linie=5 => Target:'05'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:38.407",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 2617,
+      "raw": "2026.09.11 13:01:38.407 - Standard    - SendTaskToPlc - Send job to PlcSC1: ZielMethode: RPCFuncSendeFahrziel Parameter='2095-1|0015690683|05')",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:38.407",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12869,
+      "raw": "2026.09.11 13:01:38.407 - Test        - RPCFuncSendeFahrziel - Parameter='2095-1|0015690683|05'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:38.407",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12871,
+      "raw": "2026.09.11 13:01:38.407 - Standard    - RPC: Scanner Daten an Logikmodul gesendet: '2095-1|SC_VL2|SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:38.423",
+      "sourceFile": "ConMFRtoPLCSC1_Connection_2026_09_11__13_33_00.log",
+      "line": 2380,
+      "raw": "2026.09.11 13:01:38.423 - Daten       - Send     (raw)(087): ASCII[S<HT>6054<HT>MFR   <HT>SPS   <HT>02<HT>13:01:38.423<HT>00<HT>0043<HT>2095-1<HT>0015690683                      <HT>05]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:38.423",
+      "sourceFile": "ConMFRtoPLCSC1_Connection_2026_09_11__13_33_00.log",
+      "line": 2381,
+      "raw": "2026.09.11 13:01:38.423 - Daten       - Send (encoded)(089): ASCII[<STX>S<HT>6054<HT>MFR   <HT>SPS   <HT>02<HT>13:01:38.423<HT>00<HT>0043<HT>2095-1<HT>0015690683                      <HT>05<ETX>]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:38.423",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12873,
+      "raw": "2026.09.11 13:01:38.423 - Standard    - Void UpdateTask() - Sending data 'S\t6054\tMFR   \tSPS   \t02\t13:01:38.423\t00\t0043\t2095-1\t0015690683                      \t05'. SendCounter=1. Current send queue (port: ConMFRtoPLCSC1) size is '1'.",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:39.564",
+      "sourceFile": "ConPLCtoMFRSC1_Connection_2026_09_11__13_10_04.log",
+      "line": 8925,
+      "raw": "2026.09.11 13:01:39.564 - Daten       - Received     (raw)(089): ASCII[<STX>S<HT>0341<HT>SPS   <HT>MFR   <HT>03<HT>11:05:46.681<HT>00<HT>0043<HT>2090-1<HT>0015690683                      <HT>01<ETX>]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:39.564",
+      "sourceFile": "ConPLCtoMFRSC1_Connection_2026_09_11__13_10_04.log",
+      "line": 8926,
+      "raw": "2026.09.11 13:01:39.564 - Daten       - Received (decoded)(087): ASCII[S<HT>0341<HT>SPS   <HT>MFR   <HT>03<HT>11:05:46.681<HT>00<HT>0043<HT>2090-1<HT>0015690683                      <HT>01]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:39.564",
+      "sourceFile": "ConPLCtoMFRSC1_Connection_2026_09_11__13_10_04.log",
+      "line": 8927,
+      "raw": "2026.09.11 13:01:39.564 - Daten       - Received (encoded)(087): ASCII[S<HT>0341<HT>SPS   <HT>MFR   <HT>03<HT>11:05:46.681<HT>00<HT>0043<HT>2090-1<HT>0015690683                      <HT>01]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:39.564",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 2645,
+      "raw": "2026.09.11 13:01:39.564 - Standard    - OnPlcAcknowledge: received Data: '2090-1||0015690683|01'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:39.564",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 2646,
+      "raw": "2026.09.11 13:01:39.564 - Fehler      - OnPlcAcknowledge - Paket '0015690683' wurde falsch ausgeschleust! Pos: '2090-1' Soll: '05' Ist: '01'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:39.564",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 2647,
+      "raw": "2026.09.11 13:01:39.564 - Fehler      - OnPlcAcknowledge - Paket '0015690683' Ausschleuse-Quittung für unbekannte Position!",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:39.564",
+      "sourceFile": "ProcLogicSC1_Process_2026_09_11__13_15_46.log",
+      "line": 2648,
+      "raw": "2026.09.11 13:01:39.564 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_VL2, WeightStart=5460, WeightBrutto=-1, PlcTarget=05, TrackingId=, Status=PENDING, VRNewHeight=-1, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:39.564",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12889,
+      "raw": "2026.09.11 13:01:39.564 - Standard    - OnPacketReceived - Received data 'S\t0341\tSPS   \tMFR   \t03\t11:05:46.681\t00\t0043\t2090-1\t0015690683                      \t01'. (port: ConPLCtoMFRSC1)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:39.564",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12891,
+      "raw": "2026.09.11 13:01:39.564 - Standard    - OnSendAcknowledgeToPlc - 'S\t0341\tSPS   \tMFR   \t03\t11:05:46.681\t00\t0043\t2090-1\t                      0015690683\t01'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:39.564",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12892,
+      "raw": "2026.09.11 13:01:39.564 - TelegrammInfo - SPS->MFR: Ausschleuse Quittung - #'2090-1'/2090-1 Barcode '0015690683' IstZiel '01'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:39.564",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12893,
+      "raw": "2026.09.11 13:01:39.564 - Test        - RPCCallSendAckDataToLogicModule - ScannerID='2090-1' ScannerName='' Barcode='0015690683' IstZiel='01'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:01:39.564",
+      "sourceFile": "ProcPLCSC1_Process_2026_09_11__13_06_17.log",
+      "line": 12894,
+      "raw": "2026.09.11 13:01:39.564 - Standard    - RPC: Ausschleuse Quittung an Logikmodul gesendet: '2090-1||0015690683|01'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:07:31.386",
+      "sourceFile": "ConPLCtoMFR_Connection_2026_09_11__13_15_56.log",
+      "line": 4060,
+      "raw": "2026.09.11 13:07:31.386 - Daten       - Raw Data: >>\u0002S\t7742\tSPS   \tMFR   \t09\t11:11:38.508\t00\t0031\t2370-1\t00157175350015690683\t 161\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:07:31.386",
+      "sourceFile": "ConPLCtoMFR_Connection_2026_09_11__13_15_56.log",
+      "line": 4061,
+      "raw": "2026.09.11 13:07:31.386 - Daten       - Received (decoded)(077): ASCII[S<HT>7742<HT>SPS   <HT>MFR   <HT>09<HT>11:11:38.508<HT>00<HT>0031<HT>2370-1<HT>00157175350015690683<HT> 161]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:07:31.386",
+      "sourceFile": "ProcLogic_Process_2026_09_11__13_58_52.log",
+      "line": 11454,
+      "raw": "2026.09.11 13:07:31.386 - Standard    - OnVolumenreduzierer: received Data: '2370-1|00157175350015690683|161'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:07:31.386",
+      "sourceFile": "ProcLogic_Process_2026_09_11__13_58_52.log",
+      "line": 11455,
+      "raw": "2026.09.11 13:07:31.386 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=VR_2370-1, WeightStart=5460, WeightBrutto=-1, PlcTarget=05, TrackingId=, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:07:31.386",
+      "sourceFile": "ProcLogic_Process_2026_09_11__13_58_52.log",
+      "line": 11456,
+      "raw": "2026.09.11 13:07:31.386 - Standard    - SendePakethöheAnsLVS - Sende Gewicht an FWMS: ZielMethode: 'RPCFuncSendePaketHöhe' Parameter='0015690683|161|0015717535')",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:07:31.386",
+      "sourceFile": "ProcPLC_Process_2026_09_11__13_10_06.log",
+      "line": 7799,
+      "raw": "2026.09.11 13:07:31.386 - Standard    - OnPacketReceived - Received data 'S\t7742\tSPS   \tMFR   \t09\t11:11:38.508\t00\t0031\t2370-1\t00157175350015690683\t 161'. (port: ConPLCtoMFR)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:07:31.386",
+      "sourceFile": "ProcPLC_Process_2026_09_11__13_10_06.log",
+      "line": 7802,
+      "raw": "2026.09.11 13:07:31.386 - TelegrammInfo - SPS->MFR: Volumenreduzierer ID - '2370-1' ParcelID '00157175350015690683' neue Höhe '161'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:07:31.386",
+      "sourceFile": "ProcPLC_Process_2026_09_11__13_10_06.log",
+      "line": 7803,
+      "raw": "2026.09.11 13:07:31.386 - Test        - RPCCallSendVolumeReducerToLogicModule - VolumeReducerID='2370-1' ParcelID='00157175350015690683' VolumeReducerData='161'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:07:31.386",
+      "sourceFile": "ProcPLC_Process_2026_09_11__13_10_06.log",
+      "line": 7804,
+      "raw": "2026.09.11 13:07:31.386 - Standard    - RPC: Teleskopstatus an Logikmodul gesendet: '2370-1|00157175350015690683|161'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:07:31.480",
+      "sourceFile": "ConMFRtoLVS_Connection_2026_09_11__13_23_42.log",
+      "line": 15251,
+      "raw": "2026.09.11 13:07:31.480 - Daten       - Sent: 90/90 >>\u0002S\t3787\tMFC   \tWMF   \t02\t13:07:31.480\t00\t0043\tZP 00157175350015690683          0000016102\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:07:31.480",
+      "sourceFile": "ProcLVS_Process_2026_09_11__14_42_47.log",
+      "line": 2092,
+      "raw": "2026.09.11 13:07:31.480 - Standard    - Void UpdateTask() - Sending data 'S\t3787\tMFC   \tWMF   \t02\t13:07:31.480\t00\t0043\tZP 00157175350015690683          0000016102'. SendCounter=1. Current send queue (port: ConMFRtoLVS) size is '1'.",
+      "layer": "LVS"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:20.901",
+      "sourceFile": "ConPLCtoMFRSC2_Connection_2026_09_11__14_01_30.log",
+      "line": 451,
+      "raw": "2026.09.11 13:09:20.901 - Daten       - Raw Data: >>\u0002S\t2132\tSPS   \tMFR   \t01\t11:13:28.023\t00\t0072\t3255-1\tSORTER    ZP 00157175350015690683           00005,45500EXPF     \u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:20.901",
+      "sourceFile": "ConPLCtoMFRSC2_Connection_2026_09_11__14_01_30.log",
+      "line": 452,
+      "raw": "2026.09.11 13:09:20.901 - Daten       - Received (decoded)(116): ASCII[S<HT>2132<HT>SPS   <HT>MFR   <HT>01<HT>11:13:28.023<HT>00<HT>0072<HT>3255-1<HT>SORTER    ZP 00157175350015690683           00005,45500EXPF     ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:20.901",
+      "sourceFile": "ProcLogicSC2_Process_2026_09_11__13_34_42.log",
+      "line": 4043,
+      "raw": "2026.09.11 13:09:20.901 - Standard    - OnScannerData: received Data: '3255-1|SC_BWL3|SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:20.901",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 7960,
+      "raw": "2026.09.11 13:09:20.901 - Standard    - OnPacketReceived - Received data 'S\t2132\tSPS   \tMFR   \t01\t11:13:28.023\t00\t0072\t3255-1\tSORTER    ZP 00157175350015690683           00005,45500EXPF     '. (port: ConPLCtoMFRSC2)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:20.901",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 7962,
+      "raw": "2026.09.11 13:09:20.901 - Standard    - OnSendAcknowledgeToPlc - 'S\t2132\tSPS   \tMFR   \t01\t11:13:28.023\t00\t0067\t3255-1\tSORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:20.901",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 7963,
+      "raw": "2026.09.11 13:09:20.901 - TelegrammInfo - SPS->MFR: Scanner Daten - #'3255-1'/3255-1 Barcode 'SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:20.901",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 7964,
+      "raw": "2026.09.11 13:09:20.901 - Test        - RPCCallSendScannerDataToLogicModule - ScannerID='3255-1' ScannerName='SC_BWL3' Barcode='SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:20.916",
+      "sourceFile": "ProcLogicSC2_Process_2026_09_11__13_34_42.log",
+      "line": 4045,
+      "raw": "2026.09.11 13:09:20.916 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_BWL3, WeightStart=5460, WeightBrutto=-1, PlcTarget=05, TrackingId=, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:20.916",
+      "sourceFile": "ProcLogicSC2_Process_2026_09_11__13_34_42.log",
+      "line": 4046,
+      "raw": "2026.09.11 13:09:20.916 - Standard    - ScanBruttoWaage: 'SORTER    ZP 00157175350015690683           00005,45500EXPF' DS für ParcelId '0015690683' in tudata gefunden! ParcelID_WaageBrutto[2]=0015690683",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:20.916",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 7965,
+      "raw": "2026.09.11 13:09:20.916 - Standard    - RPC: Scanner Daten an Logikmodul gesendet: '3255-1|SC_BWL3|SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:20.932",
+      "sourceFile": "ProcLogicSC2_Process_2026_09_11__13_34_42.log",
+      "line": 4051,
+      "raw": "2026.09.11 13:09:20.932 - Standard    - SendeWaagedatenAnsLVS - Sende Gewicht an FWMS: ZielMethode: 'RPCFuncSendeGewicht' Parameter='0015690683|5580|0015717535')",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:20.932",
+      "sourceFile": "ProcLogicSC2_Process_2026_09_11__13_34_42.log",
+      "line": 4053,
+      "raw": "2026.09.11 13:09:20.932 - Standard    - BroadcastWaageDaten - Send WaageDaten to Management.UI: (WaageDaten='Waage|WaageID=3255-- / SC_LINE3|ParcelID=0015690683|IstGewicht=5580|SollGewicht=5455|Toleranz=5|TimeStamp=11.09.2026 13:09:20')",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:20.932",
+      "sourceFile": "ProcLogicSC2_Process_2026_09_11__13_34_42.log",
+      "line": 4054,
+      "raw": "2026.09.11 13:09:20.932 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_LINE3, WeightStart=5460, WeightBrutto=5580, PlcTarget=05, TrackingId=, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:20.932",
+      "sourceFile": "ProcLogicSC2_Process_2026_09_11__13_34_42.log",
+      "line": 4055,
+      "raw": "2026.09.11 13:09:20.932 - Standard    - WaageBrutto: ' ParcelID_WaageBrutto[2]=0015690683 Status=PENDING'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:20.932",
+      "sourceFile": "RemoteManagement_Process_2026_09_11__13_22_58.log",
+      "line": 6355,
+      "raw": "2026.09.11 13:09:20.932 - Standard    - Sending Waage data to UI:Waage|WaageID=3255-- / SC_LINE3|ParcelID=0015690683|IstGewicht=5580|SollGewicht=5455|Toleranz=5|TimeStamp=11.09.2026 13:09:20",
+      "layer": "Other"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:21.026",
+      "sourceFile": "ConMFRtoLVS_Connection_2026_09_11__13_23_42.log",
+      "line": 15575,
+      "raw": "2026.09.11 13:09:21.026 - Daten       - Sent: 90/90 >>\u0002S\t3868\tMFC   \tWMF   \t01\t13:09:21.026\t00\t0043\tZP 00157175350015690683          0000558001\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:21.026",
+      "sourceFile": "ProcLVS_Process_2026_09_11__14_42_47.log",
+      "line": 2265,
+      "raw": "2026.09.11 13:09:21.026 - Standard    - Void UpdateTask() - Sending data 'S\t3868\tMFC   \tWMF   \t01\t13:09:21.026\t00\t0043\tZP 00157175350015690683          0000558001'. SendCounter=1. Current send queue (port: ConMFRtoLVS) size is '1'.",
+      "layer": "LVS"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:47.636",
+      "sourceFile": "ConPLCtoMFRSC2_Connection_2026_09_11__14_01_30.log",
+      "line": 607,
+      "raw": "2026.09.11 13:09:47.636 - Daten       - Raw Data: >>\u0002S\t2171\tSPS   \tMFR   \t01\t11:13:54.766\t00\t0072\t3265-1\tSORTER    ZP 00157175350015690683           00005,45500EXPF     \u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:47.636",
+      "sourceFile": "ConPLCtoMFRSC2_Connection_2026_09_11__14_01_30.log",
+      "line": 608,
+      "raw": "2026.09.11 13:09:47.636 - Daten       - Received (decoded)(116): ASCII[S<HT>2171<HT>SPS   <HT>MFR   <HT>01<HT>11:13:54.766<HT>00<HT>0072<HT>3265-1<HT>SORTER    ZP 00157175350015690683           00005,45500EXPF     ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:47.636",
+      "sourceFile": "ProcLogicSC2_Process_2026_09_11__13_34_42.log",
+      "line": 4321,
+      "raw": "2026.09.11 13:09:47.636 - Standard    - OnScannerData: received Data: '3265-1|SC_ETIINL3|SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:47.636",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8379,
+      "raw": "2026.09.11 13:09:47.636 - Standard    - OnPacketReceived - Received data 'S\t2171\tSPS   \tMFR   \t01\t11:13:54.766\t00\t0072\t3265-1\tSORTER    ZP 00157175350015690683           00005,45500EXPF     '. (port: ConPLCtoMFRSC2)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:47.636",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8381,
+      "raw": "2026.09.11 13:09:47.636 - Standard    - OnSendAcknowledgeToPlc - 'S\t2171\tSPS   \tMFR   \t01\t11:13:54.766\t00\t0067\t3265-1\tSORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:47.636",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8382,
+      "raw": "2026.09.11 13:09:47.636 - TelegrammInfo - SPS->MFR: Scanner Daten - #'3265-1'/3265-1 Barcode 'SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:47.636",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8383,
+      "raw": "2026.09.11 13:09:47.636 - Test        - RPCCallSendScannerDataToLogicModule - ScannerID='3265-1' ScannerName='SC_ETIINL3' Barcode='SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:47.652",
+      "sourceFile": "ProcEtikettierer_Process_2026_09_11__13_33_24.log",
+      "line": 14888,
+      "raw": "2026.09.11 13:09:47.652 - Daten       - OnDateiDrucken - Received data '0015690683' for 'SC_ETIINL3'.",
+      "layer": "Other"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:47.652",
+      "sourceFile": "ProcEtikettierer_Process_2026_09_11__13_33_24.log",
+      "line": 14889,
+      "raw": "2026.09.11 13:09:47.652 - Test        - DoZplPrintJob - In - ParcelId='0015690683'",
+      "layer": "Other"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:47.652",
+      "sourceFile": "ProcLogicSC2_Process_2026_09_11__13_34_42.log",
+      "line": 4323,
+      "raw": "2026.09.11 13:09:47.652 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_ETIINL3, WeightStart=5460, WeightBrutto=5580, PlcTarget=05, TrackingId=, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:47.652",
+      "sourceFile": "ProcLogicSC2_Process_2026_09_11__13_34_42.log",
+      "line": 4325,
+      "raw": "2026.09.11 13:09:47.652 - Standard    - SendTaskToProcEti - Send job to ProcEtikettierer: ZielMethode: OnDateiDrucken ScannerId='SC_ETIINL3' Parceld='0015690683'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:47.652",
+      "sourceFile": "ProcLogicSC2_Process_2026_09_11__13_34_42.log",
+      "line": 4327,
+      "raw": "2026.09.11 13:09:47.652 - Standard    - ScanEtiEingang: 'SORTER    ZP 00157175350015690683           00005,45500EXPF' DS für ParcelId '0015690683' in tudata gefunden!",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:47.652",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8385,
+      "raw": "2026.09.11 13:09:47.652 - Standard    - RPC: Scanner Daten an Logikmodul gesendet: '3265-1|SC_ETIINL3|SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:47.714",
+      "sourceFile": "ProcEtikettierer_Process_2026_09_11__13_33_24.log",
+      "line": 14890,
+      "raw": "2026.09.11 13:09:47.714 - Standard    - FindZplFilesWithRetry - Search pattern: 'ZP_0015690683_*.zpl', max attempts: 3, delay: 200ms",
+      "layer": "Other"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:47.824",
+      "sourceFile": "ProcEtikettierer_Process_2026_09_11__13_33_24.log",
+      "line": 14892,
+      "raw": "2026.09.11 13:09:47.824 - Standard    - DoZplPrintJob - Printfile found: '\\\\10.64.17.140\\ifcfiles\\ZUH\\HEBER\\lbl\\ZP_0015690683_658215741663000013601021.zpl'",
+      "layer": "Other"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:47.824",
+      "sourceFile": "ProcEtikettierer_Process_2026_09_11__13_33_24.log",
+      "line": 14893,
+      "raw": "2026.09.11 13:09:47.824 - Standard    - UpdateTrackingId - TrackingId='658215741663000013601021' for ParcelId='0015690683'",
+      "layer": "Other"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:47.824",
+      "sourceFile": "ProcEtikettierer_Process_2026_09_11__13_33_24.log",
+      "line": 14894,
+      "raw": "2026.09.11 13:09:47.824 - Standard    - UpdateTrackingId - TrackingId='658215741663000013601021' added for ParcelId='0015690683'",
+      "layer": "Other"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:48.074",
+      "sourceFile": "ProcEtikettierer_Process_2026_09_11__13_33_24.log",
+      "line": 14897,
+      "raw": "2026.09.11 13:09:48.074 - Test        - DoZplPrintJob - Out - ParcelId='0015690683'",
+      "layer": "Other"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.950",
+      "sourceFile": "ConPLCtoMFRSC2_Connection_2026_09_11__14_01_30.log",
+      "line": 651,
+      "raw": "2026.09.11 13:09:54.950 - Daten       - Raw Data: >>\u0002S\t2182\tSPS   \tMFR   \t01\t11:14:02.069\t00\t0072\t3275-1\tSORTER    ZP 00157175350015690683           00005,45500EXPF     \u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.950",
+      "sourceFile": "ConPLCtoMFRSC2_Connection_2026_09_11__14_01_30.log",
+      "line": 652,
+      "raw": "2026.09.11 13:09:54.950 - Daten       - Received (decoded)(116): ASCII[S<HT>2182<HT>SPS   <HT>MFR   <HT>01<HT>11:14:02.069<HT>00<HT>0072<HT>3275-1<HT>SORTER    ZP 00157175350015690683           00005,45500EXPF     ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.950",
+      "sourceFile": "ProcLogicSC2_Process_2026_09_11__13_34_42.log",
+      "line": 4400,
+      "raw": "2026.09.11 13:09:54.950 - Standard    - OnScannerData: received Data: '3275-1|SC_ETIOSL3|SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.950",
+      "sourceFile": "ProcLogicSC2_Process_2026_09_11__13_34_42.log",
+      "line": 4402,
+      "raw": "2026.09.11 13:09:54.950 - Standard    - ScanEtiAusgang: 'SC_ETIOSL3'  SeitenScan ParcelId='0015690683' => Target:'  '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.950",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8495,
+      "raw": "2026.09.11 13:09:54.950 - Standard    - OnPacketReceived - Received data 'S\t2182\tSPS   \tMFR   \t01\t11:14:02.069\t00\t0072\t3275-1\tSORTER    ZP 00157175350015690683           00005,45500EXPF     '. (port: ConPLCtoMFRSC2)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.950",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8497,
+      "raw": "2026.09.11 13:09:54.950 - Standard    - OnSendAcknowledgeToPlc - 'S\t2182\tSPS   \tMFR   \t01\t11:14:02.069\t00\t0067\t3275-1\tSORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.950",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8498,
+      "raw": "2026.09.11 13:09:54.950 - TelegrammInfo - SPS->MFR: Scanner Daten - #'3275-1'/3275-1 Barcode 'SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.950",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8499,
+      "raw": "2026.09.11 13:09:54.950 - Test        - RPCCallSendScannerDataToLogicModule - ScannerID='3275-1' ScannerName='SC_ETIOSL3' Barcode='SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.950",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8500,
+      "raw": "2026.09.11 13:09:54.950 - Standard    - RPC: Scanner Daten an Logikmodul gesendet: '3275-1|SC_ETIOSL3|SORTER    ZP 00157175350015690683           00005,45500EXPF'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.965",
+      "sourceFile": "ConPLCtoMFRSC2_Connection_2026_09_11__14_01_30.log",
+      "line": 655,
+      "raw": "2026.09.11 13:09:54.965 - Daten       - Raw Data: >>\u0002S\t2183\tSPS   \tMFR   \t01\t11:14:02.088\t00\t0040\t3275-2\t658215741663000013601021        \u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.965",
+      "sourceFile": "ConPLCtoMFRSC2_Connection_2026_09_11__14_01_30.log",
+      "line": 656,
+      "raw": "2026.09.11 13:09:54.965 - Daten       - Received (decoded)(084): ASCII[S<HT>2183<HT>SPS   <HT>MFR   <HT>01<HT>11:14:02.088<HT>00<HT>0040<HT>3275-2<HT>658215741663000013601021        ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.965",
+      "sourceFile": "ProcLogicSC2_Process_2026_09_11__13_34_42.log",
+      "line": 4405,
+      "raw": "2026.09.11 13:09:54.965 - Standard    - OnScannerData: received Data: '3275-2|SC_ETIOTL3|658215741663000013601021'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.965",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8504,
+      "raw": "2026.09.11 13:09:54.965 - Standard    - OnPacketReceived - Received data 'S\t2183\tSPS   \tMFR   \t01\t11:14:02.088\t00\t0040\t3275-2\t658215741663000013601021        '. (port: ConPLCtoMFRSC2)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.965",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8506,
+      "raw": "2026.09.11 13:09:54.965 - Standard    - OnSendAcknowledgeToPlc - 'S\t2183\tSPS   \tMFR   \t01\t11:14:02.088\t00\t0040\t3275-2\t        658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.965",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8507,
+      "raw": "2026.09.11 13:09:54.965 - TelegrammInfo - SPS->MFR: Scanner Daten - #'3275-2'/3275-2 Barcode '658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.965",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8508,
+      "raw": "2026.09.11 13:09:54.965 - Test        - RPCCallSendScannerDataToLogicModule - ScannerID='3275-2' ScannerName='SC_ETIOTL3' Barcode='658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.981",
+      "sourceFile": "ProcLogicSC2_Process_2026_09_11__13_34_42.log",
+      "line": 4407,
+      "raw": "2026.09.11 13:09:54.981 - Test        - ScanEtiAusgang: Datenbankeintrag: 658215741663000013601021, TrackingId-Scan: 658215741663000013601021",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.981",
+      "sourceFile": "ProcLogicSC2_Process_2026_09_11__13_34_42.log",
+      "line": 4408,
+      "raw": "2026.09.11 13:09:54.981 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_ETIOTL3, WeightStart=5460, WeightBrutto=5580, PlcTarget=WG, TrackingId=658215741663000013601021, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.981",
+      "sourceFile": "ProcLogicSC2_Process_2026_09_11__13_34_42.log",
+      "line": 4409,
+      "raw": "2026.09.11 13:09:54.981 - Standard    - Void ScanEtiAusgang(System.String[]): Seitenlesung: 0015690683, Top-Lesung: 658215741663000013601021",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.981",
+      "sourceFile": "ProcLogicSC2_Process_2026_09_11__13_34_42.log",
+      "line": 4411,
+      "raw": "2026.09.11 13:09:54.981 - Standard    - SendTaskToPlc - Send job to PlcSC2: ZielMethode: RPCFuncSendeFahrziel Parameter='3275-1|0015690683|WG')",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.981",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8509,
+      "raw": "2026.09.11 13:09:54.981 - Test        - RPCFuncSendeFahrziel - Parameter='3275-1|0015690683|WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.981",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8511,
+      "raw": "2026.09.11 13:09:54.981 - Standard    - RPC: Scanner Daten an Logikmodul gesendet: '3275-2|SC_ETIOTL3|658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:09:54.996",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8514,
+      "raw": "2026.09.11 13:09:54.996 - Standard    - Void UpdateTask() - Sending data 'S\t4817\tMFR   \tSPS   \t02\t13:09:54.996\t00\t0043\t3275-1\t0015690683                      \tWG'. SendCounter=1. Current send queue (port: ConMFRtoPLCSC2) size is '1'.",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:10:00.793",
+      "sourceFile": "ConPLCtoMFRSC2_Connection_2026_09_11__14_01_30.log",
+      "line": 683,
+      "raw": "2026.09.11 13:10:00.793 - Daten       - Raw Data: >>\u0002S\t2190\tSPS   \tMFR   \t03\t11:14:07.912\t00\t0043\t3275-1\t0015690683                      \tWG\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:10:00.793",
+      "sourceFile": "ConPLCtoMFRSC2_Connection_2026_09_11__14_01_30.log",
+      "line": 684,
+      "raw": "2026.09.11 13:10:00.793 - Daten       - Received (decoded)(087): ASCII[S<HT>2190<HT>SPS   <HT>MFR   <HT>03<HT>11:14:07.912<HT>00<HT>0043<HT>3275-1<HT>0015690683                      <HT>WG]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:10:00.793",
+      "sourceFile": "ProcLogicSC2_Process_2026_09_11__13_34_42.log",
+      "line": 4459,
+      "raw": "2026.09.11 13:10:00.793 - Standard    - OnPlcAcknowledge: received Data: '3275-1|SC_ETIOSL3|0015690683|WG'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:10:00.793",
+      "sourceFile": "ProcLogicSC2_Process_2026_09_11__13_34_42.log",
+      "line": 4460,
+      "raw": "2026.09.11 13:10:00.793 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_ETIOTL3, WeightStart=5460, WeightBrutto=5580, PlcTarget=WG, TrackingId=658215741663000013601021, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:10:00.793",
+      "sourceFile": "ProcLogicSC2_Process_2026_09_11__13_34_42.log",
+      "line": 4461,
+      "raw": "2026.09.11 13:10:00.793 - Standard    - OnPlcAcknowledge: '0015690683' 'Keine Aktion!'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:10:00.793",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8583,
+      "raw": "2026.09.11 13:10:00.793 - Standard    - OnPacketReceived - Received data 'S\t2190\tSPS   \tMFR   \t03\t11:14:07.912\t00\t0043\t3275-1\t0015690683                      \tWG'. (port: ConPLCtoMFRSC2)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:10:00.793",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8585,
+      "raw": "2026.09.11 13:10:00.793 - Standard    - OnSendAcknowledgeToPlc - 'S\t2190\tSPS   \tMFR   \t03\t11:14:07.912\t00\t0043\t3275-1\t                      0015690683\tWG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:10:00.793",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8586,
+      "raw": "2026.09.11 13:10:00.793 - TelegrammInfo - SPS->MFR: Ausschleuse Quittung - #'3275-1'/3275-1 Barcode '0015690683' IstZiel 'WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:10:00.793",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8587,
+      "raw": "2026.09.11 13:10:00.793 - Test        - RPCCallSendAckDataToLogicModule - ScannerID='3275-1' ScannerName='SC_ETIOSL3' Barcode='0015690683' IstZiel='WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:10:00.793",
+      "sourceFile": "ProcPLCSC2_Process_2026_09_11__13_22_26.log",
+      "line": 8588,
+      "raw": "2026.09.11 13:10:00.793 - Standard    - RPC: Ausschleuse Quittung an Logikmodul gesendet: '3275-1|SC_ETIOSL3|0015690683|WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.578",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 289,
+      "raw": "2026.09.11 13:20:32.578 - Daten       - Raw Data: >>\u0002S\t4459\tSPS   \tMFR   \t01\t11:24:39.715\t00\t0040\t4110-1\t658215741663000013601021        \u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.578",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 290,
+      "raw": "2026.09.11 13:20:32.578 - Daten       - Received (decoded)(084): ASCII[S<HT>4459<HT>SPS   <HT>MFR   <HT>01<HT>11:24:39.715<HT>00<HT>0040<HT>4110-1<HT>658215741663000013601021        ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.578",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 2256,
+      "raw": "2026.09.11 13:20:32.578 - Standard    - OnScannerData: received Data: '4110-1|SC_H4T1|658215741663000013601021'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.578",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 5933,
+      "raw": "2026.09.11 13:20:32.578 - Standard    - OnPacketReceived - Received data 'S\t4459\tSPS   \tMFR   \t01\t11:24:39.715\t00\t0040\t4110-1\t658215741663000013601021        '. (port: ConPLCtoMFRSC3)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.578",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 5935,
+      "raw": "2026.09.11 13:20:32.578 - Standard    - OnSendAcknowledgeToPlc - 'S\t4459\tSPS   \tMFR   \t01\t11:24:39.715\t00\t0040\t4110-1\t        658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.578",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 5936,
+      "raw": "2026.09.11 13:20:32.578 - TelegrammInfo - SPS->MFR: Scanner Daten - #'4110-1'/4110-1 Barcode '658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.578",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 5937,
+      "raw": "2026.09.11 13:20:32.578 - Test        - RPCCallSendScannerDataToLogicModule - ScannerID='4110-1' ScannerName='SC_H4T1' Barcode='658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.594",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 2260,
+      "raw": "2026.09.11 13:20:32.594 - Ablaufinfo  - SaveToDB - TID: '658215741663000013601021' Target: '00000' circle: '0'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.594",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 2261,
+      "raw": "2026.09.11 13:20:32.594 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_H4T1, WeightStart=5460, WeightBrutto=5580, PlcTarget=WG, TrackingId=658215741663000013601021, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.594",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 2262,
+      "raw": "2026.09.11 13:20:32.594 - Standard    - ScanTeleskopNP: 'SC_H4T1' TrackingID='658215741663000013601021' ParcelId='0015690683' => Target:'WG'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.594",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 2264,
+      "raw": "2026.09.11 13:20:32.594 - Standard    - SendTaskToPlc - Send job to PlcSC3: ZielMethode: RPCFuncSendeFahrziel Parameter='4110-1|658215741663000013601021|WG')",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.594",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 5938,
+      "raw": "2026.09.11 13:20:32.594 - Test        - RPCFuncSendeFahrziel - Parameter='4110-1|658215741663000013601021|WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.594",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 5940,
+      "raw": "2026.09.11 13:20:32.594 - Standard    - RPC: Scanner Daten an Logikmodul gesendet: '4110-1|SC_H4T1|658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.609",
+      "sourceFile": "ConMFRtoPLCSC3_Connection_2026_09_11__13_31_45.log",
+      "line": 10210,
+      "raw": "2026.09.11 13:20:32.609 - Daten       - Sent: 89/89 >>\u0002S\t7800\tMFR   \tSPS   \t02\t13:20:32.609\t00\t0043\t4110-1\t658215741663000013601021        \tWG\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.609",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 5943,
+      "raw": "2026.09.11 13:20:32.609 - Standard    - Void UpdateTask() - Sending data 'S\t7800\tMFR   \tSPS   \t02\t13:20:32.609\t00\t0043\t4110-1\t658215741663000013601021        \tWG'. SendCounter=1. Current send queue (port: ConMFRtoPLCSC3) size is '1'.",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.797",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 301,
+      "raw": "2026.09.11 13:20:32.797 - Daten       - Raw Data: >>\u0002S\t4462\tSPS   \tMFR   \t03\t11:24:39.932\t00\t0043\t4110-1\t658215741663000013601021        \tWG\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.797",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 302,
+      "raw": "2026.09.11 13:20:32.797 - Daten       - Received (decoded)(087): ASCII[S<HT>4462<HT>SPS   <HT>MFR   <HT>03<HT>11:24:39.932<HT>00<HT>0043<HT>4110-1<HT>658215741663000013601021        <HT>WG]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.797",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 2288,
+      "raw": "2026.09.11 13:20:32.797 - Standard    - OnPlcAcknowledge: received Data: '4110-1|SC_H4T1|658215741663000013601021|WG'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.797",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 2289,
+      "raw": "2026.09.11 13:20:32.797 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_H4T1, WeightStart=5460, WeightBrutto=5580, PlcTarget=WG, TrackingId=658215741663000013601021, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.797",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 2290,
+      "raw": "2026.09.11 13:20:32.797 - Standard    - OnPlcAcknowledge: '658215741663000013601021' ' ist nicht das Ziel => keine Aktion!'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.797",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 5975,
+      "raw": "2026.09.11 13:20:32.797 - Standard    - OnPacketReceived - Received data 'S\t4462\tSPS   \tMFR   \t03\t11:24:39.932\t00\t0043\t4110-1\t658215741663000013601021        \tWG'. (port: ConPLCtoMFRSC3)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.797",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 5977,
+      "raw": "2026.09.11 13:20:32.797 - Standard    - OnSendAcknowledgeToPlc - 'S\t4462\tSPS   \tMFR   \t03\t11:24:39.932\t00\t0043\t4110-1\t        658215741663000013601021\tWG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.797",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 5978,
+      "raw": "2026.09.11 13:20:32.797 - TelegrammInfo - SPS->MFR: Ausschleuse Quittung - #'4110-1'/4110-1 Barcode '658215741663000013601021' IstZiel 'WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.797",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 5979,
+      "raw": "2026.09.11 13:20:32.797 - Test        - RPCCallSendAckDataToLogicModule - ScannerID='4110-1' ScannerName='SC_H4T1' Barcode='658215741663000013601021' IstZiel='WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:32.797",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 5980,
+      "raw": "2026.09.11 13:20:32.797 - Standard    - RPC: Ausschleuse Quittung an Logikmodul gesendet: '4110-1|SC_H4T1|658215741663000013601021|WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.516",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 441,
+      "raw": "2026.09.11 13:20:38.516 - Daten       - Raw Data: >>\u0002S\t4497\tSPS   \tMFR   \t01\t11:24:45.651\t00\t0040\t4120-1\t658215741663000013601021        \u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.516",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 442,
+      "raw": "2026.09.11 13:20:38.516 - Daten       - Received (decoded)(084): ASCII[S<HT>4497<HT>SPS   <HT>MFR   <HT>01<HT>11:24:45.651<HT>00<HT>0040<HT>4120-1<HT>658215741663000013601021        ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.516",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 2652,
+      "raw": "2026.09.11 13:20:38.516 - Standard    - OnScannerData: received Data: '4120-1|SC_H4T2|658215741663000013601021'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.516",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6421,
+      "raw": "2026.09.11 13:20:38.516 - Standard    - OnPacketReceived - Received data 'S\t4497\tSPS   \tMFR   \t01\t11:24:45.651\t00\t0040\t4120-1\t658215741663000013601021        '. (port: ConPLCtoMFRSC3)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.516",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6423,
+      "raw": "2026.09.11 13:20:38.516 - Standard    - OnSendAcknowledgeToPlc - 'S\t4497\tSPS   \tMFR   \t01\t11:24:45.651\t00\t0040\t4120-1\t        658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.516",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6424,
+      "raw": "2026.09.11 13:20:38.516 - TelegrammInfo - SPS->MFR: Scanner Daten - #'4120-1'/4120-1 Barcode '658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.516",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6425,
+      "raw": "2026.09.11 13:20:38.516 - Test        - RPCCallSendScannerDataToLogicModule - ScannerID='4120-1' ScannerName='SC_H4T2' Barcode='658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.531",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 2656,
+      "raw": "2026.09.11 13:20:38.531 - Ablaufinfo  - SaveToDB - TID: '658215741663000013601021' Target: '00000' circle: '0'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.531",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 2657,
+      "raw": "2026.09.11 13:20:38.531 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_H4T2, WeightStart=5460, WeightBrutto=5580, PlcTarget=WG, TrackingId=658215741663000013601021, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.531",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 2658,
+      "raw": "2026.09.11 13:20:38.531 - Standard    - ScanTeleskopNP: 'SC_H4T2' TrackingID='658215741663000013601021' ParcelId='0015690683' => Target:'WG'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.531",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 2660,
+      "raw": "2026.09.11 13:20:38.531 - Standard    - SendTaskToPlc - Send job to PlcSC3: ZielMethode: RPCFuncSendeFahrziel Parameter='4120-1|658215741663000013601021|WG')",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.531",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6426,
+      "raw": "2026.09.11 13:20:38.531 - Test        - RPCFuncSendeFahrziel - Parameter='4120-1|658215741663000013601021|WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.531",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6428,
+      "raw": "2026.09.11 13:20:38.531 - Standard    - RPC: Scanner Daten an Logikmodul gesendet: '4120-1|SC_H4T2|658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.547",
+      "sourceFile": "ConMFRtoPLCSC3_Connection_2026_09_11__13_31_45.log",
+      "line": 10282,
+      "raw": "2026.09.11 13:20:38.547 - Daten       - Sent: 89/89 >>\u0002S\t7818\tMFR   \tSPS   \t02\t13:20:38.547\t00\t0043\t4120-1\t658215741663000013601021        \tWG\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.547",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6431,
+      "raw": "2026.09.11 13:20:38.547 - Standard    - Void UpdateTask() - Sending data 'S\t7818\tMFR   \tSPS   \t02\t13:20:38.547\t00\t0043\t4120-1\t658215741663000013601021        \tWG'. SendCounter=1. Current send queue (port: ConMFRtoPLCSC3) size is '1'.",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.734",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 461,
+      "raw": "2026.09.11 13:20:38.734 - Daten       - Raw Data: >>\u0002S\t4502\tSPS   \tMFR   \t03\t11:24:45.868\t00\t0043\t4120-1\t658215741663000013601021        \tWG\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.734",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 462,
+      "raw": "2026.09.11 13:20:38.734 - Daten       - Received (decoded)(087): ASCII[S<HT>4502<HT>SPS   <HT>MFR   <HT>03<HT>11:24:45.868<HT>00<HT>0043<HT>4120-1<HT>658215741663000013601021        <HT>WG]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.734",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 2692,
+      "raw": "2026.09.11 13:20:38.734 - Standard    - OnPlcAcknowledge: received Data: '4120-1|SC_H4T2|658215741663000013601021|WG'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.734",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 2693,
+      "raw": "2026.09.11 13:20:38.734 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_H4T2, WeightStart=5460, WeightBrutto=5580, PlcTarget=WG, TrackingId=658215741663000013601021, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.734",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 2694,
+      "raw": "2026.09.11 13:20:38.734 - Standard    - OnPlcAcknowledge: '658215741663000013601021' ' ist nicht das Ziel => keine Aktion!'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.734",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6483,
+      "raw": "2026.09.11 13:20:38.734 - Standard    - OnPacketReceived - Received data 'S\t4502\tSPS   \tMFR   \t03\t11:24:45.868\t00\t0043\t4120-1\t658215741663000013601021        \tWG'. (port: ConPLCtoMFRSC3)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.734",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6485,
+      "raw": "2026.09.11 13:20:38.734 - Standard    - OnSendAcknowledgeToPlc - 'S\t4502\tSPS   \tMFR   \t03\t11:24:45.868\t00\t0043\t4120-1\t        658215741663000013601021\tWG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.734",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6486,
+      "raw": "2026.09.11 13:20:38.734 - TelegrammInfo - SPS->MFR: Ausschleuse Quittung - #'4120-1'/4120-1 Barcode '658215741663000013601021' IstZiel 'WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.734",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6487,
+      "raw": "2026.09.11 13:20:38.734 - Test        - RPCCallSendAckDataToLogicModule - ScannerID='4120-1' ScannerName='SC_H4T2' Barcode='658215741663000013601021' IstZiel='WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:38.734",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6488,
+      "raw": "2026.09.11 13:20:38.734 - Standard    - RPC: Ausschleuse Quittung an Logikmodul gesendet: '4120-1|SC_H4T2|658215741663000013601021|WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.423",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 597,
+      "raw": "2026.09.11 13:20:44.423 - Daten       - Raw Data: >>\u0002S\t4536\tSPS   \tMFR   \t01\t11:24:51.553\t00\t0040\t4130-1\t658215741663000013601021        \u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.423",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 598,
+      "raw": "2026.09.11 13:20:44.423 - Daten       - Received (decoded)(084): ASCII[S<HT>4536<HT>SPS   <HT>MFR   <HT>01<HT>11:24:51.553<HT>00<HT>0040<HT>4130-1<HT>658215741663000013601021        ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.423",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 2988,
+      "raw": "2026.09.11 13:20:44.423 - Standard    - OnScannerData: received Data: '4130-1|SC_H4T3|658215741663000013601021'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.423",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6907,
+      "raw": "2026.09.11 13:20:44.423 - Standard    - OnPacketReceived - Received data 'S\t4536\tSPS   \tMFR   \t01\t11:24:51.553\t00\t0040\t4130-1\t658215741663000013601021        '. (port: ConPLCtoMFRSC3)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.423",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6909,
+      "raw": "2026.09.11 13:20:44.423 - Standard    - OnSendAcknowledgeToPlc - 'S\t4536\tSPS   \tMFR   \t01\t11:24:51.553\t00\t0040\t4130-1\t        658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.423",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6910,
+      "raw": "2026.09.11 13:20:44.423 - TelegrammInfo - SPS->MFR: Scanner Daten - #'4130-1'/4130-1 Barcode '658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.423",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6911,
+      "raw": "2026.09.11 13:20:44.423 - Test        - RPCCallSendScannerDataToLogicModule - ScannerID='4130-1' ScannerName='SC_H4T3' Barcode='658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.439",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 2992,
+      "raw": "2026.09.11 13:20:44.439 - Ablaufinfo  - SaveToDB - TID: '658215741663000013601021' Target: '00000' circle: '0'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.439",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 2993,
+      "raw": "2026.09.11 13:20:44.439 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_H4T3, WeightStart=5460, WeightBrutto=5580, PlcTarget=WG, TrackingId=658215741663000013601021, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.439",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 2994,
+      "raw": "2026.09.11 13:20:44.439 - Standard    - ScanTeleskopNP: 'SC_H4T3' TrackingID='658215741663000013601021' ParcelId='0015690683' => Target:'WG'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.439",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 2996,
+      "raw": "2026.09.11 13:20:44.439 - Standard    - SendTaskToPlc - Send job to PlcSC3: ZielMethode: RPCFuncSendeFahrziel Parameter='4130-1|658215741663000013601021|WG')",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.439",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6912,
+      "raw": "2026.09.11 13:20:44.439 - Test        - RPCFuncSendeFahrziel - Parameter='4130-1|658215741663000013601021|WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.439",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6914,
+      "raw": "2026.09.11 13:20:44.439 - Standard    - RPC: Scanner Daten an Logikmodul gesendet: '4130-1|SC_H4T3|658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.454",
+      "sourceFile": "ConMFRtoPLCSC3_Connection_2026_09_11__13_31_45.log",
+      "line": 10346,
+      "raw": "2026.09.11 13:20:44.454 - Daten       - Sent: 89/89 >>\u0002S\t7834\tMFR   \tSPS   \t02\t13:20:44.454\t00\t0043\t4130-1\t658215741663000013601021        \tWG\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.454",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6917,
+      "raw": "2026.09.11 13:20:44.454 - Standard    - Void UpdateTask() - Sending data 'S\t7834\tMFR   \tSPS   \t02\t13:20:44.454\t00\t0043\t4130-1\t658215741663000013601021        \tWG'. SendCounter=1. Current send queue (port: ConMFRtoPLCSC3) size is '1'.",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.626",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 617,
+      "raw": "2026.09.11 13:20:44.626 - Daten       - Raw Data: >>\u0002S\t4541\tSPS   \tMFR   \t03\t11:24:51.756\t00\t0043\t4130-1\t658215741663000013601021        \tWG\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.626",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 618,
+      "raw": "2026.09.11 13:20:44.626 - Daten       - Received (decoded)(087): ASCII[S<HT>4541<HT>SPS   <HT>MFR   <HT>03<HT>11:24:51.756<HT>00<HT>0043<HT>4130-1<HT>658215741663000013601021        <HT>WG]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.626",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 3031,
+      "raw": "2026.09.11 13:20:44.626 - Standard    - OnPlcAcknowledge: received Data: '4130-1|SC_H4T3|658215741663000013601021|WG'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.626",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 3032,
+      "raw": "2026.09.11 13:20:44.626 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_H4T3, WeightStart=5460, WeightBrutto=5580, PlcTarget=WG, TrackingId=658215741663000013601021, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.626",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 3033,
+      "raw": "2026.09.11 13:20:44.626 - Standard    - OnPlcAcknowledge: '658215741663000013601021' ' ist nicht das Ziel => keine Aktion!'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.626",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6975,
+      "raw": "2026.09.11 13:20:44.626 - Standard    - OnPacketReceived - Received data 'S\t4541\tSPS   \tMFR   \t03\t11:24:51.756\t00\t0043\t4130-1\t658215741663000013601021        \tWG'. (port: ConPLCtoMFRSC3)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.626",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6977,
+      "raw": "2026.09.11 13:20:44.626 - Standard    - OnSendAcknowledgeToPlc - 'S\t4541\tSPS   \tMFR   \t03\t11:24:51.756\t00\t0043\t4130-1\t        658215741663000013601021\tWG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.626",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6978,
+      "raw": "2026.09.11 13:20:44.626 - TelegrammInfo - SPS->MFR: Ausschleuse Quittung - #'4130-1'/4130-1 Barcode '658215741663000013601021' IstZiel 'WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.626",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6979,
+      "raw": "2026.09.11 13:20:44.626 - Test        - RPCCallSendAckDataToLogicModule - ScannerID='4130-1' ScannerName='SC_H4T3' Barcode='658215741663000013601021' IstZiel='WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:44.626",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 6980,
+      "raw": "2026.09.11 13:20:44.626 - Standard    - RPC: Ausschleuse Quittung an Logikmodul gesendet: '4130-1|SC_H4T3|658215741663000013601021|WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.392",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 757,
+      "raw": "2026.09.11 13:20:50.392 - Daten       - Raw Data: >>\u0002S\t4576\tSPS   \tMFR   \t01\t11:24:57.527\t00\t0040\t4140-1\t658215741663000013601021        \u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.392",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 758,
+      "raw": "2026.09.11 13:20:50.392 - Daten       - Received (decoded)(084): ASCII[S<HT>4576<HT>SPS   <HT>MFR   <HT>01<HT>11:24:57.527<HT>00<HT>0040<HT>4140-1<HT>658215741663000013601021        ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.392",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 3341,
+      "raw": "2026.09.11 13:20:50.392 - Standard    - OnScannerData: received Data: '4140-1|SC_H4T4|658215741663000013601021'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.392",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7415,
+      "raw": "2026.09.11 13:20:50.392 - Standard    - OnPacketReceived - Received data 'S\t4576\tSPS   \tMFR   \t01\t11:24:57.527\t00\t0040\t4140-1\t658215741663000013601021        '. (port: ConPLCtoMFRSC3)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.392",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7417,
+      "raw": "2026.09.11 13:20:50.392 - Standard    - OnSendAcknowledgeToPlc - 'S\t4576\tSPS   \tMFR   \t01\t11:24:57.527\t00\t0040\t4140-1\t        658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.392",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7418,
+      "raw": "2026.09.11 13:20:50.392 - TelegrammInfo - SPS->MFR: Scanner Daten - #'4140-1'/4140-1 Barcode '658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.392",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7419,
+      "raw": "2026.09.11 13:20:50.392 - Test        - RPCCallSendScannerDataToLogicModule - ScannerID='4140-1' ScannerName='SC_H4T4' Barcode='658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.408",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 3345,
+      "raw": "2026.09.11 13:20:50.408 - Ablaufinfo  - SaveToDB - TID: '658215741663000013601021' Target: '00000' circle: '0'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.408",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 3346,
+      "raw": "2026.09.11 13:20:50.408 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_H4T4, WeightStart=5460, WeightBrutto=5580, PlcTarget=WG, TrackingId=658215741663000013601021, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.408",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 3347,
+      "raw": "2026.09.11 13:20:50.408 - Standard    - ScanTeleskopNP: 'SC_H4T4' TrackingID='658215741663000013601021' ParcelId='0015690683' => Target:'WG'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.408",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 3349,
+      "raw": "2026.09.11 13:20:50.408 - Standard    - SendTaskToPlc - Send job to PlcSC3: ZielMethode: RPCFuncSendeFahrziel Parameter='4140-1|658215741663000013601021|WG')",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.408",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7420,
+      "raw": "2026.09.11 13:20:50.408 - Test        - RPCFuncSendeFahrziel - Parameter='4140-1|658215741663000013601021|WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.408",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7422,
+      "raw": "2026.09.11 13:20:50.408 - Standard    - RPC: Scanner Daten an Logikmodul gesendet: '4140-1|SC_H4T4|658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.423",
+      "sourceFile": "ConMFRtoPLCSC3_Connection_2026_09_11__13_31_45.log",
+      "line": 10418,
+      "raw": "2026.09.11 13:20:50.423 - Daten       - Sent: 89/89 >>\u0002S\t7852\tMFR   \tSPS   \t02\t13:20:50.423\t00\t0043\t4140-1\t658215741663000013601021        \tWG\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.423",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7425,
+      "raw": "2026.09.11 13:20:50.423 - Standard    - Void UpdateTask() - Sending data 'S\t7852\tMFR   \tSPS   \t02\t13:20:50.423\t00\t0043\t4140-1\t658215741663000013601021        \tWG'. SendCounter=1. Current send queue (port: ConMFRtoPLCSC3) size is '1'.",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.595",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 765,
+      "raw": "2026.09.11 13:20:50.595 - Daten       - Raw Data: >>\u0002S\t4578\tSPS   \tMFR   \t03\t11:24:57.725\t00\t0043\t4140-1\t658215741663000013601021        \tWG\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.595",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 766,
+      "raw": "2026.09.11 13:20:50.595 - Daten       - Received (decoded)(087): ASCII[S<HT>4578<HT>SPS   <HT>MFR   <HT>03<HT>11:24:57.725<HT>00<HT>0043<HT>4140-1<HT>658215741663000013601021        <HT>WG]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.595",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 3356,
+      "raw": "2026.09.11 13:20:50.595 - Standard    - OnPlcAcknowledge: received Data: '4140-1|SC_H4T4|658215741663000013601021|WG'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.595",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 3357,
+      "raw": "2026.09.11 13:20:50.595 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_H4T4, WeightStart=5460, WeightBrutto=5580, PlcTarget=WG, TrackingId=658215741663000013601021, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.595",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 3358,
+      "raw": "2026.09.11 13:20:50.595 - Standard    - OnPlcAcknowledge: '658215741663000013601021' ' ist nicht das Ziel => keine Aktion!'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.595",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7441,
+      "raw": "2026.09.11 13:20:50.595 - Standard    - OnPacketReceived - Received data 'S\t4578\tSPS   \tMFR   \t03\t11:24:57.725\t00\t0043\t4140-1\t658215741663000013601021        \tWG'. (port: ConPLCtoMFRSC3)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.595",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7443,
+      "raw": "2026.09.11 13:20:50.595 - Standard    - OnSendAcknowledgeToPlc - 'S\t4578\tSPS   \tMFR   \t03\t11:24:57.725\t00\t0043\t4140-1\t        658215741663000013601021\tWG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.595",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7444,
+      "raw": "2026.09.11 13:20:50.595 - TelegrammInfo - SPS->MFR: Ausschleuse Quittung - #'4140-1'/4140-1 Barcode '658215741663000013601021' IstZiel 'WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.595",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7445,
+      "raw": "2026.09.11 13:20:50.595 - Test        - RPCCallSendAckDataToLogicModule - ScannerID='4140-1' ScannerName='SC_H4T4' Barcode='658215741663000013601021' IstZiel='WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:50.595",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7446,
+      "raw": "2026.09.11 13:20:50.595 - Standard    - RPC: Ausschleuse Quittung an Logikmodul gesendet: '4140-1|SC_H4T4|658215741663000013601021|WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.220",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 917,
+      "raw": "2026.09.11 13:20:56.220 - Daten       - Raw Data: >>\u0002S\t4616\tSPS   \tMFR   \t01\t11:25:03.353\t00\t0040\t4150-1\t658215741663000013601021        \u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.220",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 918,
+      "raw": "2026.09.11 13:20:56.220 - Daten       - Received (decoded)(084): ASCII[S<HT>4616<HT>SPS   <HT>MFR   <HT>01<HT>11:25:03.353<HT>00<HT>0040<HT>4150-1<HT>658215741663000013601021        ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.220",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 3703,
+      "raw": "2026.09.11 13:20:56.220 - Standard    - OnScannerData: received Data: '4150-1|SC_H4T5|658215741663000013601021'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.220",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7929,
+      "raw": "2026.09.11 13:20:56.220 - Standard    - OnPacketReceived - Received data 'S\t4616\tSPS   \tMFR   \t01\t11:25:03.353\t00\t0040\t4150-1\t658215741663000013601021        '. (port: ConPLCtoMFRSC3)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.220",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7931,
+      "raw": "2026.09.11 13:20:56.220 - Standard    - OnSendAcknowledgeToPlc - 'S\t4616\tSPS   \tMFR   \t01\t11:25:03.353\t00\t0040\t4150-1\t        658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.220",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7932,
+      "raw": "2026.09.11 13:20:56.220 - TelegrammInfo - SPS->MFR: Scanner Daten - #'4150-1'/4150-1 Barcode '658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.220",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7933,
+      "raw": "2026.09.11 13:20:56.220 - Test        - RPCCallSendScannerDataToLogicModule - ScannerID='4150-1' ScannerName='SC_H4T5' Barcode='658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.236",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 3707,
+      "raw": "2026.09.11 13:20:56.236 - Ablaufinfo  - SaveToDB - TID: '658215741663000013601021' Target: '00000' circle: '0'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.236",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 3708,
+      "raw": "2026.09.11 13:20:56.236 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_H4T5, WeightStart=5460, WeightBrutto=5580, PlcTarget=WG, TrackingId=658215741663000013601021, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.236",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 3709,
+      "raw": "2026.09.11 13:20:56.236 - Standard    - ScanTeleskopNP: 'SC_H4T5' TrackingID='658215741663000013601021' ParcelId='0015690683' => Target:'WG'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.236",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 3711,
+      "raw": "2026.09.11 13:20:56.236 - Standard    - SendTaskToPlc - Send job to PlcSC3: ZielMethode: RPCFuncSendeFahrziel Parameter='4150-1|658215741663000013601021|WG')",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.236",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7934,
+      "raw": "2026.09.11 13:20:56.236 - Test        - RPCFuncSendeFahrziel - Parameter='4150-1|658215741663000013601021|WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.236",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7936,
+      "raw": "2026.09.11 13:20:56.236 - Standard    - RPC: Scanner Daten an Logikmodul gesendet: '4150-1|SC_H4T5|658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.252",
+      "sourceFile": "ConMFRtoPLCSC3_Connection_2026_09_11__13_31_45.log",
+      "line": 10494,
+      "raw": "2026.09.11 13:20:56.252 - Daten       - Sent: 89/89 >>\u0002S\t7871\tMFR   \tSPS   \t02\t13:20:56.252\t00\t0043\t4150-1\t658215741663000013601021        \tWG\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.252",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7939,
+      "raw": "2026.09.11 13:20:56.252 - Standard    - Void UpdateTask() - Sending data 'S\t7871\tMFR   \tSPS   \t02\t13:20:56.252\t00\t0043\t4150-1\t658215741663000013601021        \tWG'. SendCounter=1. Current send queue (port: ConMFRtoPLCSC3) size is '1'.",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.377",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 925,
+      "raw": "2026.09.11 13:20:56.377 - Daten       - Raw Data: >>\u0002S\t4618\tSPS   \tMFR   \t03\t11:25:03.513\t00\t0043\t4150-1\t658215741663000013601021        \tWG\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.377",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 926,
+      "raw": "2026.09.11 13:20:56.377 - Daten       - Received (decoded)(087): ASCII[S<HT>4618<HT>SPS   <HT>MFR   <HT>03<HT>11:25:03.513<HT>00<HT>0043<HT>4150-1<HT>658215741663000013601021        <HT>WG]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.377",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 3718,
+      "raw": "2026.09.11 13:20:56.377 - Standard    - OnPlcAcknowledge: received Data: '4150-1|SC_H4T5|658215741663000013601021|WG'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.377",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 3719,
+      "raw": "2026.09.11 13:20:56.377 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_H4T5, WeightStart=5460, WeightBrutto=5580, PlcTarget=WG, TrackingId=658215741663000013601021, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.377",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 3720,
+      "raw": "2026.09.11 13:20:56.377 - Standard    - OnPlcAcknowledge: '658215741663000013601021' ' ist nicht das Ziel => keine Aktion!'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.377",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7955,
+      "raw": "2026.09.11 13:20:56.377 - Standard    - OnPacketReceived - Received data 'S\t4618\tSPS   \tMFR   \t03\t11:25:03.513\t00\t0043\t4150-1\t658215741663000013601021        \tWG'. (port: ConPLCtoMFRSC3)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.377",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7957,
+      "raw": "2026.09.11 13:20:56.377 - Standard    - OnSendAcknowledgeToPlc - 'S\t4618\tSPS   \tMFR   \t03\t11:25:03.513\t00\t0043\t4150-1\t        658215741663000013601021\tWG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.377",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7958,
+      "raw": "2026.09.11 13:20:56.377 - TelegrammInfo - SPS->MFR: Ausschleuse Quittung - #'4150-1'/4150-1 Barcode '658215741663000013601021' IstZiel 'WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.377",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7959,
+      "raw": "2026.09.11 13:20:56.377 - Test        - RPCCallSendAckDataToLogicModule - ScannerID='4150-1' ScannerName='SC_H4T5' Barcode='658215741663000013601021' IstZiel='WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:20:56.377",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 7960,
+      "raw": "2026.09.11 13:20:56.377 - Standard    - RPC: Ausschleuse Quittung an Logikmodul gesendet: '4150-1|SC_H4T5|658215741663000013601021|WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:03.769",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 1077,
+      "raw": "2026.09.11 13:21:03.769 - Daten       - Raw Data: >>\u0002S\t4656\tSPS   \tMFR   \t01\t11:25:10.912\t00\t0040\t4160-1\t658215741663000013601021        \u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:03.769",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 1078,
+      "raw": "2026.09.11 13:21:03.769 - Daten       - Received (decoded)(084): ASCII[S<HT>4656<HT>SPS   <HT>MFR   <HT>01<HT>11:25:10.912<HT>00<HT>0040<HT>4160-1<HT>658215741663000013601021        ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:03.769",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4100,
+      "raw": "2026.09.11 13:21:03.769 - Standard    - OnScannerData: received Data: '4160-1|SC_H4T6|658215741663000013601021'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:03.769",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 8431,
+      "raw": "2026.09.11 13:21:03.769 - Standard    - OnPacketReceived - Received data 'S\t4656\tSPS   \tMFR   \t01\t11:25:10.912\t00\t0040\t4160-1\t658215741663000013601021        '. (port: ConPLCtoMFRSC3)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:03.769",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 8433,
+      "raw": "2026.09.11 13:21:03.769 - Standard    - OnSendAcknowledgeToPlc - 'S\t4656\tSPS   \tMFR   \t01\t11:25:10.912\t00\t0040\t4160-1\t        658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:03.769",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 8434,
+      "raw": "2026.09.11 13:21:03.769 - TelegrammInfo - SPS->MFR: Scanner Daten - #'4160-1'/4160-1 Barcode '658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:03.769",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 8435,
+      "raw": "2026.09.11 13:21:03.769 - Test        - RPCCallSendScannerDataToLogicModule - ScannerID='4160-1' ScannerName='SC_H4T6' Barcode='658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:03.800",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4104,
+      "raw": "2026.09.11 13:21:03.800 - Ablaufinfo  - SaveToDB - TID: '658215741663000013601021' Target: '00000' circle: '0'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:03.800",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4105,
+      "raw": "2026.09.11 13:21:03.800 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_H4T6, WeightStart=5460, WeightBrutto=5580, PlcTarget=AR, TrackingId=658215741663000013601021, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:03.800",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4106,
+      "raw": "2026.09.11 13:21:03.800 - Standard    - ScanTeleskopNP: 'SC_H4T6' TrackingID='658215741663000013601021' ParcelId='0015690683' hat Ziel erreicht (SC_H4T6), schleuse aus! => Target:'AR'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:03.800",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4108,
+      "raw": "2026.09.11 13:21:03.800 - Standard    - SendTaskToPlc - Send job to PlcSC3: ZielMethode: RPCFuncSendeFahrziel Parameter='4160-1|658215741663000013601021|AR')",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:03.800",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 8437,
+      "raw": "2026.09.11 13:21:03.800 - Test        - RPCFuncSendeFahrziel - Parameter='4160-1|658215741663000013601021|AR'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:03.800",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 8439,
+      "raw": "2026.09.11 13:21:03.800 - Standard    - RPC: Scanner Daten an Logikmodul gesendet: '4160-1|SC_H4T6|658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:03.816",
+      "sourceFile": "ConMFRtoPLCSC3_Connection_2026_09_11__13_31_45.log",
+      "line": 10562,
+      "raw": "2026.09.11 13:21:03.816 - Daten       - Sent: 89/89 >>\u0002S\t7888\tMFR   \tSPS   \t02\t13:21:03.816\t00\t0043\t4160-1\t658215741663000013601021        \tAR\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:03.816",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 8441,
+      "raw": "2026.09.11 13:21:03.816 - Standard    - Void UpdateTask() - Sending data 'S\t7888\tMFR   \tSPS   \t02\t13:21:03.816\t00\t0043\t4160-1\t658215741663000013601021        \tAR'. SendCounter=1. Current send queue (port: ConMFRtoPLCSC3) size is '1'.",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:04.316",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 1117,
+      "raw": "2026.09.11 13:21:04.316 - Daten       - Raw Data: >>\u0002S\t4666\tSPS   \tMFR   \t03\t11:25:11.449\t00\t0043\t4160-1\t658215741663000013601021        \tWG\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:04.316",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 1118,
+      "raw": "2026.09.11 13:21:04.316 - Daten       - Received (decoded)(087): ASCII[S<HT>4666<HT>SPS   <HT>MFR   <HT>03<HT>11:25:11.449<HT>00<HT>0043<HT>4160-1<HT>658215741663000013601021        <HT>WG]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:04.316",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4188,
+      "raw": "2026.09.11 13:21:04.316 - Standard    - OnPlcAcknowledge: received Data: '4160-1|SC_H4T6|658215741663000013601021|WG'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:04.316",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4189,
+      "raw": "2026.09.11 13:21:04.316 - Fehler      - OnPlcAcknowledge - Paket '0015690683' wurde falsch ausgeschleust! Pos: '4160-1' Soll: 'AR' Ist: 'WG'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:04.316",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4190,
+      "raw": "2026.09.11 13:21:04.316 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_H4T6, WeightStart=5460, WeightBrutto=5580, PlcTarget=AR, TrackingId=658215741663000013601021, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:04.316",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4191,
+      "raw": "2026.09.11 13:21:04.316 - Standard    - OnPlcAcknowledge: '658215741663000013601021' ' ist nicht das Ziel => keine Aktion!'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:04.316",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 8569,
+      "raw": "2026.09.11 13:21:04.316 - Standard    - OnPacketReceived - Received data 'S\t4666\tSPS   \tMFR   \t03\t11:25:11.449\t00\t0043\t4160-1\t658215741663000013601021        \tWG'. (port: ConPLCtoMFRSC3)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:04.316",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 8571,
+      "raw": "2026.09.11 13:21:04.316 - Standard    - OnSendAcknowledgeToPlc - 'S\t4666\tSPS   \tMFR   \t03\t11:25:11.449\t00\t0043\t4160-1\t        658215741663000013601021\tWG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:04.316",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 8572,
+      "raw": "2026.09.11 13:21:04.316 - TelegrammInfo - SPS->MFR: Ausschleuse Quittung - #'4160-1'/4160-1 Barcode '658215741663000013601021' IstZiel 'WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:04.316",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 8573,
+      "raw": "2026.09.11 13:21:04.316 - Test        - RPCCallSendAckDataToLogicModule - ScannerID='4160-1' ScannerName='SC_H4T6' Barcode='658215741663000013601021' IstZiel='WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:04.316",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 8574,
+      "raw": "2026.09.11 13:21:04.316 - Standard    - RPC: Ausschleuse Quittung an Logikmodul gesendet: '4160-1|SC_H4T6|658215741663000013601021|WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.347",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 1261,
+      "raw": "2026.09.11 13:21:10.347 - Daten       - Raw Data: >>\u0002S\t4702\tSPS   \tMFR   \t01\t11:25:17.481\t00\t0040\t4170-1\t658215741663000013601021        \u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.347",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 1262,
+      "raw": "2026.09.11 13:21:10.347 - Daten       - Received (decoded)(084): ASCII[S<HT>4702<HT>SPS   <HT>MFR   <HT>01<HT>11:25:17.481<HT>00<HT>0040<HT>4170-1<HT>658215741663000013601021        ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.347",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 1264,
+      "raw": "2026.09.11 13:21:10.347 - Daten       - Raw Data: >>\u0002S\t4702\tSPS   \tMFR   \t01\t11:25:17.481\t00\t0040\t4170-1\t658215741663000013601021        \u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.347",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 1265,
+      "raw": "2026.09.11 13:21:10.347 - Daten       - Received (decoded)(084): ASCII[S<HT>4702<HT>SPS   <HT>MFR   <HT>01<HT>11:25:17.481<HT>00<HT>0040<HT>4170-1<HT>658215741663000013601021        ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.347",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4512,
+      "raw": "2026.09.11 13:21:10.347 - Standard    - OnScannerData: received Data: '4170-1|SC_H4T7|658215741663000013601021'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.347",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9026,
+      "raw": "2026.09.11 13:21:10.347 - Standard    - OnPacketReceived - Received data 'S\t4702\tSPS   \tMFR   \t01\t11:25:17.481\t00\t0040\t4170-1\t658215741663000013601021        '. (port: ConPLCtoMFRSC3)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.347",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9028,
+      "raw": "2026.09.11 13:21:10.347 - Standard    - OnSendAcknowledgeToPlc - 'S\t4702\tSPS   \tMFR   \t01\t11:25:17.481\t00\t0040\t4170-1\t        658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.347",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9029,
+      "raw": "2026.09.11 13:21:10.347 - TelegrammInfo - SPS->MFR: Scanner Daten - #'4170-1'/4170-1 Barcode '658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.347",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9030,
+      "raw": "2026.09.11 13:21:10.347 - Test        - RPCCallSendScannerDataToLogicModule - ScannerID='4170-1' ScannerName='SC_H4T7' Barcode='658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.363",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4516,
+      "raw": "2026.09.11 13:21:10.363 - Ablaufinfo  - SaveToDB - TID: '658215741663000013601021' Target: '00000' circle: '0'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.363",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4517,
+      "raw": "2026.09.11 13:21:10.363 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_H4T7, WeightStart=5460, WeightBrutto=5580, PlcTarget=WG, TrackingId=658215741663000013601021, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.363",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4518,
+      "raw": "2026.09.11 13:21:10.363 - Standard    - ScanTeleskopNP: 'SC_H4T7' TrackingID='658215741663000013601021' ParcelId='0015690683' => Target:'WG'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.363",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4520,
+      "raw": "2026.09.11 13:21:10.363 - Standard    - SendTaskToPlc - Send job to PlcSC3: ZielMethode: RPCFuncSendeFahrziel Parameter='4170-1|658215741663000013601021|WG')",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.363",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4524,
+      "raw": "2026.09.11 13:21:10.363 - Standard    - OnScannerData: received Data: '4170-1|SC_H4T7|658215741663000013601021'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.363",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9031,
+      "raw": "2026.09.11 13:21:10.363 - Test        - RPCFuncSendeFahrziel - Parameter='4170-1|658215741663000013601021|WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.363",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9033,
+      "raw": "2026.09.11 13:21:10.363 - Standard    - RPC: Scanner Daten an Logikmodul gesendet: '4170-1|SC_H4T7|658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.363",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9036,
+      "raw": "2026.09.11 13:21:10.363 - Standard    - OnPacketReceived - Received data 'S\t4702\tSPS   \tMFR   \t01\t11:25:17.481\t00\t0040\t4170-1\t658215741663000013601021        '. (port: ConPLCtoMFRSC3)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.363",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9038,
+      "raw": "2026.09.11 13:21:10.363 - Standard    - OnSendAcknowledgeToPlc - 'S\t4702\tSPS   \tMFR   \t01\t11:25:17.481\t00\t0040\t4170-1\t        658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.363",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9039,
+      "raw": "2026.09.11 13:21:10.363 - TelegrammInfo - SPS->MFR: Scanner Daten - #'4170-1'/4170-1 Barcode '658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.363",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9040,
+      "raw": "2026.09.11 13:21:10.363 - Test        - RPCCallSendScannerDataToLogicModule - ScannerID='4170-1' ScannerName='SC_H4T7' Barcode='658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.378",
+      "sourceFile": "ConMFRtoPLCSC3_Connection_2026_09_11__13_31_45.log",
+      "line": 10646,
+      "raw": "2026.09.11 13:21:10.378 - Daten       - Sent: 89/89 >>\u0002S\t7913\tMFR   \tSPS   \t02\t13:21:10.378\t00\t0043\t4170-1\t658215741663000013601021        \tWG\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.378",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4528,
+      "raw": "2026.09.11 13:21:10.378 - Ablaufinfo  - SaveToDB - TID: '658215741663000013601021' Target: '00000' circle: '0'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.378",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4529,
+      "raw": "2026.09.11 13:21:10.378 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_H4T7, WeightStart=5460, WeightBrutto=5580, PlcTarget=WG, TrackingId=658215741663000013601021, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.378",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4530,
+      "raw": "2026.09.11 13:21:10.378 - Standard    - ScanTeleskopNP: 'SC_H4T7' TrackingID='658215741663000013601021' ParcelId='0015690683' => Target:'WG'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.378",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4532,
+      "raw": "2026.09.11 13:21:10.378 - Standard    - SendTaskToPlc - Send job to PlcSC3: ZielMethode: RPCFuncSendeFahrziel Parameter='4170-1|658215741663000013601021|WG')",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.378",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9042,
+      "raw": "2026.09.11 13:21:10.378 - Standard    - Void UpdateTask() - Sending data 'S\t7913\tMFR   \tSPS   \t02\t13:21:10.378\t00\t0043\t4170-1\t658215741663000013601021        \tWG'. SendCounter=1. Current send queue (port: ConMFRtoPLCSC3) size is '1'.",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.378",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9047,
+      "raw": "2026.09.11 13:21:10.378 - Test        - RPCFuncSendeFahrziel - Parameter='4170-1|658215741663000013601021|WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.378",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9049,
+      "raw": "2026.09.11 13:21:10.378 - Standard    - RPC: Scanner Daten an Logikmodul gesendet: '4170-1|SC_H4T7|658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.410",
+      "sourceFile": "ConMFRtoPLCSC3_Connection_2026_09_11__13_31_45.log",
+      "line": 10650,
+      "raw": "2026.09.11 13:21:10.410 - Daten       - Sent: 89/89 >>\u0002S\t7914\tMFR   \tSPS   \t02\t13:21:10.410\t00\t0043\t4170-1\t658215741663000013601021        \tWG\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.410",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9071,
+      "raw": "2026.09.11 13:21:10.410 - Standard    - Void UpdateTask() - Sending data 'S\t7914\tMFR   \tSPS   \t02\t13:21:10.410\t00\t0043\t4170-1\t658215741663000013601021        \tWG'. SendCounter=1. Current send queue (port: ConMFRtoPLCSC3) size is '2'.",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.441",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 1279,
+      "raw": "2026.09.11 13:21:10.441 - Daten       - Raw Data: >>\u0002S\t4705\tSPS   \tMFR   \t03\t11:25:17.575\t00\t0043\t4170-1\t658215741663000013601021        \tWG\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.441",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 1280,
+      "raw": "2026.09.11 13:21:10.441 - Daten       - Received (decoded)(087): ASCII[S<HT>4705<HT>SPS   <HT>MFR   <HT>03<HT>11:25:17.575<HT>00<HT>0043<HT>4170-1<HT>658215741663000013601021        <HT>WG]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.441",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4556,
+      "raw": "2026.09.11 13:21:10.441 - Standard    - OnPlcAcknowledge: received Data: '4170-1|SC_H4T7|658215741663000013601021|WG'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.441",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4557,
+      "raw": "2026.09.11 13:21:10.441 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_H4T7, WeightStart=5460, WeightBrutto=5580, PlcTarget=WG, TrackingId=658215741663000013601021, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.441",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4558,
+      "raw": "2026.09.11 13:21:10.441 - Standard    - OnPlcAcknowledge: '658215741663000013601021' ' ist nicht das Ziel => keine Aktion!'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.441",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9092,
+      "raw": "2026.09.11 13:21:10.441 - Standard    - OnPacketReceived - Received data 'S\t4705\tSPS   \tMFR   \t03\t11:25:17.575\t00\t0043\t4170-1\t658215741663000013601021        \tWG'. (port: ConPLCtoMFRSC3)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.441",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9094,
+      "raw": "2026.09.11 13:21:10.441 - Standard    - OnSendAcknowledgeToPlc - 'S\t4705\tSPS   \tMFR   \t03\t11:25:17.575\t00\t0043\t4170-1\t        658215741663000013601021\tWG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.441",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9095,
+      "raw": "2026.09.11 13:21:10.441 - TelegrammInfo - SPS->MFR: Ausschleuse Quittung - #'4170-1'/4170-1 Barcode '658215741663000013601021' IstZiel 'WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.441",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9096,
+      "raw": "2026.09.11 13:21:10.441 - Test        - RPCCallSendAckDataToLogicModule - ScannerID='4170-1' ScannerName='SC_H4T7' Barcode='658215741663000013601021' IstZiel='WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:10.441",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9097,
+      "raw": "2026.09.11 13:21:10.441 - Standard    - RPC: Ausschleuse Quittung an Logikmodul gesendet: '4170-1|SC_H4T7|658215741663000013601021|WG'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.176",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 1433,
+      "raw": "2026.09.11 13:21:16.176 - Daten       - Raw Data: >>\u0002S\t4743\tSPS   \tMFR   \t01\t11:25:23.315\t00\t0040\t4180-1\t658215741663000013601021        \u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.176",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 1434,
+      "raw": "2026.09.11 13:21:16.176 - Daten       - Received (decoded)(084): ASCII[S<HT>4743<HT>SPS   <HT>MFR   <HT>01<HT>11:25:23.315<HT>00<HT>0040<HT>4180-1<HT>658215741663000013601021        ]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.176",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4883,
+      "raw": "2026.09.11 13:21:16.176 - Standard    - OnScannerData: received Data: '4180-1|SC_H4T8|658215741663000013601021'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.176",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9564,
+      "raw": "2026.09.11 13:21:16.176 - Standard    - OnPacketReceived - Received data 'S\t4743\tSPS   \tMFR   \t01\t11:25:23.315\t00\t0040\t4180-1\t658215741663000013601021        '. (port: ConPLCtoMFRSC3)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.176",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9566,
+      "raw": "2026.09.11 13:21:16.176 - Standard    - OnSendAcknowledgeToPlc - 'S\t4743\tSPS   \tMFR   \t01\t11:25:23.315\t00\t0040\t4180-1\t        658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.176",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9567,
+      "raw": "2026.09.11 13:21:16.176 - TelegrammInfo - SPS->MFR: Scanner Daten - #'4180-1'/4180-1 Barcode '658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.176",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9568,
+      "raw": "2026.09.11 13:21:16.176 - Test        - RPCCallSendScannerDataToLogicModule - ScannerID='4180-1' ScannerName='SC_H4T8' Barcode='658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.191",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4887,
+      "raw": "2026.09.11 13:21:16.191 - Ablaufinfo  - SaveToDB - TID: '658215741663000013601021' Target: '00000' circle: '0'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.207",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4888,
+      "raw": "2026.09.11 13:21:16.207 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_H4T8, WeightStart=5460, WeightBrutto=5580, PlcTarget=AR, TrackingId=658215741663000013601021, Status=PENDING, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.207",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4889,
+      "raw": "2026.09.11 13:21:16.207 - Standard    - ScanTeleskopNP: 'SC_H4T8' TrackingID='658215741663000013601021' ParcelId='0015690683' hat Ziel erreicht (SC_H4T8), schleuse aus! => Target:'AR'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.207",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4891,
+      "raw": "2026.09.11 13:21:16.207 - Standard    - SendTaskToPlc - Send job to PlcSC3: ZielMethode: RPCFuncSendeFahrziel Parameter='4180-1|658215741663000013601021|AR')",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.207",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9570,
+      "raw": "2026.09.11 13:21:16.207 - Test        - RPCFuncSendeFahrziel - Parameter='4180-1|658215741663000013601021|AR'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.207",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9572,
+      "raw": "2026.09.11 13:21:16.207 - Standard    - RPC: Scanner Daten an Logikmodul gesendet: '4180-1|SC_H4T8|658215741663000013601021'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.238",
+      "sourceFile": "ConMFRtoPLCSC3_Connection_2026_09_11__13_31_45.log",
+      "line": 10718,
+      "raw": "2026.09.11 13:21:16.238 - Daten       - Sent: 89/89 >>\u0002S\t7931\tMFR   \tSPS   \t02\t13:21:16.238\t00\t0043\t4180-1\t658215741663000013601021        \tAR\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.238",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9574,
+      "raw": "2026.09.11 13:21:16.238 - Standard    - Void UpdateTask() - Sending data 'S\t7931\tMFR   \tSPS   \t02\t13:21:16.238\t00\t0043\t4180-1\t658215741663000013601021        \tAR'. SendCounter=1. Current send queue (port: ConMFRtoPLCSC3) size is '1'.",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.504",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 1437,
+      "raw": "2026.09.11 13:21:16.504 - Daten       - Raw Data: >>\u0002S\t4744\tSPS   \tMFR   \t03\t11:25:23.645\t00\t0043\t4180-1\t658215741663000013601021        \tAR\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.504",
+      "sourceFile": "ConPLCtoMFRSC3_Connection_2026_09_11__13_30_57.log",
+      "line": 1438,
+      "raw": "2026.09.11 13:21:16.504 - Daten       - Received (decoded)(087): ASCII[S<HT>4744<HT>SPS   <HT>MFR   <HT>03<HT>11:25:23.645<HT>00<HT>0043<HT>4180-1<HT>658215741663000013601021        <HT>AR]",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.504",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4895,
+      "raw": "2026.09.11 13:21:16.504 - Standard    - OnPlcAcknowledge: received Data: '4180-1|SC_H4T8|658215741663000013601021|AR'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.504",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9580,
+      "raw": "2026.09.11 13:21:16.504 - Standard    - OnPacketReceived - Received data 'S\t4744\tSPS   \tMFR   \t03\t11:25:23.645\t00\t0043\t4180-1\t658215741663000013601021        \tAR'. (port: ConPLCtoMFRSC3)",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.504",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9582,
+      "raw": "2026.09.11 13:21:16.504 - Standard    - OnSendAcknowledgeToPlc - 'S\t4744\tSPS   \tMFR   \t03\t11:25:23.645\t00\t0043\t4180-1\t        658215741663000013601021\tAR'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.504",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9583,
+      "raw": "2026.09.11 13:21:16.504 - TelegrammInfo - SPS->MFR: Ausschleuse Quittung - #'4180-1'/4180-1 Barcode '658215741663000013601021' IstZiel 'AR'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.504",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9584,
+      "raw": "2026.09.11 13:21:16.504 - Test        - RPCCallSendAckDataToLogicModule - ScannerID='4180-1' ScannerName='SC_H4T8' Barcode='658215741663000013601021' IstZiel='AR'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.519",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4896,
+      "raw": "2026.09.11 13:21:16.519 - Standard    - SendeAusschleusungAnFWMS: received Data: ParcelId='0015690683' ChuteID=04008",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.519",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4897,
+      "raw": "2026.09.11 13:21:16.519 - Standard    - SendeAusschleusungAnFWMS - Send job to FWMS: ZielMethode: 'RPCFuncSendeWAZiel' Parameter='0015690683|04008|0015717535')",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.519",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4899,
+      "raw": "2026.09.11 13:21:16.519 - Ablaufinfo  - SaveToDB - TID: '658215741663000013601021' Target: '04008' circle: '0'",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.519",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4900,
+      "raw": "2026.09.11 13:21:16.519 - Ablaufinfo  - SaveToDB - 'UPDATE (tudata) PrincipalID=ZP, OrderID=0015717535, ParcelID=0015690683, ControlFlag=, GrossWeight=5455, CarrierID=EXP, CartonType=F, LastScanPos=SC_H4T8, WeightStart=5460, WeightBrutto=5580, PlcTarget=AR, TrackingId=658215741663000013601021, Status=CLOSED, VRNewHeight=161, '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.519",
+      "sourceFile": "ProcLogicSC3_Process_2026_09_11__13_25_15.log",
+      "line": 4901,
+      "raw": "2026.09.11 13:21:16.519 - Standard    - OnPlcAcknowledge: '658215741663000013601021' 'Ausschleuse Meldung '04008'an FWMS gesendet => CLOSE '",
+      "layer": "Logic"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.519",
+      "sourceFile": "ProcPLCSC3_Process_2026_09_11__13_22_54.log",
+      "line": 9586,
+      "raw": "2026.09.11 13:21:16.519 - Standard    - RPC: Ausschleuse Quittung an Logikmodul gesendet: '4180-1|SC_H4T8|658215741663000013601021|AR'",
+      "layer": "PLC"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.597",
+      "sourceFile": "ConMFRtoLVS_Connection_2026_09_11__13_23_42.log",
+      "line": 17355,
+      "raw": "2026.09.11 13:21:16.597 - Daten       - Sent: 90/90 >>\u0002S\t4313\tMFC   \tWMF   \t03\t13:21:16.597\t00\t0043\tZP 00157175350015690683          0000400803\u0003<<",
+      "layer": "Transport"
+    },
+    {
+      "timestamp": "2026.09.11 13:21:16.597",
+      "sourceFile": "ProcLVS_Process_2026_09_11__14_42_47.log",
+      "line": 3227,
+      "raw": "2026.09.11 13:21:16.597 - Standard    - Void UpdateTask() - Sending data 'S\t4313\tMFC   \tWMF   \t03\t13:21:16.597\t00\t0043\tZP 00157175350015690683          0000400803'. SendCounter=1. Current send queue (port: ConMFRtoLVS) size is '1'.",
+      "layer": "LVS"
+    }
+  ],
+  "completeness": "Closed-anchor reconstruction",
+  "sourcePartitions": [
+    "root"
+  ]
+}
