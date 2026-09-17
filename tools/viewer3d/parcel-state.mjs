@@ -20,14 +20,21 @@ export function prepareObservations(events, base) {
   return events.map((e,index)=>{
     const raw=e.raw??e.Raw??'', timestamp=e.timestamp??e.Timestamp;
     const values=dbValues(raw), explicit=e.location??e.Location??values?.LastScanPos??raw.match(/\bSC_[A-Z0-9_]+\b/)?.[0];
-    const layer=values?'Database':(e.layer??e.Layer??'Unclassified');
     const sourceFile=e.sourceFile??e.SourceFile??'';
+    const layer=values?'Database':normalizeLayer(e.layer??e.Layer,sourceFile,raw);
     const logMatch=raw.match(/ - ([^-]+?)\\s+- /);
     const methodMatch=raw.match(/ - [^-]+ - ([A-Za-z_][\\w.]*(?:\\([^)]*\\))?)/);
     return {t:(millis(timestamp)-millis(base))/1000,Timestamp:timestamp,raw,values,LocationId:explicit||null,Layer:layer,
       system:e.System||sourceFile.split(/[\\/]/).at(-1).split('_')[0],sourceFile,logLevel:e.logLevel??logMatch?.[1]?.trim()??null,method:e.method??methodMatch?.[1]??null,
       line:e.line??e.Line,index};
   }).sort((a,b)=>a.t-b.t||a.index-b.index);
+}
+function normalizeLayer(layer,sourceFile,raw) {
+  const name=sourceFile.split(/[\\/]/).at(-1);
+  if(/^ProcCamera/i.test(name)||/OnSendInfoStringToCamera/i.test(raw))return 'Camera';
+  if(/^RemoteManagement/i.test(name)||/Sending Waage data to UI/i.test(raw))return 'UI';
+  if(/^ProcEtikettierer/i.test(name)||/OnDateiDrucken|DoZplPrintJob|UpdateTrackingId/i.test(raw))return 'Labeler';
+  return layer||'Unclassified';
 }
 export function stateAt(observations,time) {
   const values={}, provenance={};
@@ -57,6 +64,9 @@ export function explain(e) {
   if(/SendTaskToPlc|Fahrziel/.test(raw))return 'The material-flow logic issued a destination instruction to the conveyor controller.';
   if(/Ausschleuse Quittung|OnPlcAcknowledge/.test(raw))return 'The conveyor controller reported the actual routing outcome. This is separate from issuing the instruction.';
   if(/OnPlcCloseAcknowledge/.test(raw))return 'The controller reported the parcel’s outbound completion.';
+  if(e.Layer==='Camera')return 'The parcel data was sent to the camera system so the camera can associate an image with this parcel and its weighing moment.';
+  if(e.Layer==='UI')return 'The scale result was published to the operator interface, including actual weight, target weight, tolerance, scale ID and parcel ID.';
+  if(e.Layer==='Labeler')return 'The label service received the parcel, found its ZPL print file, sent it to the label printer and may have assigned or updated the tracking ID.';
   if(e.Layer==='Transport')return 'The communication connection recorded a telegram exchange. A send alone does not confirm physical movement.';
   if(e.Layer==='LVS')return 'The warehouse-system process recorded a message exchange for this parcel.';
   return 'A '+e.Layer+' observation was recorded. Its detailed meaning has not yet been mapped; the original evidence is available.';

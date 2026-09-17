@@ -158,6 +158,7 @@ button:hover{background:var(--selected);border-color:var(--trace)}
 .layer-nav [role=tab]:first-child{border-top:0}
 .layer-nav [role=tab][aria-selected=true]{background:var(--control);color:var(--text);outline:0}
 .layer-tab[data-layer="Database"]{--layer-color:#d8a343;--layer-fill:#6b4d12}.layer-tab[data-layer="Logic"]{--layer-color:#8b9eff;--layer-fill:#303c82}.layer-tab[data-layer="PLC"]{--layer-color:#4dd5b0;--layer-fill:#145d50}.layer-tab[data-layer="Transport"]{--layer-color:#e298bd;--layer-fill:#6c3454}.layer-tab[data-layer="LVS"]{--layer-color:#bd91e8;--layer-fill:#523477}.layer-tab[data-layer="Other"],.layer-tab[data-layer="Unclassified"]{--layer-color:#8b96a3;--layer-fill:#3c4653}
+.layer-tab[data-layer="Camera"]{--layer-color:#62c6ff;--layer-fill:#164d6b}.layer-tab[data-layer="UI"]{--layer-color:#f0b45c;--layer-fill:#694514}.layer-tab[data-layer="Labeler"]{--layer-color:#f277a8;--layer-fill:#6d2344}
 .layer-nav [role=tab]{background:var(--layer-fill,#3c4653);color:#fff9;box-shadow:inset 0 -1px #ffffff14}
 .layer-nav [role=tab][aria-selected=true]{background:var(--layer-color);color:#101820;font-weight:700}
 .station-explanation-callout{max-height:65vh;overflow:auto;pointer-events:auto;overflow-wrap:anywhere}

@@ -62,9 +62,19 @@ internal static class RealDatasetJourneyReader
             raw.Contains("SaveToDB", StringComparison.OrdinalIgnoreCase) ? "StatePersisted" : e.Layer ?? "Observed";
         var timestamp = ParseTimestamp(e.Timestamp);
         var ids = aliases.Concat(ExtractTokens(raw)).Distinct(StringComparer.OrdinalIgnoreCase).ToArray();
-        var evidence = new JourneyEvidence(e.SourceFile ?? "", e.Line, e.Layer ?? "RealDataset", raw);
-        return new ParcelJourneyEvent(timestamp, type, e.Layer ?? "Observed", raw, e.Location ?? InferLocation(raw), null,
+        var layer = NormalizeLayer(e.Layer, e.SourceFile, raw);
+        var evidence = new JourneyEvidence(e.SourceFile ?? "", e.Line, layer, raw);
+        return new ParcelJourneyEvent(timestamp, type, layer, raw, e.Location ?? InferLocation(raw), null,
             JourneyEventStatus.Confirmed, ids, [evidence]);
+    }
+
+    private static string NormalizeLayer(string? layer, string? sourceFile, string raw)
+    {
+        var name = Path.GetFileName(sourceFile ?? "");
+        if (name.StartsWith("ProcCamera", StringComparison.OrdinalIgnoreCase) || raw.Contains("OnSendInfoStringToCamera", StringComparison.OrdinalIgnoreCase)) return "Camera";
+        if (name.StartsWith("RemoteManagement", StringComparison.OrdinalIgnoreCase) || raw.Contains("Sending Waage data to UI", StringComparison.OrdinalIgnoreCase)) return "UI";
+        if (name.StartsWith("ProcEtikettierer", StringComparison.OrdinalIgnoreCase) || raw.Contains("OnDateiDrucken", StringComparison.OrdinalIgnoreCase) || raw.Contains("DoZplPrintJob", StringComparison.OrdinalIgnoreCase) || raw.Contains("UpdateTrackingId", StringComparison.OrdinalIgnoreCase)) return "Labeler";
+        return string.Equals(layer, "Other", StringComparison.OrdinalIgnoreCase) ? "Other" : (layer ?? "Observed");
     }
 
     private static DateTime ParseTimestamp(string? value) =>

@@ -129,7 +129,7 @@ namespace ParcelLogMiddleware
         }
         static string Partition(string path) { var d = Path.GetDirectoryName(path); var n = Path.GetFileName(d); return Regex.IsMatch(n ?? "", @"^KW_\d+$", RegexOptions.IgnoreCase) ? n : "root"; }
 
-        static string Layer(string file) { var n = Path.GetFileName(file); if (n.StartsWith("Con")) return "Transport"; if (n.StartsWith("ProcPLC")) return "PLC"; if (n.StartsWith("ProcLogic")) return "Logic"; if (n.StartsWith("ProcLVS")) return "LVS"; if (n.StartsWith("ProcEtikettierer")) return "Labeler"; return "Other"; }
+        static string Layer(string file) { var n = Path.GetFileName(file); if (n.StartsWith("Con")) return "Transport"; if (n.StartsWith("ProcPLC")) return "PLC"; if (n.StartsWith("ProcLogic")) return "Logic"; if (n.StartsWith("ProcLVS")) return "LVS"; if (n.StartsWith("ProcEtikettierer")) return "Labeler"; if (n.StartsWith("ProcCamera")) return "Camera"; if (n.StartsWith("RemoteManagement")) return "UI"; return "Other"; }
         static string Arg(string[] a, string key, string fallback) { var i = Array.IndexOf(a, key); return i >= 0 && i + 1 < a.Length ? a[i + 1] : fallback; }
         static void Serve(int port)
         {
