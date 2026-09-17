@@ -13,7 +13,7 @@ namespace ParcelLogMiddleware
 {
     internal sealed class JourneyEvent
     {
-        public string EventId { get; set; } public string Timestamp { get; set; } public string EventType { get; set; } public string Layer { get; set; } public string System { get; set; } public string Phase { get; set; } public string Location { get; set; } public string LocationConfidence { get; set; }
+        public string EventId { get; set; } public string Timestamp { get; set; } public string EventType { get; set; } public string Layer { get; set; } public string Source { get; set; } public string Operation { get; set; } public string Channel { get; set; } public string Outcome { get; set; } public string System { get; set; } public string Phase { get; set; } public string Location { get; set; } public string LocationConfidence { get; set; }
         public string ParcelId { get; set; } public string OrderId { get; set; } public string TrackingId { get; set; } public string Target { get; set; } public string Status { get; set; } public string Raw { get; set; } public string SourceFile { get; set; }
         public int Line { get; set; }
         public string[] Identifiers { get; set; }
@@ -91,7 +91,8 @@ namespace ParcelLogMiddleware
                     var tf = TrackingField.Match(line); if (tf.Success) { ids.Add(tf.Groups["id"].Value); if (tracking == null) tracking = tf.Groups["id"].Value; }
                     if (parcel != null) ids.Add(parcel); if (order != null) ids.Add(order); if (!String.IsNullOrEmpty(tracking) && tracking != "NOREAD") ids.Add(tracking);
                     if (ids.Count == 0) continue;
-                    var e = new JourneyEvent { EventId = file + ":" + lineNo, Timestamp = sm.Groups[1].Value, EventType = type, Layer = layer, System = system, Phase = phase, Location = phase, LocationConfidence = phase == null ? "Unknown" : "Explicit", ParcelId = parcel, OrderId = order, TrackingId = tracking, Target = target, Raw = line, SourceFile = file, Line = lineNo, Identifiers = ids.ToArray() };
+                    var meaning = Meaning(line, type, layer);
+                    var e = new JourneyEvent { EventId = file + ":" + lineNo, Timestamp = sm.Groups[1].Value, EventType = type, Layer = layer, Source = meaning.Item1, Operation = meaning.Item2, Channel = meaning.Item3, Outcome = meaning.Item4, System = system, Phase = phase, Location = phase, LocationConfidence = phase == null ? "Unknown" : "Explicit", ParcelId = parcel, OrderId = order, TrackingId = tracking, Target = target, Raw = line, SourceFile = file, Line = lineNo, Identifiers = ids.ToArray() };
                     if (db.Success) { e.Status = Regex.Match(line, @"\bStatus=([^,]*)").Groups[1].Value; e.Location = Regex.Match(line, @"\bLastScanPos=([^,]*)").Groups[1].Value; }
                     if (!String.IsNullOrEmpty(parcel)) Dirty.Add(parcel);
                     foreach (var id in ids) { List<JourneyEvent> list; lock (Gate) { if (!Index.TryGetValue(id, out list)) Index[id] = list = new List<JourneyEvent>(); list.Add(e); } }
@@ -128,6 +129,22 @@ namespace ParcelLogMiddleware
             }
         }
         static string Partition(string path) { var d = Path.GetDirectoryName(path); var n = Path.GetFileName(d); return Regex.IsMatch(n ?? "", @"^KW_\d+$", RegexOptions.IgnoreCase) ? n : "root"; }
+
+        static Tuple<string, string, string, string> Meaning(string raw, string type, string layer)
+        {
+            var source = layer; var operation = type; var channel = "Log"; var outcome = "Observed";
+            if (raw.IndexOf("OnSendInfoStringToCamera", StringComparison.OrdinalIgnoreCase) >= 0) { source = "Camera"; operation = "CameraNotification"; channel = "RPC"; outcome = "Sent"; }
+            else if (raw.IndexOf("Sending Waage data to UI", StringComparison.OrdinalIgnoreCase) >= 0) { source = "UI"; operation = "WeightPublished"; channel = "UI"; outcome = "Sent"; }
+            else if (raw.IndexOf("OnDateiDrucken", StringComparison.OrdinalIgnoreCase) >= 0) { source = "Labeler"; operation = "LabelRequested"; channel = "RPC"; outcome = "Received"; }
+            else if (raw.IndexOf("FindZplFilesWithRetry", StringComparison.OrdinalIgnoreCase) >= 0) { source = "Labeler"; operation = "PrintFileSearch"; channel = "FileSystem"; outcome = "Started"; }
+            else if (raw.IndexOf("Printfile found", StringComparison.OrdinalIgnoreCase) >= 0) { source = "Labeler"; operation = "PrintFileFound"; channel = "FileSystem"; outcome = "Completed"; }
+            else if (raw.IndexOf("UpdateTrackingId", StringComparison.OrdinalIgnoreCase) >= 0) { source = "Labeler"; operation = "TrackingIdAssigned"; channel = "Database"; outcome = "Completed"; }
+            else if (raw.IndexOf("DoZplPrintJob - Out", StringComparison.OrdinalIgnoreCase) >= 0) { source = "Labeler"; operation = "LabelPrint"; channel = "PLC"; outcome = "Completed"; }
+            else if (type == "DatabaseState") { source = "Database"; operation = "StateUpdated"; channel = "Database"; outcome = "Completed"; }
+            else if (type == "PlcAcknowledgement") { source = "PLC"; operation = "RouteAcknowledgement"; channel = "PLC"; outcome = "Received"; }
+            else if (type == "ScannerRead") { source = "Logic"; operation = "ScanReceived"; channel = "RPC"; outcome = "Received"; }
+            return Tuple.Create(source, operation, channel, outcome);
+        }
 
         static string Layer(string file) { var n = Path.GetFileName(file); if (n.StartsWith("Con")) return "Transport"; if (n.StartsWith("ProcPLC")) return "PLC"; if (n.StartsWith("ProcLogic")) return "Logic"; if (n.StartsWith("ProcLVS")) return "LVS"; if (n.StartsWith("ProcEtikettierer")) return "Labeler"; if (n.StartsWith("ProcCamera")) return "Camera"; if (n.StartsWith("RemoteManagement")) return "UI"; return "Other"; }
         static string Arg(string[] a, string key, string fallback) { var i = Array.IndexOf(a, key); return i >= 0 && i + 1 < a.Length ? a[i + 1] : fallback; }
