@@ -230,4 +230,7 @@ $('play').setAttribute('title','Play / pause (Space)');$('follow').setAttribute(
 
 function tick(time){try{if(playing){t=Math.min(p.duration,t+(time-last)/1000*+$('speed').value);if(t>=p.duration)pause();render()}}catch(e){pause();$('status').textContent='Replay error: '+e.message}last=time;requestAnimationFrame(tick)}load();requestAnimationFrame(tick);window.replayTest={model:M,pointAt,partial,load(i){$('pick').value=i;load()},seek(s){pause();t=Math.max(0,Math.min(p.duration,s));render();return{xy,t}},get state(){return{xy,t,following,view}}};
 if(location.protocol==='http:'&&location.hostname==='127.0.0.1'){const close=document.createElement('button');close.textContent='Exit application';close.onclick=async()=>{pause();const r=await fetch('/api/session');const session=await r.json();await fetch('/api/exit',{method:'POST',headers:{'X-ParcelJourney-Session':session.token}});document.body.textContent='ParcelJourney has stopped. You may close this tab.'};document.querySelector('.controls').append(close)}
-</script></html>
+</script><style>
+/* Keep both station label layers visible in the 2D view. */
+.station .label,.station .code{display:block!important;pointer-events:none;text-shadow:0 1px 3px #0008}
+</style></html>
