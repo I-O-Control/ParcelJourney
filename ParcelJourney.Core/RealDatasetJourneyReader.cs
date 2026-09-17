@@ -64,8 +64,20 @@ internal static class RealDatasetJourneyReader
         var ids = aliases.Concat(ExtractTokens(raw)).Distinct(StringComparer.OrdinalIgnoreCase).ToArray();
         var layer = NormalizeLayer(e.Layer, e.SourceFile, raw);
         var evidence = new JourneyEvidence(e.SourceFile ?? "", e.Line, layer, raw);
+        var meaning = Meaning(layer, raw, type);
         return new ParcelJourneyEvent(timestamp, type, layer, raw, e.Location ?? InferLocation(raw), null,
-            JourneyEventStatus.Confirmed, ids, [evidence]);
+            JourneyEventStatus.Confirmed, ids, [evidence], meaning.Source, meaning.Operation, meaning.Channel, meaning.Outcome);
+    }
+
+    private static (string Source, string Operation, string Channel, string Outcome) Meaning(string layer, string raw, string type)
+    {
+        if (layer == "Camera") return ("Camera", "CameraNotification", "RPC", "Sent");
+        if (layer == "UI") return ("UI", "WeightPublished", "UI", "Sent");
+        if (layer == "Labeler" || raw.Contains("OnDateiDrucken", StringComparison.OrdinalIgnoreCase) || raw.Contains("DoZplPrintJob", StringComparison.OrdinalIgnoreCase)) return ("Labeler", "LabelProcessing", "RPC", "Observed");
+        if (type == "DatabaseState") return ("Database", "StateUpdated", "Database", "Completed");
+        if (type == "PlcAcknowledgement") return ("PLC", "RouteAcknowledgement", "PLC", "Received");
+        if (type == "ScannerRead") return ("Logic", "ScanReceived", "RPC", "Received");
+        return (layer, type, "Log", "Observed");
     }
 
     private static string NormalizeLayer(string? layer, string? sourceFile, string raw)
@@ -97,5 +109,5 @@ internal static class RealDatasetJourneyReader
 
     private static readonly JsonSerializerOptions Options = new() { PropertyNameCaseInsensitive = true };
     private sealed class RealParcel { public string? ParcelId { get; set; } public string[]? Aliases { get; set; } public List<RealEvent>? Events { get; set; } }
-    private sealed class RealEvent { public string? Timestamp { get; set; } public string? SourceFile { get; set; } public int Line { get; set; } public string? Raw { get; set; } public string? Layer { get; set; } public string? Location { get; set; } }
+    private sealed class RealEvent { public string? Timestamp { get; set; } public string? SourceFile { get; set; } public int Line { get; set; } public string? Raw { get; set; } public string? Layer { get; set; } public string? Location { get; set; } public string? Source { get; set; } public string? Operation { get; set; } public string? Channel { get; set; } public string? Outcome { get; set; } }
 }
