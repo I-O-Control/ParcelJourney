@@ -152,6 +152,12 @@ button:hover{background:var(--selected);border-color:var(--trace)}
 .layer-nav [data-layer=Logic]{border-bottom-color:#8b9eff}
 .layer-nav [data-layer=PLC]{border-bottom-color:#4dd5b0}
 .layer-nav [data-layer=Transport]{border-bottom-color:#e298bd}
+.station-callout{padding-left:48px}
+.station-callout .layer-nav{position:absolute;left:-1px;top:8px;bottom:8px;width:34px;margin:0;padding:0;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:0;border:0}
+.layer-nav [role=tab]{flex:1 1 0;min-height:34px;padding:5px 2px;border:0;border-top:1px solid var(--line);border-bottom:0;border-left:4px solid var(--layer-color,#8b96a3);border-radius:0;background:transparent;color:var(--muted);font-size:9px;line-height:1;writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;white-space:nowrap}
+.layer-nav [role=tab]:first-child{border-top:0}
+.layer-nav [role=tab][aria-selected=true]{background:var(--control);color:var(--text);outline:0}
+.layer-tab[data-layer="Database"]{--layer-color:#d8a343}.layer-tab[data-layer="Logic"]{--layer-color:#8b9eff}.layer-tab[data-layer="PLC"]{--layer-color:#4dd5b0}.layer-tab[data-layer="Transport"]{--layer-color:#e298bd}.layer-tab[data-layer="LVS"]{--layer-color:#bd91e8}.layer-tab[data-layer="Other"],.layer-tab[data-layer="Unclassified"]{--layer-color:#8b96a3}
 .station-explanation-callout{max-height:65vh;overflow:auto;pointer-events:auto;overflow-wrap:anywhere}
 .station-explanation-callout dl{display:grid;grid-template-columns:1fr 1.3fr;gap:7px;font-size:11px;white-space:normal}
 .station-explanation-callout dt{color:var(--muted)}
