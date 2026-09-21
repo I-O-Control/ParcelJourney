@@ -31,8 +31,8 @@ main{display:grid;grid-template-columns:minmax(0,1fr) 330px;min-height:0}
 .view-tools>span{width:1px;background:var(--line);height:20px}
 .map-footer{position:absolute;bottom:17px;left:26px;right:26px;display:flex;justify-content:space-between;gap:15px;pointer-events:none;font-size:8px;letter-spacing:1px;color:#a0b2bd}
 .map-footer b{padding:0 7px;color:#496371}
-.map-tag{display:none;position:absolute;pointer-events:none;transform:translate(-50%,-100%);padding:7px 10px;border:1px solid #dcab68;background:#15222ded;box-shadow:0 4px 12px #0003;border-radius:5px;font-size:10px;max-width:200px;white-space:nowrap}
-.map-tag::after{content:'';position:absolute;left:50%;top:100%;height:12px;width:1px;background:#dcab68}
+.map-tag{display:none;position:absolute;pointer-events:none;transform:translate(-50%,-100%);padding:7px 10px;border:1px solid var(--trace);background:var(--label-bg);box-shadow:0 4px 12px #0003;border-radius:5px;font-size:10px;max-width:200px;white-space:nowrap}
+.map-tag::after{content:'';position:absolute;left:50%;top:100%;height:12px;width:1px;background:var(--trace)}
 .map-tag.next{border-color:#66a99d;color:#b1d9d1}
 .map-tag.next::after{background:#66a99d}
 .map-tag.hover{border-color:#879fb3;background:#294151;z-index:4}
@@ -46,7 +46,7 @@ aside>label{display:block;color:var(--muted);font-size:11px;margin-bottom:8px}
 #search-form button{font-size:11px}
 #search-status{font-size:11px;color:var(--accent);margin:5px 0;min-height:13px}
 .parcel-card{display:flex;gap:13px;align-items:center;padding:18px 0 22px}
-.parcel-symbol{display:grid;place-items:center;width:43px;height:48px;background:#44382c;color:var(--accent);border:1px solid #675040;border-radius:8px;font-size:29px;flex-shrink:0}
+.parcel-symbol{display:grid;place-items:center;width:43px;height:48px;background:var(--selected);color:var(--accent);border:1px solid var(--line);border-radius:8px;font-size:29px;flex-shrink:0}
 .parcel-card h2{font-size:18px;letter-spacing:.6px;margin:5px 0}
 .parcel-card p{font-size:11px;margin:0;color:var(--muted)}
 .state-line{display:flex;justify-content:space-between;font-size:10px;color:var(--teal);letter-spacing:1px}
