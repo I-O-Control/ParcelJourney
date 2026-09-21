@@ -305,7 +305,7 @@ async function boot() {
   }
   function renderLayerEvent(){
     const group=layerEvents[layerIndex];layerNav.replaceChildren();result.replaceChildren();
-    layerEvents.forEach((g,i)=>{const tab=document.createElement('button');tab.type='button';tab.className='layer-tab';tab.setAttribute('role','tab');tab.setAttribute('aria-selected',String(i===layerIndex));tab.textContent=g.layer==='Database'?'Db':g.layer;tab.dataset.layer=g.layer;
+    layerEvents.forEach((g,i)=>{const tab=document.createElement('button');tab.type='button';tab.className='layer-tab';tab.setAttribute('role','tab');tab.setAttribute('aria-selected',String(i===layerIndex));tab.textContent=g.layer==='Database'?'Db':g.layer;tab.dataset.layer=g.layer==='Database'?'Db':g.layer;
       tab.onclick=e=>{e.stopPropagation();pause();layerIndex=i;renderLayerEvent();};layerNav.append(tab);});
     if(group?.entries?.length){
       const decision=document.createElement('p');decision.className='station-decision';decision.textContent=stationDecision(group.entries);result.append(decision);

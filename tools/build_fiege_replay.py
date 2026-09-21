@@ -11,7 +11,18 @@ def build():
     layout=json.loads((ROOT/'topology/replay-layout.json').read_text())
     nodes={n['id']:n for n in layout['nodes']}
     # Hall 3 chute decision precedes the Hall 3 telescopes in the real logs.
+    # Keep its three outputs as one vertical chute bank on its left.  The prior
+    # layout moved the decision to the approach side but left these endpoints
+    # at their old, right-hand coordinates, creating a misleading cross-plant
+    # loop.  This is a readable schematic arrangement, not surveyed CAD data.
     nodes['SC_H3RU'].update(x=190,y=1810,coordinateBasis='Schematic approach position; order verified by real logs')
+    h3_chute_layout={
+        'H3_CHUTE1':(-100,1660), # NIO / chute 1
+        'H3_CHUTE2':(-100,1810),
+        'H3_CHUTE3':(-100,1960),
+    }
+    for chute,(x,y) in h3_chute_layout.items():
+        nodes[chute].update(x=x,y=y,coordinateBasis='Schematic Hall 3 chute bank; vertically stacked left of the logged chute decision')
     # Side/top reads share an equipment base and occur 15–31 ms apart. They
     # are two read heads at one station, not a 190-unit conveyor journey.
     for line in range(1,6):
@@ -28,6 +39,21 @@ def build():
     for edge in edges.values():
         edge['points'][0]=[nodes[edge['a']]['x'],nodes[edge['a']]['y']]
         edge['points'][-1]=[nodes[edge['b']]['x'],nodes[edge['b']]['y']]
+    # The three outcomes share the short departure belt from the chute
+    # decision, then split on separate horizontal levels.  This explicitly
+    # replaces the obsolete geometry inherited from the former right-hand
+    # chute bank and prevents any diagonal/cross-plant route from being drawn.
+    for chute,(_,y) in h3_chute_layout.items():
+        edge=edges[f'SC_H3RU>{chute}']
+        edge['points']=[[190,1810],[40,1810],[40,y],[-100,y]]
+        edge['basis']='Schematic Hall 3 chute bank: common departure belt, then vertically separated outputs left of the chute decision'
+    # These two retained floor edges also used the decision's former
+    # right-hand coordinate as an intermediate point.  Rebuild them from the
+    # current endpoints so neither renderer can draw a diagonal conveyor.
+    edges['SC_H3T7>SC_H3RU']['points']=[[1330,1880],[1330,1810],[190,1810]]
+    edges['SC_H3T7>SC_H3RU']['basis']='Schematic orthogonal return from the final Hall 3 divert scanner to the Hall 3 chute decision'
+    edges['SC_H3RU>SC_H2T1']['points']=[[190,1810],[190,2160],[250,2160],[250,2220]]
+    edges['SC_H3RU>SC_H2T1']['basis']='Schematic orthogonal continuation from the Hall 3 chute decision to Hall 2'
     parcels=[];report=[]
     observed=set()
     refs=sorted({r['fields'].get('LastScanPos','') for c in data['selected'] for r in c['rows']} - set(nodes))

@@ -12,6 +12,10 @@ for(const edge of model.edges){
     if(last[0]!==b.x||last[1]!==b.y)failures.push(`${edge.id}: path does not end at ${edge.b}`);
   }
   if(edge.points.length<2)failures.push(`${edge.id}: path has no physical span`);
+  for(let i=1;i<edge.points.length;i++){
+    const previous=edge.points[i-1],current=edge.points[i];
+    if(previous[0]!==current[0]&&previous[1]!==current[1])failures.push(`${edge.id}: diagonal conveyor segment ${previous} → ${current}`);
+  }
 }
 const start=model.nodes[0]?.id,seen=new Set(start?[start]:[]),queue=start?[start]:[];
 while(queue.length){for(const next of adjacency.get(queue.shift())||[])if(!seen.has(next)){seen.add(next);queue.push(next)}}
