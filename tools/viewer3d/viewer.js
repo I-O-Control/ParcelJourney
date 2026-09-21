@@ -305,7 +305,7 @@ async function boot() {
   }
   function renderLayerEvent(){
     const group=layerEvents[layerIndex];layerNav.replaceChildren();result.replaceChildren();
-    layerEvents.forEach((g,i)=>{const tab=document.createElement('button');tab.type='button';tab.className='layer-tab';tab.setAttribute('role','tab');tab.setAttribute('aria-selected',String(i===layerIndex));tab.textContent=g.layer==='Database'?'Db':g.layer;tab.dataset.layer=g.layer==='Database'?'Db':g.layer;
+    layerEvents.forEach((g,i)=>{const tab=document.createElement('button');tab.type='button';tab.className='layer-tab';tab.setAttribute('role','tab');tab.setAttribute('aria-selected',String(i===layerIndex));tab.textContent=g.layer;tab.dataset.layer=g.layer;
       tab.onclick=e=>{e.stopPropagation();pause();layerIndex=i;renderLayerEvent();};layerNav.append(tab);});
     if(group?.entries?.length){
       const decision=document.createElement('p');decision.className='station-decision';decision.textContent=stationDecision(group.entries);result.append(decision);
@@ -351,7 +351,6 @@ async function boot() {
         if(moving){layerNav.replaceChildren();result.replaceChildren();const bullet=document.createElement('p');bullet.textContent='Last position: '+(nodes.get(state.leg.a)?.label||state.leg.a);result.append(bullet);}
         destination.textContent=moving?'Next action: arrive at '+context.node.label:context.next?'Next position: '+nodes.get(context.next.id).label:'Journey complete';
         if(moving){const timer=document.createElement('span');timer.className='countdown';timer.textContent=Math.max(0,context.remaining).toFixed(1)+' s';destination.append(' · ',timer);}
-        card.dataset.tone=layerEvents[layerIndex]?.entries.some(x=>x.event.values?.Status==='WEIGHTERR')?'exception':'active';
         calloutContent=textKey;cardHeight=card.offsetHeight;
       }
       const cw=card.offsetWidth,ch=cardHeight,px=projectPoint(parcel.position);

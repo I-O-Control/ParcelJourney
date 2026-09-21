@@ -21,7 +21,7 @@ export function prepareObservations(events, base) {
     const raw=e.raw??e.Raw??'', timestamp=e.timestamp??e.Timestamp;
     const values=dbValues(raw), explicit=e.location??e.Location??values?.LastScanPos??raw.match(/\bSC_[A-Z0-9_]+\b/)?.[0];
     const sourceFile=e.sourceFile??e.SourceFile??'';
-    const layer=values?'Database':normalizeLayer(e.layer??e.Layer,sourceFile,raw);
+    const layer=values?'Db':normalizeLayer(e.layer??e.Layer,sourceFile,raw);
     const logMatch=raw.match(/ - ([^-]+?)\\s+- /);
     const methodMatch=raw.match(/ - [^-]+ - ([A-Za-z_][\\w.]*(?:\\([^)]*\\))?)/);
     return {t:(millis(timestamp)-millis(base))/1000,Timestamp:timestamp,raw,values,LocationId:explicit||null,Layer:layer,
@@ -31,10 +31,15 @@ export function prepareObservations(events, base) {
 }
 function normalizeLayer(layer,sourceFile,raw) {
   const name=sourceFile.split(/[\\/]/).at(-1);
-  if(/^ProcCamera/i.test(name)||/OnSendInfoStringToCamera/i.test(raw))return 'Camera';
-  if(/^RemoteManagement/i.test(name)||/Sending Waage data to UI/i.test(raw))return 'UI';
-  if(/^ProcEtikettierer/i.test(name)||/OnDateiDrucken|DoZplPrintJob|UpdateTrackingId/i.test(raw))return 'Labeler';
-  return layer||'Unclassified';
+  const text=`${layer||''} ${name} ${raw||''}`.toLowerCase();
+  // Stable, operator-facing categories: a PLC exchange must never inherit a
+  // different color merely because it was written by another source process.
+  if(/\b(?:db|database)\b|\b(?:insert|update) \(tudata\)/.test(text))return 'Db';
+  if(/plc|sendtasktoplc|fahrziel|quittung|acknowledge|route response/.test(text))return 'PLC';
+  if(/\b(?:lvs|transport)\b|conmfr|socket|\bsent:|\breceived:/.test(text))return 'Transport';
+  if(/^ProcCamera/i.test(name)||/^RemoteManagement/i.test(name)||/^ProcEtikettierer/i.test(name)||/OnSendInfoStringToCamera|Sending Waage data to UI|OnDateiDrucken|DoZplPrintJob|UpdateTrackingId/.test(raw))return 'Other';
+  if(/logic|scanner|scan|weight|scale|route|decision|print|label/.test(text))return 'Logic';
+  return 'Other';
 }
 export function stateAt(observations,time) {
   const values={}, provenance={};

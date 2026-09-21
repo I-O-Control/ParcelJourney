@@ -130,8 +130,6 @@ button:hover{background:var(--selected);border-color:var(--trace)}
 .station-callout .layer-nav button{padding:1px 7px;border:1px solid var(--line);background:transparent;color:var(--text);font-size:16px;line-height:16px}
 .station-callout .layer-nav button:disabled{opacity:.3}
 .station-callout .callout-next{border-top:1px solid var(--line);padding-top:9px;margin-top:8px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between;align-items:center;gap:8px}.station-callout .countdown{font-variant-numeric:tabular-nums;color:var(--trace);font-size:15px;font-weight:700;letter-spacing:.02em;white-space:nowrap}
-.station-callout[data-tone=exception]{border-left-color:var(--exception)}.station-callout[data-tone=exception] .callout-phase{color:var(--exception)}
-.station-callout[data-tone=warning]{border-left-color:var(--warning)}.station-callout[data-tone=warning] .callout-phase{color:var(--warning)}
 .context-leader{stroke:var(--trace);stroke-width:1.2;fill:none;opacity:.8}
 .section-label{position:absolute;left:0;top:0;font-size:12px;font-weight:700;letter-spacing:3px;line-height:18px;padding:4px 8px;white-space:nowrap;background:transparent;color:var(--muted);border:0;opacity:.24;text-shadow:0 2px 8px var(--bg);pointer-events:none}
 #tag-current{z-index:2;border-color:var(--trace);font-size:9px}#tag-current::after{background:var(--trace)}
