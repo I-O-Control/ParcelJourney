@@ -239,6 +239,29 @@ async function boot() {
   let activeContext=null,selectedObservation=null;
   const projectPoint=(point)=>{const v=point.clone().project(camera);return {x:(v.x+1)/2*host.clientWidth,y:(1-v.y)/2*host.clientHeight,depth:v.z};};
   function clockAt(){const first=chosen.events[0],base=millis(first.Timestamp);return Number.isFinite(base)?new Date(base+(t-first.t)*1000).toISOString().replace('T',' ').replace('Z',''):'Time unavailable';}
+  function operatorEvent(e){
+    const raw=e.Raw||e.raw||e.RawLine||e.rawLine||'';
+    const operation=e.Operation||e.operation||e.EventType||e.eventType||e.type||'';
+    const text=(operation+' '+(e.Summary||e.summary||'')+' '+raw).toLowerCase();
+    let action='System exchange';
+    if(/onscannerdata|scanner daten|scanner read/.test(text))action='Scanner read';
+    else if(/sendtasktoplc|sende?fahrziel|route command|divertcommanded/.test(text))action='Route decision sent to PLC';
+    else if(/acknowledge|quittung|divertconfirmed/.test(text))action='PLC route response received';
+    else if(/savetodb|insert|update|statepersisted/.test(text))action='Parcel state stored';
+    else if(/print|label/.test(text))action='Label print operation';
+    else if(/weight|scale|brutto/.test(text))action='Weight check';
+    const source=e.Source||e.source||e.system||'';
+    const method=e.Operation||e.operation||e.EventType||e.eventType||'';
+    const technical=[source,method].filter(Boolean).join(' · ')||raw||action;
+    const outcome=e.Outcome||e.outcome||e.Status||e.status||'';
+    return {technical:action,outcome,summary:e.Summary||e.summary||'',detail:technical};
+  }
+  function stationDecision(entries){
+    const facts=entries.map(x=>operatorEvent(x.event));
+    const unique=[...new Map(facts.map(x=>[x.technical+'|'+x.outcome,x])).values()];
+    if(!unique.length)return 'No station observation has been recorded at this moment.';
+    return unique.map(x=>x.technical+(x.outcome?' → '+x.outcome:'')).join('  ·  ')+(unique.length<facts.length?'  ·  '+facts.length+' recorded exchanges':'');
+  }
   function openParcelData(){pause();explanationCard.hidden=false;renderParcelData();requestFrame();}
   card.onclick=e=>{if(e.target.closest('button,details,summary'))return;openParcelData();};
   card.onkeydown=e=>{if(e.target===card&&(e.key==='Enter'||e.key===' ')){e.preventDefault();openParcelData();}};
@@ -259,6 +282,7 @@ async function boot() {
     }
     explanationCard.append(dl);
     const group=layerEvents[layerIndex];
+    if(group?.entries?.length){const technicalHeading=document.createElement('strong');technicalHeading.textContent='Technical event detail';explanationCard.append(technicalHeading);for(const entry of group.entries){const fact=operatorEvent(entry.event),p=document.createElement('p');p.textContent=fact.detail+(fact.outcome?' · result: '+fact.outcome:'');explanationCard.append(p);}}
     for(const entry of group?.entries||[]){
       const detail=document.createElement('details'),summary=document.createElement('summary');summary.textContent='Evidence · '+entry.event.sourceFile+':'+entry.event.line;detail.append(summary);
       const pre=document.createElement('pre');pre.textContent=entry.evidence.map(e=>e.Timestamp+' '+e.sourceFile+':'+e.line+'\n'+e.raw).join('\n\n');detail.append(pre);explanationCard.append(detail);
@@ -269,9 +293,8 @@ async function boot() {
     const group=layerEvents[layerIndex];layerNav.replaceChildren();result.replaceChildren();
     layerEvents.forEach((g,i)=>{const tab=document.createElement('button');tab.type='button';tab.className='layer-tab';tab.setAttribute('role','tab');tab.setAttribute('aria-selected',String(i===layerIndex));tab.textContent=g.layer==='Database'?'Db':g.layer;tab.dataset.layer=g.layer;
       tab.onclick=e=>{e.stopPropagation();pause();layerIndex=i;renderLayerEvent();};layerNav.append(tab);});
-    for(const entry of group?.entries||[]){
-      const p=document.createElement('p');p.textContent=explain(entry.event);result.append(p);
-      if(entry.evidence.length>1){const details=document.createElement('details'),summary=document.createElement('summary');summary.textContent=entry.evidence.length+' identical observations in '+entry.event.system;details.append(summary);const text=document.createElement('p');text.textContent=entry.evidence.map(e=>e.sourceFile+':'+e.line).join('\n');details.append(text);result.append(details);}
+    if(group?.entries?.length){
+      const decision=document.createElement('p');decision.className='station-decision';decision.textContent=stationDecision(group.entries);result.append(decision);
     }
     if(!group)result.textContent='No station observation has been recorded at this moment.';
     if(!explanationCard.hidden)renderParcelData();
@@ -281,7 +304,7 @@ async function boot() {
     inspected=node;$('station-detail').hidden=false;$('station-title').textContent=node.label;
     $('station-code').textContent=node.id+' · '+(typeNames[node.kind]||node.kind);
     const entry=routeMap.get(node.id),info=entry?routeStatus(entry,state):null;
-    $('station-result').textContent=info?.last?.Summary||'No observation at this equipment yet.';
+    if(info?.last){const fact=operatorEvent(info.last);$('station-result').textContent=fact.technical+(fact.outcome?' · result: '+fact.outcome:'')+(fact.summary?'\nMeaning: '+fact.summary:'');}else $('station-result').textContent='No observation at this equipment yet.';
     $('station-visits').textContent=info?info.visits+' recorded visits':'';
     $('station-explanation').textContent='';
   }
@@ -309,10 +332,11 @@ async function boot() {
       if(textKey!==calloutContent){
         badge.textContent=clockAt();
         name.textContent=moving?'Next target · '+context.node.label:context.node.label;
-        code.textContent=context.node.id+' · '+(typeNames[context.node.kind]||context.node.kind)+(selected?' · Recorded event context':'');
-        renderLayerEvent();
-        if(moving){layerNav.replaceChildren();result.textContent='Last confirmed position: '+(nodes.get(state.leg.a)?.label||state.leg.a)+'. Travelling toward '+context.node.label+'. Next recorded arrival in '+Math.max(0,context.remaining).toFixed(1)+' s. Movement is schematic.';}
-        destination.textContent=moving?'Next expected action: observation at '+context.node.label:context.next?'Next position → '+nodes.get(context.next.id).label:'End of the recorded journey';
+        code.textContent=(typeNames[context.node.kind]||context.node.kind)+' · '+context.node.id;
+      renderLayerEvent();
+        if(moving){layerNav.replaceChildren();result.replaceChildren();const bullet=document.createElement('p');bullet.textContent='Last position: '+(nodes.get(state.leg.a)?.label||state.leg.a);result.append(bullet);}
+        destination.textContent=moving?'Next action: arrive at '+context.node.label:context.next?'Next position: '+nodes.get(context.next.id).label:'Journey complete';
+        if(moving){const timer=document.createElement('span');timer.className='countdown';timer.textContent=Math.max(0,context.remaining).toFixed(1)+' s';destination.append(' · ',timer);}
         card.dataset.tone=layerEvents[layerIndex]?.entries.some(x=>x.event.values?.Status==='WEIGHTERR')?'exception':'active';
         calloutContent=textKey;cardHeight=card.offsetHeight;
       }
@@ -357,7 +381,7 @@ async function boot() {
     $('state-badge').textContent=status;$('percent').textContent=`${Math.floor(t/chosen.duration*100)}%`;
     $('progress-fill').style.width=`${t/chosen.duration*100}%`;
     $('current').textContent=state.done?chosen.completeness:state.leg?'Conveyor transfer':nodes.get(state.stop.id).label;
-    $('description').textContent=state.leg?`${nodes.get(state.leg.a).label} → ${nodes.get(state.leg.b).label}`:state.event.Summary;
+    $('description').textContent=state.leg?`${nodes.get(state.leg.a).label} → ${nodes.get(state.leg.b).label}`:operatorEvent(state.event).technical;
     $('next').textContent=state.done?'End of this replay':nodes.get(state.leg?.b||state.nextStop?.id)?.label||'Final operation';
     $('expectation').textContent=state.next;$('seek').value=t;$('time').textContent=fmt(t);
     if(activeIndex!==state.index){
@@ -403,8 +427,8 @@ async function boot() {
     // separated by a few milliseconds while representing the same visible
     // station moment. Exact timestamps remain available inside the expansion.
     chosen.events.forEach(e=>{const key=Math.floor(e.t)+'|'+(e.LocationId||'');let group=byMoment.get(key);if(!group){group={event:e,events:[]};byMoment.set(key,group);moments.push(group);}group.events.push(e);});
-    moments.forEach(group=>{const e=group.event;const wrap=document.createElement('div');wrap.className='timeline-group';const b=document.createElement('button');b.className='event event-group';b.title=group.events.length>1?group.events.length+' simultaneous events':e.Summary;const time=document.createElement('time');time.textContent=fmt(e.t);const label=document.createElement('span');label.textContent=nodes.get(e.LocationId).label;b.append(time,label);if(group.events.length>1){const count=document.createElement('em');count.textContent=group.events.length+' events';b.append(count);}b.onclick=()=>seek(e.t);routeButtons.push(b);wrap.append(b);
-      if(group.events.length>1){const expand=document.createElement('button');expand.type='button';expand.className='event-expand';expand.textContent='Show individual events';const children=document.createElement('div');children.className='timeline-children';children.hidden=true;expand.onclick=ev=>{ev.stopPropagation();children.hidden=!children.hidden;expand.textContent=children.hidden?'Show individual events':'Hide individual events';};group.events.forEach(child=>{const cb=document.createElement('button');cb.className='event event-child';cb.title=child.Summary;const ct=document.createElement('time');ct.textContent=fmt(child.t);const cl=document.createElement('span');cl.textContent=(child.Layer==='Database'?'Db':child.Layer)+' · '+(child.Summary||child.EventType);cb.append(ct,cl);cb.onclick=()=>seek(child.t);children.append(cb);routeButtons.push(cb);});wrap.append(expand,children);} $('timeline').append(wrap);});
+    moments.forEach(group=>{const e=group.event;const wrap=document.createElement('div');wrap.className='timeline-group';const b=document.createElement('button');b.className='event event-group';b.title=group.events.length>1?group.events.length+' simultaneous events':operatorEvent(e).technical;const time=document.createElement('time');time.textContent=fmt(e.t);const label=document.createElement('span');label.textContent=nodes.get(e.LocationId).label;b.append(time,label);if(group.events.length>1){const count=document.createElement('em');count.textContent=group.events.length+' events';b.append(count);}b.onclick=()=>seek(e.t);routeButtons.push(b);wrap.append(b);
+      if(group.events.length>1){const expand=document.createElement('button');expand.type='button';expand.className='event-expand';expand.textContent='Show individual events';const children=document.createElement('div');children.className='timeline-children';children.hidden=true;expand.onclick=ev=>{ev.stopPropagation();children.hidden=!children.hidden;expand.textContent=children.hidden?'Show individual events':'Hide individual events';};group.events.forEach(child=>{const cb=document.createElement('button');cb.className='event event-child';cb.title=operatorEvent(child).technical;const ct=document.createElement('time');ct.textContent=fmt(child.t);const cl=document.createElement('span');const fact=operatorEvent(child);cl.textContent=fact.technical+(fact.outcome?' · '+fact.outcome:'');cb.append(ct,cl);cb.onclick=()=>seek(child.t);children.append(cb);routeButtons.push(cb);});wrap.append(expand,children);} $('timeline').append(wrap);});
     requestFrame();
   }
   model.parcels.forEach((p,i)=>{const o=document.createElement('option');o.value=i;o.textContent=`${p.id} · ${p.name}`;$('scenario').append(o);});

@@ -129,7 +129,7 @@ button:hover{background:var(--selected);border-color:var(--trace)}
 .station-callout .layer-nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:9px 0 2px;border-top:1px solid var(--line);padding-top:7px;color:var(--muted);font-size:10px}
 .station-callout .layer-nav button{padding:1px 7px;border:1px solid var(--line);background:transparent;color:var(--text);font-size:16px;line-height:16px}
 .station-callout .layer-nav button:disabled{opacity:.3}
-.station-callout .callout-next{border-top:1px solid var(--line);padding-top:9px;color:var(--muted);font-size:11px}
+.station-callout .callout-next{border-top:1px solid var(--line);padding-top:9px;margin-top:8px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between;align-items:center;gap:8px}.station-callout .countdown{font-variant-numeric:tabular-nums;color:var(--trace);font-size:15px;font-weight:700;letter-spacing:.02em;white-space:nowrap}
 .station-callout[data-tone=exception]{border-left-color:var(--exception)}.station-callout[data-tone=exception] .callout-phase{color:var(--exception)}
 .station-callout[data-tone=warning]{border-left-color:var(--warning)}.station-callout[data-tone=warning] .callout-phase{color:var(--warning)}
 .context-leader{stroke:var(--trace);stroke-width:1.2;fill:none;opacity:.8}
