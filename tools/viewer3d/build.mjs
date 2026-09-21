@@ -1,12 +1,14 @@
 import { build } from 'esbuild';
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, copyFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { prepareObservations, findings } from './parcel-state.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const output = path.join(root, 'ParcelJourney.App/Viewer3d');
+const staticOutput = path.join(root, 'analysis/3d');
 await mkdir(output, { recursive: true });
+await mkdir(staticOutput, { recursive: true });
 await build({
   entryPoints: [path.join(root, 'tools/viewer3d/viewer.js')],
   outfile: path.join(output, 'viewer.js'), bundle: true, minify: true,
@@ -31,4 +33,14 @@ if(model.validation?.mode !== 'real-logs' || model.parcels.length !== 10) throw 
 await writeFile(path.join(root, 'analysis/fiege-replay-model.json'), JSON.stringify(model));
 await writeFile(path.join(root, 'analysis/fiege-replay-validation.json'), JSON.stringify(model.validation, null, 2));
 await writeFile(path.join(output, 'THREE-LICENSE.txt'), await readFile(new URL('./node_modules/three/LICENSE', import.meta.url), 'utf8'));
+// The static analysis preview and the packaged application must never drift:
+// build both from these exact viewer assets and the same audited route model.
+await Promise.all([
+  copyFile(path.join(output, 'index.html'), path.join(staticOutput, 'index.html')),
+  copyFile(path.join(output, 'viewer.css'), path.join(staticOutput, 'viewer.css')),
+  copyFile(path.join(output, 'viewer.js'), path.join(staticOutput, 'viewer.js')),
+  copyFile(path.join(output, 'THREE-LICENSE.txt'), path.join(staticOutput, 'THREE-LICENSE.txt')),
+  copyFile(path.join(root, 'analysis/fiege-replay-model.json'), path.join(staticOutput, 'model.json')),
+  copyFile(path.join(output, 'theme.css'), path.join(root, 'analysis/theme.css'))
+]);
 console.log(`Bundled offline 3D viewer; ${model.parcels.length} scenarios.`);

@@ -2,18 +2,6 @@
 @model ParcelJourney.App.Pages.IndexModel
 @{ Layout = null; }
 @Html.Raw(Model.Viewer)
-<link rel="stylesheet" href="/theme.css">
-<script>
-(() => {
-  const button=document.getElementById('theme'),system=matchMedia('(prefers-color-scheme: light)');
-  let saved,syncing=false;try{saved=localStorage.getItem('parceljourney-theme');}catch{}
-  const apply=light=>{syncing=true;try{if(button&&document.body.classList.contains('light')!==light)button.click();}finally{syncing=false;}};
-  apply(saved?saved==='light':system.matches);
-  button?.addEventListener('click',()=>{if(syncing)return;saved=document.body.classList.contains('light')?'light':'dark';try{localStorage.setItem('parceljourney-theme',saved);}catch{}});
-  system.addEventListener('change',()=>{if(!saved)apply(system.matches);});
-  addEventListener('storage',e=>{if(e.key==='parceljourney-theme'){saved=e.newValue;apply(saved?saved==='light':system.matches);}});
-})();
-</script>
 <style>#live-query{position:fixed;left:12px;right:12px;bottom:12px;z-index:9;padding:10px 12px;border:1px solid #435778;border-radius:10px;background:#142338f2;color:#e2e8f0;box-shadow:0 8px 24px #0005}#live-query-form{display:flex;gap:8px;align-items:center;flex-wrap:wrap}#live-query input{min-width:180px;padding:7px;border:1px solid #435778;border-radius:6px;background:#243250;color:inherit}#live-query button{padding:7px 12px;border:1px solid #f07840;border-radius:6px;background:#50342d;color:inherit}#live-status{color:#ffbd9a}#live-result{max-height:220px;overflow:auto;white-space:pre-wrap;background:#0f172af5;padding:10px;border-radius:6px;margin:8px 0 0}@@media(max-width:700px){#live-query{position:relative;left:auto;right:auto;bottom:auto;margin:8px}}
 </style>
 <script>(()=>{const form=document.getElementById('live-query-form'),status=document.getElementById('live-status'),out=document.getElementById('live-result'),logs=document.getElementById('live-logs');document.getElementById('pick-logs')?.addEventListener('click',async()=>{const r=await fetch('/api/pick-folder');if(r.status===204)return;const d=await r.json();if(d.path)logs.value=d.path});fetch('/api/index/status').then(r=>r.json()).then(d=>document.getElementById('index-status').textContent=d.status).catch(()=>{});form?.addEventListener('submit',async e=>{e.preventDefault();status.textContent='Reading indexed logs…';out.hidden=true;const q=new URLSearchParams({logs:logs.value,id:document.getElementById('live-id').value,pattern:document.getElementById('live-pattern').value});try{const r=await fetch('/api/journey?'+q);const data=await r.json();if(!r.ok)throw new Error(data.error||'Read failed');out.textContent=JSON.stringify(data,null,2);out.hidden=false;status.textContent=`${data.Events?.length||0} events read from the selected folder.`}catch(err){status.textContent=err.message}})})();</script>
