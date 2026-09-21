@@ -32,6 +32,9 @@ app.Use(async (context, next) => {
 });
 app.MapRazorPages();
 app.MapGet("/theme.css", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.Theme"), "text/css"));
+// The 3D viewer returns here. Keep this route available in the packaged app as
+// well as in the static demo, so both views always use the same curated 2D UI.
+app.MapGet("/equipment-replay.html", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.Viewer"), "text/html"));
 // Bundled resources keep the 3D prototype fully offline in the single-file release.
 app.MapGet("/3d", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.3d.Html"), "text/html"));
 app.MapGet("/3d/viewer.css", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.3d.Css"), "text/css"));
