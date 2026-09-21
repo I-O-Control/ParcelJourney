@@ -11,13 +11,50 @@ def build():
     layout=json.loads((ROOT/'topology/replay-layout.json').read_text())
     nodes={n['id']:n for n in layout['nodes']}
     # Hall 3 chute decision precedes the Hall 3 telescopes in the real logs.
+    # Keep its three outputs as one vertical chute bank on its left.  The prior
+    # layout moved the decision to the approach side but left these endpoints
+    # at their old, right-hand coordinates, creating a misleading cross-plant
+    # loop.  This is a readable schematic arrangement, not surveyed CAD data.
     nodes['SC_H3RU'].update(x=190,y=1810,coordinateBasis='Schematic approach position; order verified by real logs')
+    h3_chute_layout={
+        'H3_CHUTE1':(-100,1660), # NIO / chute 1
+        'H3_CHUTE2':(-100,1810),
+        'H3_CHUTE3':(-100,1960),
+    }
+    for chute,(x,y) in h3_chute_layout.items():
+        nodes[chute].update(x=x,y=y,coordinateBasis='Schematic Hall 3 chute bank; vertically stacked left of the logged chute decision')
     # Side/top reads share an equipment base and occur 15–31 ms apart. They
     # are two read heads at one station, not a 190-unit conveyor journey.
     for line in range(1,6):
         side=nodes[f'SC_ETIOSL{line}'];top=nodes[f'SC_ETIOTL{line}']
         top.update(x=side['x'],y=side['y'],coordinateBasis='Co-located side/top reader assembly; shared equipment base in logs')
-    edges={};parcels=[];report=[]
+    # The floor layout already contains the complete schematic conveyor graph.
+    # Keep it as the physical substrate; observed parcel transitions only add
+    # evidence to these edges or create a clearly marked reference edge when a
+    # database position is not part of the floor export.
+    edges={e['id']:dict(e, evidence=[], topology='floor-layout', observationStatus='Unobserved floor connection') for e in layout.get('edges',[])}
+    # Coordinate corrections above must also move the physical path endpoints.
+    # Otherwise the graph is logically connected while the rendered belt stops
+    # at the equipment's former position.
+    for edge in edges.values():
+        edge['points'][0]=[nodes[edge['a']]['x'],nodes[edge['a']]['y']]
+        edge['points'][-1]=[nodes[edge['b']]['x'],nodes[edge['b']]['y']]
+    # The three outcomes share the short departure belt from the chute
+    # decision, then split on separate horizontal levels.  This explicitly
+    # replaces the obsolete geometry inherited from the former right-hand
+    # chute bank and prevents any diagonal/cross-plant route from being drawn.
+    for chute,(_,y) in h3_chute_layout.items():
+        edge=edges[f'SC_H3RU>{chute}']
+        edge['points']=[[190,1810],[40,1810],[40,y],[-100,y]]
+        edge['basis']='Schematic Hall 3 chute bank: common departure belt, then vertically separated outputs left of the chute decision'
+    # These two retained floor edges also used the decision's former
+    # right-hand coordinate as an intermediate point.  Rebuild them from the
+    # current endpoints so neither renderer can draw a diagonal conveyor.
+    edges['SC_H3T7>SC_H3RU']['points']=[[1330,1880],[1330,1810],[190,1810]]
+    edges['SC_H3T7>SC_H3RU']['basis']='Schematic orthogonal return from the final Hall 3 divert scanner to the Hall 3 chute decision'
+    edges['SC_H3RU>SC_H2T1']['points']=[[190,1810],[190,2160],[250,2160],[250,2220]]
+    edges['SC_H3RU>SC_H2T1']['basis']='Schematic orthogonal continuation from the Hall 3 chute decision to Hall 2'
+    parcels=[];report=[]
     observed=set()
     refs=sorted({r['fields'].get('LastScanPos','') for c in data['selected'] for r in c['rows']} - set(nodes))
     for index,loc in enumerate(refs):
@@ -28,7 +65,21 @@ def build():
         nodes[loc]=dict(id=loc,label=loc+' · recorded reference',x=x,y=y,kind='junction',equipment=loc,coordinateBasis='Database LastScanPos reference; schematic position, not a surveyed scanner')
     def connect(a,b):
         key=a+'>'+b
-        if key in edges: return key
+        if key in edges:
+            # Reuse the floor segment identity, but let the observed route
+            # geometry win when the replay has a more specific bend for it.
+            na,nb=nodes[a],nodes[b];p=[na['x'],na['y']];q=[nb['x'],nb['y']];mid=[]
+            if a=='SC_H4RU' and b=='SC_H3RU': mid=[[1970,p[1]],[1970,1810]]
+            elif a=='SC_H3RU' and b.startswith('SC_H3T'): mid=[[190,1880]]
+            elif a=='SC_H2T9' and b=='SC_H4T1': mid=[[2110,p[1]],[2110,1450],[250,1450]]
+            elif a=='SC_H3T7' and b=='SC_H2T1': mid=[[1970,p[1]],[1970,2160],[250,2160]]
+            elif a in ('SC_VL1','SC_VL2') and b=='SC_WAVL': mid=[[2040,170],[2040,550],[740,550]]
+            elif b.startswith('SC_BWL'): mid=[[p[0],650],[400,650],[400,q[1]]]
+            elif a.startswith('SC_ETIOT') and b.startswith('SC_H4'): mid=[[2040,p[1]],[2040,1450],[q[0],1450]]
+            elif p[0]!=q[0] and p[1]!=q[1]: mid=[[p[0],q[1]]]
+            edges[key]['points']=[p,*mid,q]
+            edges[key]['observationStatus']='Observed by selected parcel logs'
+            return key
         na,nb=nodes[a],nodes[b];p=[na['x'],na['y']];q=[nb['x'],nb['y']]
         mid=[]
         if a=='SC_H4RU' and b=='SC_H3RU': mid=[[1970,p[1]],[1970,1810]]
@@ -39,7 +90,7 @@ def build():
         elif b.startswith('SC_BWL'): mid=[[p[0],650],[400,650],[400,q[1]]]
         elif a.startswith('SC_ETIOT') and b.startswith('SC_H4'): mid=[[2040,p[1]],[2040,1450],[q[0],1450]]
         elif p[0]!=q[0] and p[1]!=q[1]: mid=[[p[0],q[1]]]
-        edges[key]=dict(id=key,a=a,b=b,points=[p,*mid,q],basis='Observed scanner succession; schematic interpolation, intermediate equipment not asserted',evidence=[])
+        edges[key]=dict(id=key,a=a,b=b,points=[p,*mid,q],basis='Observed scanner succession; schematic interpolation, intermediate equipment not asserted',evidence=[],topology='observed-transition',observationStatus='Observed by selected parcel logs')
         return key
     for c in data['selected']:
         assert all(e['file'].startswith(('ConMFRtoLVS','ProcLVS')) and ('Sent:' in e['raw'] or 'Sending data' in e['raw']) and (timestamp(e['time'])-timestamp(c['end'])).total_seconds()<1 for e in c['laterEvidence']),c['id']
@@ -91,7 +142,17 @@ def build():
                 summary='Database '+f.get('Status','')+' · '+loc+' · PLC '+f.get('PlcTarget','')
                 if loc==location: stops[-1]['departure']=t
                 event_type='Database state'
-            events.append(dict(t=t,LocationId=location,ObservedLocationId=loc,Summary=summary,EventType=event_type,Timestamp=r['time'],Evidence=[evidence(r)]))
+            events.append(dict(t=t,LocationId=location,ObservedLocationId=loc,Summary=summary,EventType=event_type,Timestamp=r['time'],Evidence=[evidence(r)],values=(r.get('fields') if r['source']=='db' else None)))
+        # A physical station moment includes scanner, database and PLC records that
+        # can be separated by only a few milliseconds. Carry the latest tudata
+        # snapshot into the first event of that moment so the UI can show the
+        # complete parcel identity without inventing a later journey step.
+        for i,e in enumerate(events):
+            snapshot={}
+            for other in events:
+                if other['t']<=e['t']+0.5 and other['LocationId']==e['LocationId']:
+                    snapshot.update(other.get('values') or {})
+            if snapshot: e['values']=snapshot
         final=c['rows'][-1]; destination=next(re.search(r'ChuteID=(\w+)',r['raw'])[1] for r in reversed(c['audit']) if 'SendeAusschleusungAnFWMS: received Data:' in r['raw'])
         closed=(timestamp(c['end'])-origin).total_seconds()
         tail=c['laterEvidence']
@@ -117,7 +178,32 @@ def build():
     template=template.replace('__BRAND_IMAGE__',brand[0] if brand else '')
     engine=(ROOT/'tools/replay-engine.js').read_text(encoding='utf-8')+'\n'+(ROOT/'tools/label-layout.js').read_text(encoding='utf-8')
     inline=json.dumps(model,ensure_ascii=False).replace('<',r'\u003c').replace('>',r'\u003e')
-    (ROOT/'analysis/equipment-replay.html').write_text(template.replace('__ENGINE__',engine).replace('__MODEL__',inline),encoding='utf-8')
+    rendered=template.replace('__ENGINE__',engine).replace('__MODEL__',inline)
+    # Keep the worker-facing view compact, while leaving the full evidence available
+    # in the parcel detail card.  The evidence is opened by default so the actual
+    # source line is never hidden behind a technical-only disclosure.
+    ui_patch='''<style>
+    .area-placeholder{position:absolute;z-index:1;pointer-events:none;padding:6px;border:0;background:transparent;color:#a9b7ca;text-transform:uppercase;letter-spacing:4px;font-size:13px;font-weight:750;opacity:.2;white-space:nowrap;text-shadow:0 2px 10px var(--bg);transform:translate(-50%,-50%)}
+    </style><script>
+    (()=>{
+      const side=document.querySelector('aside');
+      if(side){
+        [...side.querySelectorAll('h2')].forEach(h=>{if(/Equipment [/] event detail/i.test(h.textContent)){h.hidden=true;if(h.nextElementSibling)h.nextElementSibling.hidden=true;}});
+        [...side.querySelectorAll('h2')].forEach(h=>{if(/Recorded timeline/i.test(h.textContent))h.textContent='Journey timeline';});
+      }
+      const stage=document.getElementById('stage'),map=document.getElementById('map');
+      if(stage&&map){
+        const layer=document.createElement('div');layer.id='area-placeholders';stage.append(layer);
+        const areas=[['ENTRY & QUALITY',180,-560],['SEALING',920,320],['PACKAGING',980,900],['HALLE 4',1420,1420],['HALLE 3',1420,1810],['HALLE 2',1420,2200]];
+        const paint=()=>{const c=map.getScreenCTM(),r=stage.getBoundingClientRect(),degrees=+(document.getElementById('rotation')?.value||0);if(!c)return;layer.replaceChildren();for(const [name,x,y] of areas){const point=window.LabelLayout?LabelLayout.rotate([x,y],degrees):[x,y],q=new DOMPoint(point[0],point[1]).matrixTransform(c),d=document.createElement('div');d.className='area-placeholder';d.textContent=name;d.style.left=(q.x-r.left)+'px';d.style.top=(q.y-r.top)+'px';layer.append(d)}};
+        new ResizeObserver(paint).observe(stage);window.addEventListener('resize',paint);window.addEventListener('parcel-map-changed',paint);setTimeout(paint,0);setTimeout(paint,300);
+      }
+      const openEvidence=()=>{const d=document.querySelector('#parcel-detail details');if(d)d.open=true};
+      new MutationObserver(openEvidence).observe(document.body,{childList:true,subtree:true});openEvidence();
+    })();
+    </script>'''
+    rendered=rendered.replace('</html>',ui_patch+'</html>')
+    (ROOT/'analysis/equipment-replay.html').write_text(rendered,encoding='utf-8')
     print(json.dumps(validation,indent=2))
 
 if __name__=='__main__': build()

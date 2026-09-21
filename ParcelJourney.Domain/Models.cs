@@ -15,7 +15,11 @@ public sealed record ParcelJourneyEvent(
     string? EquipmentId,
     JourneyEventStatus Status,
     IReadOnlyList<string> Identifiers,
-    IReadOnlyList<JourneyEvidence> Evidence);
+    IReadOnlyList<JourneyEvidence> Evidence,
+    string? Source = null,
+    string? Operation = null,
+    string? Channel = null,
+    string? Outcome = null);
 
 public sealed record ParcelJourney(
     string SearchTerm,
