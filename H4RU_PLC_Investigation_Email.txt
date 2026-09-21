@@ -1,0 +1,106 @@
+DEUTSCH
+=======
+
+Betreff: H4RU – Prüfung der PLC-Verarbeitung bei manuellen Ausschleusungen
+
+Die Logs zeigen, dass der Carrier den manuellen Toren korrekt zugeordnet ist. MFR liest die Scannerdaten korrekt, berechnet das manuelle Ziel und sendet es über den H4RU-Kanal an die PLC.
+
+Beispiel:
+
+Tracking ID: 662165073366000013601225
+Parcel ID:   0015690980
+Carrier:     EXP
+
+14:20:08.483  MFR empfängt:
+              4190-1|SC_H4RU|662165073366000013601225
+
+14:20:08.499  MFR berechnet und sendet Ziel 02:
+              4190-1|662165073366000013601225|02
+
+14:20:09.421  PLC-Rückmeldung:
+              4190-1|SC_H4RU|662165073366000013601225|WG
+
+MFR protokolliert daher korrekt:
+              Soll: 02, Ist: WG
+
+Dasselbe Verhalten ist auch bei weiteren manuellen H4RU-Fällen sichtbar. Beispielweise wurde für ein weiteres Paket um 14:20:06.139 das Ziel 01 gesendet, jedoch um 14:20:06.796 ebenfalls WG zurückgemeldet.
+
+Die MFR-Logs zeigen somit:
+
+- Carrier-Zuordnung zu den manuellen Toren: korrekt
+- Scannerdaten und Parcel-ID: korrekt empfangen
+- Berechnung der manuellen Ziele 01–04: korrekt
+- Übertragung über PLC-Kanal 4190-1: dokumentiert
+- PLC-Rückmeldung: WG statt des angeforderten manuellen Ziels
+
+Da MFR das korrekte Ziel sendet, sollten wir den weiteren Ablauf gemeinsam mit Fiege in einem Live-Test prüfen. Dabei sollten wir insbesondere feststellen:
+
+- Was empfängt die PLC tatsächlich?
+- Welche Zielwerte und welches Format erwartet die PLC für H4RU?
+- Wird 01–04 korrekt verarbeitet und den Rutschen P9/P10 zugeordnet?
+- Wird wegen eines Fehlers, eines deaktivierten Tores oder eines anderen Zustands auf WG zurückgefallen?
+- Wie soll die korrekte PLC-Bestätigung aussehen?
+
+Wir sollten dafür einen Termin mit den Fiege-Vertretern und dem PLC-Team koordinieren und mehrere kontrollierte Fälle testen, zum Beispiel:
+
+1. Verschiedene Carrier-Zuordnungen.
+2. Manuelle Ziele 01, 02, 03 und 04.
+3. Unterschiedliche Telescope-Targets.
+4. Aktivierte und deaktivierte manuelle Tore.
+5. Wiederholung desselben Tests mit identischen und veränderten Zielparametern.
+
+Während jedes Tests sollten MFR-Log, PLC-Diagnose und die tatsächliche Bewegung der Rutsche zeitgleich aufgezeichnet werden.
+
+
+ENGLISH
+=======
+
+Subject: H4RU – Check of PLC handling for manual diversions
+
+The logs show that the carrier is correctly assigned to the manual gates. MFR receives the scanner data correctly, calculates the manual target, and sends it to the PLC through the H4RU channel.
+
+Example:
+
+Tracking ID: 662165073366000013601225
+Parcel ID:   0015690980
+Carrier:     EXP
+
+14:20:08.483  MFR receives:
+              4190-1|SC_H4RU|662165073366000013601225
+
+14:20:08.499  MFR calculates and sends target 02:
+              4190-1|662165073366000013601225|02
+
+14:20:09.421  PLC acknowledgement:
+              4190-1|SC_H4RU|662165073366000013601225|WG
+
+MFR therefore correctly records:
+              Expected: 02, Received: WG
+
+The same behaviour is visible in further H4RU manual cases. For example, another parcel was assigned target 01 and sent at 14:20:06.139, but the PLC returned WG at 14:20:06.796.
+
+The MFR logs therefore show:
+
+- Carrier assignment to the manual gates: correct
+- Scanner data and parcel ID: received correctly
+- Calculation of manual targets 01–04: correct
+- Transmission through PLC channel 4190-1: documented
+- PLC acknowledgement: WG instead of the requested manual target
+
+Since MFR sends the correct target, we should investigate the process from that point onwards together with Fiege in a coordinated live test. The test should establish:
+
+- What does the PLC actually receive?
+- Which target values and format does the PLC expect for H4RU?
+- Are targets 01–04 processed and mapped to the P9/P10 lanes correctly?
+- Is an error, disabled gate, or another condition triggering a fallback to WG?
+- What should the correct PLC acknowledgement look like?
+
+We should coordinate a test session with Fiege representatives and the PLC team and run several controlled variations, for example:
+
+1. Different carrier assignments.
+2. Manual targets 01, 02, 03, and 04.
+3. Different telescope targets.
+4. Enabled and disabled manual gates.
+5. Repeating the same test with identical and modified target parameters.
+
+For every test, the MFR log, PLC diagnostics, and the actual physical chute movement should be recorded with synchronized timestamps.

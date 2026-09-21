@@ -13,10 +13,7 @@ await build({
   format: 'iife', target: 'es2022', legalComments: 'eof'
 });
 // Restore the offline artifacts from the committed viewer, with no customer source tree.
-const html = await readFile(path.join(root, 'analysis/equipment-replay.html'), 'utf8');
-const match = html.match(/const M=(\{[^\r\n]+\});/);
-if (!match) throw new Error('Bundled replay model not found');
-const model = JSON.parse(match[1]);
+const model = JSON.parse(await readFile(path.join(root,'analysis/fiege-replay-model.json'),'utf8'));
 const compact = JSON.parse(await readFile(path.join(root,'analysis/compact-real-10.json'),'utf8'));
 if(compact.version!==2)throw new Error('Regenerate compact feed with the lossless v2 encoder.');
 for(const feed of compact.parcels){

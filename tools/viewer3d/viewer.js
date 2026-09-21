@@ -11,8 +11,10 @@ const fmt = s => `${Math.floor(s / 60).toString().padStart(2, '0')}:${Math.floor
 const S = .02;
 const world = (xy, y = .5) => new THREE.Vector3(xy[0] * S, y, xy[1] * S);
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-
 async function boot() {
+  $('view-chip').textContent='3D PREVIEW';
+  $('view-switch').textContent='2D viewer ↗';
+  $('view-switch').href='/equipment-replay.html';
   const response = await fetch('/3d/model.json');
   if (!response.ok) throw new Error('The offline replay model could not be loaded.');
   const model = await response.json();
@@ -23,7 +25,7 @@ async function boot() {
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
   renderer.setClearColor(0x101a22);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.domElement.setAttribute('aria-label', 'Interactive 3D schematic conveyor plant');
+  renderer.domElement.setAttribute('aria-label','Interactive 3D schematic conveyor plant');
   host.append(renderer.domElement);
   const scene = new THREE.Scene();
   const camera = new THREE.OrthographicCamera(-30, 30, 30, -30, .1, 500);
@@ -76,14 +78,26 @@ async function boot() {
   const grid=new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(gridPoints),new THREE.LineBasicMaterial({color:0x435778,transparent:true,opacity:.16}));
   scene.add(grid);
   const staticMaterials=new Map();
-  // Paths share physical stretches: deduplicate exact segments before creating belts.
-  const segments = new Map();
-  for (const e of model.edges) for (let i = 1; i < e.points.length; i++) {
-    const a = e.points[i-1], b = e.points[i];
-    const key = [a.join(','), b.join(',')].sort().join('|');
-    if (!segments.has(key)) segments.set(key, [a,b]);
+  // Many routes reuse only part of the same physical belt. Exact-pair
+  // deduplication leaves overlapping meshes that flicker or visually erase
+  // stretches. Merge every collinear interval into a continuous floor belt.
+  const axes=new Map(),diagonals=new Map();
+  for(const edge of model.edges)for(let i=1;i<edge.points.length;i++){
+    const a=edge.points[i-1],b=edge.points[i];
+    if(a[0]===b[0]||a[1]===b[1]){
+      const vertical=a[0]===b[0],fixed=vertical?a[0]:a[1],from=Math.min(vertical?a[1]:a[0],vertical?b[1]:b[0]),to=Math.max(vertical?a[1]:a[0],vertical?b[1]:b[0]),key=(vertical?'v:':'h:')+fixed;
+      if(!axes.has(key))axes.set(key,{vertical,fixed,intervals:[]});axes.get(key).intervals.push([from,to]);
+    }else{
+      const key=[a.join(','),b.join(',')].sort().join('|');if(!diagonals.has(key))diagonals.set(key,[a,b]);
+    }
   }
-  for (const [a,b] of segments.values()) {
+  const segments=[...diagonals.values()];
+  for(const {vertical,fixed,intervals} of axes.values()){
+    intervals.sort((a,b)=>a[0]-b[0]);const merged=[];
+    for(const interval of intervals){const last=merged.at(-1);if(last&&interval[0]<=last[1]+.001)last[1]=Math.max(last[1],interval[1]);else merged.push(interval.slice());}
+    for(const [from,to] of merged)segments.push(vertical?[[fixed,from],[fixed,to]]:[[from,fixed],[to,fixed]]);
+  }
+  for (const [a,b] of segments) {
     const dx=(b[0]-a[0])*S, dz=(b[1]-a[1])*S, length=Math.hypot(dx,dz);
     if (length < .001) continue;
     const x=(a[0]+b[0])*S/2, z=(a[1]+b[1])*S/2, theta=Math.atan2(dx,dz);
@@ -269,7 +283,7 @@ async function boot() {
   document.addEventListener('pointerdown',e=>{if(!card.contains(e.target)&&!explanationCard.contains(e.target)&&!$('tag-current').contains(e.target)){explanationCard.hidden=true;requestFrame();}});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){explanationCard.hidden=true;requestFrame();}});
   function renderParcelData(){
-    const snapshot=stateAt(chosen.observations||[],t);explanationCard.replaceChildren();
+    const snapshot=stateAt(chosen.observations||[],t);const activeEvent=(chosen.events||[]).filter(e=>e.t<=t).at(-1);if(activeEvent?.values){Object.assign(snapshot.values,activeEvent.values);snapshot.provenance=Object.fromEntries(Object.keys(activeEvent.values).map(key=>[key,{timestamp:activeEvent.Timestamp,file:activeEvent.sourceFile,line:activeEvent.line}]))}if(snapshot.values.ParcelID===undefined)snapshot.values.ParcelID=chosen.id;if(snapshot.values.TrackingId===undefined&&chosen.aliases?.length)snapshot.values.TrackingId=chosen.aliases.join(', ');explanationCard.replaceChildren();
     const heading=document.createElement('strong');heading.textContent='Parcel data · '+clockAt();explanationCard.append(heading);
     const close=document.createElement('button');close.textContent='Close';close.onclick=()=>{explanationCard.hidden=true;requestFrame();};explanationCard.append(close);
     const dl=document.createElement('dl');
@@ -384,8 +398,10 @@ async function boot() {
     $('description').textContent=state.leg?`${nodes.get(state.leg.a).label} → ${nodes.get(state.leg.b).label}`:operatorEvent(state.event).technical;
     $('next').textContent=state.done?'End of this replay':nodes.get(state.leg?.b||state.nextStop?.id)?.label||'Final operation';
     $('expectation').textContent=state.next;$('seek').value=t;$('time').textContent=fmt(t);
-    if(activeIndex!==state.index){
-      routeButtons.forEach((b,i)=>{b.classList.toggle('active',i===state.index);b.classList.toggle('past',i<state.index);b.setAttribute('aria-current',i===state.index?'step':'false');});activeIndex=state.index;
+    const visitIndex=Math.max(0,routeButtons.findLastIndex(b=>Number(b.dataset.start)<=t));
+    if(activeIndex!==visitIndex){
+      routeButtons.forEach((b,i)=>{b.classList.toggle('active',i===visitIndex);b.classList.toggle('past',i<visitIndex);b.classList.toggle('future',i>visitIndex);b.setAttribute('aria-current',i===visitIndex?'step':'false');});
+      const current=routeButtons[visitIndex];if(current)$('timeline').scrollTo({top:Math.max(0,current.offsetTop-42),behavior:playing?'smooth':'auto'});activeIndex=visitIndex;
     }
     $('play').textContent=playing?'Ⅱ Pause':'▶ Play';
   }
@@ -422,13 +438,13 @@ async function boot() {
     $('scenario').value=index;$('parcel-id').textContent=chosen.id;$('parcel-name').textContent=chosen.name;
     $('seek').max=chosen.duration;$('duration').textContent=fmt(chosen.duration);$('event-count').textContent=`${chosen.events.length} events`;
     routeButtons.length=0;$('timeline').replaceChildren();
-    const moments=[];const byMoment=new Map();
-    // The timeline is intentionally second-resolution: the raw events may be
-    // separated by a few milliseconds while representing the same visible
-    // station moment. Exact timestamps remain available inside the expansion.
-    chosen.events.forEach(e=>{const key=Math.floor(e.t)+'|'+(e.LocationId||'');let group=byMoment.get(key);if(!group){group={event:e,events:[]};byMoment.set(key,group);moments.push(group);}group.events.push(e);});
-    moments.forEach(group=>{const e=group.event;const wrap=document.createElement('div');wrap.className='timeline-group';const b=document.createElement('button');b.className='event event-group';b.title=group.events.length>1?group.events.length+' simultaneous events':operatorEvent(e).technical;const time=document.createElement('time');time.textContent=fmt(e.t);const label=document.createElement('span');label.textContent=nodes.get(e.LocationId).label;b.append(time,label);if(group.events.length>1){const count=document.createElement('em');count.textContent=group.events.length+' events';b.append(count);}b.onclick=()=>seek(e.t);routeButtons.push(b);wrap.append(b);
-      if(group.events.length>1){const expand=document.createElement('button');expand.type='button';expand.className='event-expand';expand.textContent='Show individual events';const children=document.createElement('div');children.className='timeline-children';children.hidden=true;expand.onclick=ev=>{ev.stopPropagation();children.hidden=!children.hidden;expand.textContent=children.hidden?'Show individual events':'Hide individual events';};group.events.forEach(child=>{const cb=document.createElement('button');cb.className='event event-child';cb.title=operatorEvent(child).technical;const ct=document.createElement('time');ct.textContent=fmt(child.t);const cl=document.createElement('span');const fact=operatorEvent(child);cl.textContent=fact.technical+(fact.outcome?' · '+fact.outcome:'');cb.append(ct,cl);cb.onclick=()=>seek(child.t);children.append(cb);routeButtons.push(cb);});wrap.append(expand,children);} $('timeline').append(wrap);});
+    const moments=[];
+    // A row is a physical station visit. Scanner, database and PLC exchanges
+    // occurring during that visit remain expandable beneath it.
+    chosen.events.forEach(e=>{let group=moments.at(-1);if(!group||group.event.LocationId!==e.LocationId||e.t-group.end>5){group={event:e,end:e.t,events:[]};moments.push(group);}group.end=e.t;group.events.push(e);});
+    $('event-count').textContent=`${moments.length} station visits`;
+    moments.forEach(group=>{const e=group.event;const wrap=document.createElement('div');wrap.className='timeline-group';const b=document.createElement('button');b.className='event event-group';b.dataset.start=group.event.t;b.dataset.end=group.end;b.title=group.events.length>1?group.events.length+' simultaneous events':operatorEvent(e).technical;const time=document.createElement('time');time.textContent=fmt(e.t);const label=document.createElement('span');label.textContent=nodes.get(e.LocationId).label;b.append(time,label);if(group.events.length>1){const count=document.createElement('em');count.textContent=group.events.length+' events';b.append(count);}b.onclick=()=>seek(e.t);routeButtons.push(b);wrap.append(b);
+      if(group.events.length>1){const expand=document.createElement('button');expand.type='button';expand.className='event-expand';expand.textContent='Show individual events';const children=document.createElement('div');children.className='timeline-children';children.hidden=true;expand.onclick=ev=>{ev.stopPropagation();children.hidden=!children.hidden;expand.textContent=children.hidden?'Show individual events':'Hide individual events';};group.events.forEach(child=>{const cb=document.createElement('button');cb.className='event event-child';cb.title=operatorEvent(child).technical;const ct=document.createElement('time');ct.textContent=fmt(child.t);const cl=document.createElement('span');const fact=operatorEvent(child);cl.textContent=fact.technical+(fact.outcome?' · '+fact.outcome:'');cb.append(ct,cl);cb.onclick=()=>seek(child.t);children.append(cb);});wrap.append(expand,children);} $('timeline').append(wrap);});
     requestFrame();
   }
   model.parcels.forEach((p,i)=>{const o=document.createElement('option');o.value=i;o.textContent=`${p.id} · ${p.name}`;$('scenario').append(o);});
