@@ -35,7 +35,7 @@
 
 <script>
 (() => {
-    const assetVersion = '20260924.4';
+    const assetVersion = '20260924.5';
     const hostTheme = () => {
         const root = document.documentElement;
         return root.getAttribute('data-theme') === 'light' ||
@@ -52,7 +52,17 @@
             frame.src = target;
         }
     };
+    const fitToHostViewport = () => {
+        const host = document.querySelector('.parcel-journey-host');
+        if (!host) return;
+        const top = host.getBoundingClientRect().top;
+        const footer = document.querySelector('footer,[role="contentinfo"]');
+        const footerTop = footer?.getBoundingClientRect().top;
+        const bottom = footerTop && footerTop > top ? footerTop - 8 : window.innerHeight - 12;
+        host.style.height = `${Math.max(360, Math.floor(bottom - Math.max(top, 0)))}px`;
+    };
     new MutationObserver(sync).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-bs-theme'] });
+    window.addEventListener('resize', fitToHostViewport);
     window.addEventListener('message', event => {
         if (event.data?.type !== 'parcel-journey-view') return;
         const frame = document.getElementById('parcel-journey-viewer');
@@ -65,6 +75,7 @@
         sync();
         requestAnimationFrame(() => document.getElementById('parcel-journey-viewer').style.visibility = 'visible');
     });
+    requestAnimationFrame(fitToHostViewport);
     sync();
 })();
 </script>
