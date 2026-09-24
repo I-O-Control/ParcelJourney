@@ -20,7 +20,7 @@
     <EmbeddedResource Include="Viewer3d\viewer.css" LogicalName="ParcelJourney.3d.Css" />
     <EmbeddedResource Include="Viewer3d\viewer.js" LogicalName="ParcelJourney.3d.Js" />
     <EmbeddedResource Include="Viewer3d\THREE-LICENSE.txt" LogicalName="ParcelJourney.3d.License" />
-    <EmbeddedResource Include="..\analysis\3d\model.json" LogicalName="ParcelJourney.3d.Model" />
+    <EmbeddedResource Include="..\analysis\fiege-replay-model.json" LogicalName="ParcelJourney.3d.Model" />
     <EmbeddedResource Include="..\analysis\equipment-replay.html" LogicalName="ParcelJourney.Viewer" />
     <EmbeddedResource Include="..\analysis\fiege-replay-validation.json" LogicalName="ParcelJourney.Validation" />
   </ItemGroup>
