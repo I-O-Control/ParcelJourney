@@ -226,7 +226,7 @@ async function boot() {
     raycaster.setFromCamera(pointer,camera);
     return raycaster.intersectObjects(picks,false)[0]?.object.userData.node||null;
   }
-  host.addEventListener('pointerdown',e=>{down=[e.clientX,e.clientY];});
+  host.addEventListener('pointerdown',e=>{down=[e.clientX,e.clientY];if(e.target.closest?.('.station-callout,#tag-current'))pause();else if(raycaster.intersectObject(parcel,true).length)pause();},true);
   host.addEventListener('pointermove',e=>{
     if(e.buttons){dragging=true;hovered=null;return;}
     pendingPointer=[e.clientX,e.clientY];requestFrame();
@@ -485,6 +485,7 @@ async function boot() {
   systemTheme.addEventListener('change',()=>{if(themeChoice==='system')applyTheme();});
   addEventListener('storage',e=>{if(e.key==='parceljourney-theme'){themeChoice=e.newValue||'system';applyTheme();}});
   applyTheme();resize();setView(false,true);load(0);
+  if(location.protocol==='http:'&&location.hostname==='127.0.0.1'){const close=document.getElementById('end-process')||Object.assign(document.createElement('button'),{id:'end-process',type:'button',textContent:'End process',title:'Stop ParcelJourney'});close.style.marginLeft='auto';document.querySelector('footer.transport')?.append(close);close.onclick=async()=>{pause();try{const r=await fetch('/api/session');if(!r.ok)throw new Error();const session=await r.json();await fetch('/api/exit',{method:'POST',headers:{'X-ParcelJourney-Session':session.token}});document.body.textContent='ParcelJourney has stopped. You may close this tab.'}catch{close.textContent='End process unavailable'}};}
   $('scenario').disabled=false;$('play').disabled=false;$('loading').hidden=true;
 }
 function fail(error){$('loading').hidden=true;$('error').hidden=false;$('error-message').textContent=error.message||'WebGL2 is required for this view.';console.error(error);}
