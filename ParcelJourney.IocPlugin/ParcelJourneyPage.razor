@@ -35,7 +35,7 @@
 
 <script>
 (() => {
-    const assetVersion = '20260924.3';
+    const assetVersion = '20260924.4';
     const hostTheme = () => {
         const root = document.documentElement;
         return root.getAttribute('data-theme') === 'light' ||
@@ -56,7 +56,10 @@
     window.addEventListener('message', event => {
         if (event.data?.type !== 'parcel-journey-view') return;
         const frame = document.getElementById('parcel-journey-viewer');
-        if (frame) frame.dataset.view = event.data.view === '3d' ? '3d' : '2d';
+        if (frame) {
+            frame.dataset.view = event.data.view === '3d' ? '3d' : '2d';
+            frame.style.visibility = 'hidden';
+        }
     });
     document.getElementById('parcel-journey-viewer')?.addEventListener('load', () => {
         sync();
