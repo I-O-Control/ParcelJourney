@@ -4,10 +4,14 @@ using ParcelJourney.Domain;
 using System.Text.Json;
 
 static void Usage() => Console.Error.WriteLine("Usage: ParcelJourney.Standalone --logs <folder> --id <parcel-or-order-id> [--pattern <glob>] [--full]\n" +
-    "You can also pass a JSON config path: ParcelJourney.Standalone --config <file>.\n" +
+    "You can also pass a JSON config path: ParcelJourney.Standalone --config <file>, or run embedded demos with --demo.\n" +
     "The folder may contain any compatible rotated log set; no fixed Fiege filenames are required.");
 
 if (args.Length == 0) { Usage(); return 2; }
+if (args.Any(x => x.Equals("--demo", StringComparison.OrdinalIgnoreCase))) {
+    Console.WriteLine(JsonSerializer.Serialize(EmbeddedDemoJourneys.All, new JsonSerializerOptions { WriteIndented = true }));
+    return 0;
+}
 var values = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
 var patterns = new List<string>();
 var fullScan = false;
