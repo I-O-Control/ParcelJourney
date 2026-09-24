@@ -314,4 +314,4 @@ if(location.protocol==='http:'&&location.hostname==='127.0.0.1'){const close=doc
     })();
     </script><script>
 const embedded=window.parent!==window;if(embedded){const hide=()=>document.querySelectorAll('#theme,.theme-toggle').forEach(x=>x.style.display='none');hide();new MutationObserver(hide).observe(document.body,{childList:true,subtree:true});}window.addEventListener('message',e=>{if(e.data?.type==='ioc-theme'){const theme=e.data.theme==='light'?'light':'dark';document.documentElement.dataset.theme=theme;document.documentElement.dataset.bsTheme=theme;document.body.classList.toggle('light',theme==='light');}});
-</script></html>
+</script><script>document.querySelectorAll('.view3d-link').forEach(link=>{link.href='/3d'});</script></html>
