@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="ParcelHistoryExplorer.Core/ParcelHistoryExplorer.Core.csproj" />
+  <Project Path="ParcelJourney.App/ParcelJourney.App.csproj" />
+  <Project Path="ParcelJourney.Core/ParcelJourney.Core.csproj" />
+  <Project Path="ParcelJourney.Domain/ParcelJourney.Domain.csproj" />
+  <Project Path="ParcelJourney.Standalone/ParcelJourney.Standalone.csproj" />
+</Solution>
