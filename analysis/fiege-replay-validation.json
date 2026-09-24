@@ -1,7 +1,7 @@
 {
   "mode": "real-logs",
-  "runs": 10,
-  "scenarioFamilies": 10,
+  "runs": 30,
+  "scenarioFamilies": 30,
   "filesChecked": 457,
   "completeLifecycles": true,
   "laterMovement": 0,

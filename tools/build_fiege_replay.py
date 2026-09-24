@@ -56,7 +56,11 @@ def build():
     edges['SC_H3RU>SC_H2T1']['basis']='Schematic orthogonal continuation from the Hall 3 chute decision to Hall 2'
     parcels=[];report=[]
     observed=set()
-    refs=sorted({r['fields'].get('LastScanPos','') for c in data['selected'] for r in c['rows']} - set(nodes))
+    # VR_* values are database-only virtual routing positions. They are not
+    # scanner observations and must never become physical nodes or conveyor
+    # edges in the replay geometry.
+    refs=sorted({r['fields'].get('LastScanPos','') for c in data['selected'] for r in c['rows']}
+                - set(nodes) - {r['fields'].get('LastScanPos','') for c in data['selected'] for r in c['rows'] if r['fields'].get('LastScanPos','').startswith('VR_')})
     for index,loc in enumerate(refs):
         if loc.startswith('SC_LINE'):
             anchor=nodes['SC_BWL'+loc.removeprefix('SC_LINE')]
@@ -139,10 +143,13 @@ def build():
                     else:
                         assert (nodes[loc]['x'],nodes[loc]['y'])==(nodes[location]['x'],nodes[location]['y'])
                     stops.append(dict(id=loc,arrival=t,departure=t));location=loc
-                summary='Database '+f.get('Status','')+' · '+loc+' · PLC '+f.get('PlcTarget','')
+                virtual = loc.startswith('VR_')
+                summary='Database '+f.get('Status','')+' · '+(f'Routing tab {loc}' if virtual else loc)+' · PLC '+f.get('PlcTarget','')
+                if virtual and f.get('VRNewHeight') not in (None, '', '-1'):
+                    summary += ' · height '+f.get('VRNewHeight','')
                 if loc==location: stops[-1]['departure']=t
                 event_type='Database state'
-            events.append(dict(t=t,LocationId=location,ObservedLocationId=loc,Summary=summary,EventType=event_type,Timestamp=r['time'],Evidence=[evidence(r)],values=(r.get('fields') if r['source']=='db' else None)))
+            events.append(dict(t=t,LocationId=location,ObservedLocationId=loc,Summary=summary,EventType=event_type,Timestamp=r['time'],Evidence=[evidence(r)],values=(r.get('fields') if r['source']=='db' else None),routingTab=(loc if r['source']=='db' and loc.startswith('VR_') else None)))
         # A physical station moment includes scanner, database and PLC records that
         # can be separated by only a few milliseconds. Carry the latest tudata
         # snapshot into the first event of that moment so the UI can show the
@@ -167,6 +174,9 @@ def build():
         report.append(f"## {c['id']} — {desc}\n\nStart: {start}. CLOSED: {c['end']}. Last occurrence: {proof['lastOccurrence']}.\n\nAliases: {', '.join(c['aliases'])}.\n\nStart evidence: {proof['start']['FileName']}:{proof['start']['LineNumber']}.\nClosure: {proof['closed']['FileName']}:{proof['closed']['LineNumber']}.\n\nScanner reads (repeated reads retained): {' → '.join(c['route'])}\n\nLater movement: 0. Later exit-notification records: {len(tail)}.\n")
     for n in nodes.values(): n['observationStatus']='Observed in selected logs' if n['id'] in observed else 'Retained layout element; not established by selected logs'
     validation=dict(mode='real-logs',runs=len(parcels),scenarioFamilies=len(parcels),filesChecked=len(data['manifest']),completeLifecycles=True,laterMovement=0,scope='Real timestamps, scanner reads, PLC acknowledgements and DB states. Geometry and between-scan position remain schematic.')
+    # Logs provide route evidence, not a complete CAD/topology inventory.
+    # Keep the full floor topology in the rendered model; evidence status on
+    # each edge tells the UI/analysis whether the selected parcels traversed it.
     model=dict(nodes=list(nodes.values()),edges=list(edges.values()),parcels=parcels,validation=validation,sourceManifest=data['manifest'])
     (ROOT/'analysis/fiege-replay-model.json').write_text(json.dumps(model,ensure_ascii=False),encoding='utf-8')
     (ROOT/'analysis/fiege-replay-validation.json').write_text(json.dumps(validation,indent=2),encoding='utf-8')
