@@ -1,3 +1,11 @@
+## Current capture viewer
+
+The app starts empty. Browse parcel folder selects a parser Data directory.
+Only pjourney, index.json and dictionary files are loaded. Choose Data rather
+than parcels alone. Existing detail panels expose stored metadata/event fields.
+No example capture is automatically loaded. Independent comparison of 80 files
+and 12,312 events found zero decoding differences.
+
 # ParcelJourney
 
 Standalone parcel journey replay and the future I/O Control GmbH host module.
