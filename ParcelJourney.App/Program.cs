@@ -44,7 +44,20 @@ app.MapGet("/equipment-replay.html", () => Results.Content(CaptureReplay.AddLoad
 app.MapGet("/3d", () => Results.Content(CaptureReplay.AddLoader(EmbeddedAssets.Read("ParcelJourney.3d.Html")), "text/html"));
 app.MapGet("/3d/viewer.css", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.3d.Css"), "text/css"));
 app.MapGet("/3d/viewer.js", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.3d.Js"), "text/javascript"));
-app.MapGet("/3d/model.json", () => Results.Content(CaptureReplay.Model, "application/json"));
+app.MapGet("/3d/model.json", () => Results.Content(LayoutStore.Apply(CaptureReplay.Model), "application/json"));
+app.MapGet("/layout-editor", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.Layout.Html"), "text/html"));
+app.MapGet("/layout-editor.js", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.Layout.Js"), "text/javascript"));
+app.MapGet("/api/layout", () => Results.Ok(LayoutStore.Get(CaptureReplay.Model)));
+app.MapPost("/api/layout/validate", async (HttpRequest request) => {
+    try { var layout = await System.Text.Json.Nodes.JsonNode.ParseAsync(request.Body); LayoutStore.Validate(layout!.AsObject()); return Results.Ok(new { valid = true }); }
+    catch (Exception ex) { return Results.BadRequest(new { error = ex.Message }); }
+});
+app.MapPost("/api/layout", async (HttpRequest request) => {
+    if (request.Headers["X-ParcelJourney-Session"] != token) return Results.Json(new { error = "Invalid application session." }, statusCode: 403);
+    try { var layout = await System.Text.Json.Nodes.JsonNode.ParseAsync(request.Body); var revision = LayoutStore.Save(layout!.AsObject(), request.Headers.IfMatch.ToString(), CaptureReplay.Model); return Results.Ok(new { revision }); }
+    catch (InvalidOperationException ex) { return Results.Json(new { error = ex.Message }, statusCode: 409); }
+    catch (Exception ex) { return Results.BadRequest(new { error = ex.Message }); }
+});
 app.MapGet("/3d/license", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.3d.License"), "text/plain"));
 app.MapGet("/api/capture/load", (string path, bool? closedOnly) => { try { return Results.Ok(CaptureReplay.Load(path, closedOnly ?? true)); } catch (Exception ex) { return Results.BadRequest(new { error = ex.Message }); } });
 app.MapPost("/api/capture/upload", async (HttpRequest request) => {

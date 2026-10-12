@@ -14,6 +14,8 @@
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
   <ItemGroup>
+    <EmbeddedResource Include="LayoutEditor.html" LogicalName="ParcelJourney.Layout.Html" />
+    <EmbeddedResource Include="LayoutEditor.js" LogicalName="ParcelJourney.Layout.Js" />
     <ProjectReference Include="..\ParcelJourney.Core\ParcelJourney.Core.csproj" />
     <EmbeddedResource Include="Viewer3d\theme.css" LogicalName="ParcelJourney.Theme" />
     <EmbeddedResource Include="Viewer3d\index.html" LogicalName="ParcelJourney.3d.Html" />

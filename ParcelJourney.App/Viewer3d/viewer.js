@@ -32392,6 +32392,7 @@ void main() {
         action = "Parcel state stored";
       else if (/print|label/.test(text)) action = "Label print operation";
       else if (/weight|scale|brutto/.test(text)) action = "Weight check";
+      if (e.CloseObservationNumber) action = "CLOSE observation " + e.CloseObservationNumber;
       const source = e.Source || e.source || e.system || "";
       const method = e.Operation || e.operation || e.EventType || e.eventType || "";
       const technical = [source, method].filter(Boolean).join(" \xB7 ") || raw || action;
