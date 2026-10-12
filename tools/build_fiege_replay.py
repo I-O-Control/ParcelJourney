@@ -5,11 +5,24 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 def timestamp(s): return dt.datetime.strptime(s,'%Y.%m.%d %H:%M:%S.%f')
 def evidence(r): return dict(FileName=r['file'],LineNumber=r['line'],RawLine=r['raw'])
+def flow_role(edge):
+    a,b=edge['a'],edge['b']
+    if a=='RETURN' or b=='RETURN' or (a=='SC_VL2' and b=='SC_WAVL') or (a=='SC_UMR' and b=='SC_WAVL'):
+        return 'recirculation'
+    if (b.startswith(('H4_EXIT','H3_EXIT','H2_EXIT','H4_CHUTE','H3_CHUTE','AP','SEAL'))
+        or (a.startswith('SEAL') and b=='MERGE')
+        or a in ('SC_VL1','SC_VL2','SC_AP','SC_UMR') and b.startswith(('SC_BWL','SC_ETIO'))):
+        return 'branch'
+    return 'trunk'
 
 def build():
     data=json.loads((ROOT/'tmp/fiege-index.json').read_text(encoding='utf-8'))
     layout=json.loads((ROOT/'topology/replay-layout.json').read_text())
+    route_observations=json.loads((ROOT/'topology/live-1.8-route-observations.json').read_text(encoding='utf-8'))
     nodes={n['id']:n for n in layout['nodes']}
+    # PLC source identifies this point as the strapping-line distributor; it is
+    # not a QA-only station. Preserve the distinction in the user-facing seed.
+    nodes['SC_UMR'].update(label='Strapping line distributor',note='PLC logic: single-strap parcels divert right; double-strap parcels continue straight. The exact downstream corridor is schematic.')
     # Hall 3 chute decision precedes the Hall 3 telescopes in the real logs.
     # Keep its three outputs as one vertical chute bank on its left.  The prior
     # layout moved the decision to the approach side but left these endpoints
@@ -28,10 +41,9 @@ def build():
     for line in range(1,6):
         side=nodes[f'SC_ETIOSL{line}'];top=nodes[f'SC_ETIOTL{line}']
         top.update(x=side['x'],y=side['y'],coordinateBasis='Co-located side/top reader assembly; shared equipment base in logs')
-    # The floor layout already contains the complete schematic conveyor graph.
-    # Keep it as the physical substrate; observed parcel transitions only add
-    # evidence to these edges or create a clearly marked reference edge when a
-    # database position is not part of the floor export.
+    # Keep only the directed physical-corridor candidate from the layout seed.
+    # Scanner succession is evidence about order, not evidence that a direct
+    # belt exists between the two scanners.
     edges={e['id']:dict(e, evidence=[], topology='floor-layout', observationStatus='Unobserved floor connection') for e in layout.get('edges',[])}
     # Coordinate corrections above must also move the physical path endpoints.
     # Otherwise the graph is logically connected while the rendered belt stops
@@ -39,6 +51,9 @@ def build():
     for edge in edges.values():
         edge['points'][0]=[nodes[edge['a']]['x'],nodes[edge['a']]['y']]
         edge['points'][-1]=[nodes[edge['b']]['x'],nodes[edge['b']]['y']]
+        edge['routeType']=flow_role(edge)
+        edge['flowRole']=edge['routeType']
+        edge['confidence']='candidate'
     # The three outcomes share the short departure belt from the chute
     # decision, then split on separate horizontal levels.  This explicitly
     # replaces the obsolete geometry inherited from the former right-hand
@@ -50,10 +65,8 @@ def build():
     # These two retained floor edges also used the decision's former
     # right-hand coordinate as an intermediate point.  Rebuild them from the
     # current endpoints so neither renderer can draw a diagonal conveyor.
-    edges['SC_H3T7>SC_H3RU']['points']=[[1330,1880],[1330,1810],[190,1810]]
-    edges['SC_H3T7>SC_H3RU']['basis']='Schematic orthogonal return from the final Hall 3 divert scanner to the Hall 3 chute decision'
-    edges['SC_H3RU>SC_H2T1']['points']=[[190,1810],[190,2160],[250,2160],[250,2220]]
-    edges['SC_H3RU>SC_H2T1']['basis']='Schematic orthogonal continuation from the Hall 3 chute decision to Hall 2'
+    # Hall 3 chute scanner precedes its telescopes. The live seed owns these
+    # corridors; do not restore the obsolete telescope-to-chute return here.
     parcels=[];report=[]
     observed=set()
     # VR_* values are database-only virtual routing positions. They are not
@@ -66,36 +79,14 @@ def build():
             anchor=nodes['SC_BWL'+loc.removeprefix('SC_LINE')]
             x,y=anchor['x'],anchor['y']
         else: x,y=900+150*index,500
-        nodes[loc]=dict(id=loc,label=loc+' · recorded reference',x=x,y=y,kind='junction',equipment=loc,coordinateBasis='Database LastScanPos reference; schematic position, not a surveyed scanner')
+        nodes[loc]=dict(id=loc,label=loc+' · recorded reference',x=x,y=y,kind='reference',equipment=loc,physical=False,coordinateBasis='Database LastScanPos reference; co-located with associated scale; not a conveyor junction')
     def connect(a,b):
         key=a+'>'+b
         if key in edges:
-            # Reuse the floor segment identity, but let the observed route
-            # geometry win when the replay has a more specific bend for it.
-            na,nb=nodes[a],nodes[b];p=[na['x'],na['y']];q=[nb['x'],nb['y']];mid=[]
-            if a=='SC_H4RU' and b=='SC_H3RU': mid=[[1970,p[1]],[1970,1810]]
-            elif a=='SC_H3RU' and b.startswith('SC_H3T'): mid=[[190,1880]]
-            elif a=='SC_H2T9' and b=='SC_H4T1': mid=[[2110,p[1]],[2110,1450],[250,1450]]
-            elif a=='SC_H3T7' and b=='SC_H2T1': mid=[[1970,p[1]],[1970,2160],[250,2160]]
-            elif a in ('SC_VL1','SC_VL2') and b=='SC_WAVL': mid=[[2040,170],[2040,550],[740,550]]
-            elif b.startswith('SC_BWL'): mid=[[p[0],650],[400,650],[400,q[1]]]
-            elif a.startswith('SC_ETIOT') and b.startswith('SC_H4'): mid=[[2040,p[1]],[2040,1450],[q[0],1450]]
-            elif p[0]!=q[0] and p[1]!=q[1]: mid=[[p[0],q[1]]]
-            edges[key]['points']=[p,*mid,q]
-            edges[key]['observationStatus']='Observed by selected parcel logs'
+            edges[key]['observationStatus']='Observed scanner succession matches this directed topology edge; exact geometry remains schematic'
+            edges[key]['transitionObserved']=True
             return key
-        na,nb=nodes[a],nodes[b];p=[na['x'],na['y']];q=[nb['x'],nb['y']]
-        mid=[]
-        if a=='SC_H4RU' and b=='SC_H3RU': mid=[[1970,p[1]],[1970,1810]]
-        elif a=='SC_H3RU' and b.startswith('SC_H3T'): mid=[[190,1880]]
-        elif a=='SC_H2T9' and b=='SC_H4T1': mid=[[2110,p[1]],[2110,1450],[250,1450]]
-        elif a=='SC_H3T7' and b=='SC_H2T1': mid=[[1970,p[1]],[1970,2160],[250,2160]]
-        elif a in ('SC_VL1','SC_VL2') and b=='SC_WAVL': mid=[[2040,170],[2040,550],[740,550]]
-        elif b.startswith('SC_BWL'): mid=[[p[0],650],[400,650],[400,q[1]]]
-        elif a.startswith('SC_ETIOT') and b.startswith('SC_H4'): mid=[[2040,p[1]],[2040,1450],[q[0],1450]]
-        elif p[0]!=q[0] and p[1]!=q[1]: mid=[[p[0],q[1]]]
-        edges[key]=dict(id=key,a=a,b=b,points=[p,*mid,q],basis='Observed scanner succession; schematic interpolation, intermediate equipment not asserted',evidence=[],topology='observed-transition',observationStatus='Observed by selected parcel logs')
-        return key
+        return None
     for c in data['selected']:
         assert all(e['file'].startswith(('ConMFRtoLVS','ProcLVS')) and ('Sent:' in e['raw'] or 'Sending data' in e['raw']) and (timestamp(e['time'])-timestamp(c['end'])).total_seconds()<1 for e in c['laterEvidence']),c['id']
         assert any('Ausschleuse Meldung' in r['raw'] and 'CLOSE' in r['raw'] for r in c['audit'])
@@ -122,8 +113,8 @@ def build():
                         if stops:
                             prev=stops[-1];eid=connect(prev['id'],loc)
                             assert t>prev['departure'],(c['id'],r)
-                            legs.append(dict(a=prev['id'],b=loc,start=prev['departure'],end=t,edges=[eid],positionBasis='Interpolated between logged observations'))
-                            edges[eid]['evidence'].append(evidence(r))
+                            legs.append(dict(a=prev['id'],b=loc,start=prev['departure'],end=t,edges=[eid] if eid else [],routeStatus='topology-edge' if eid else 'unknown',positionBasis='Interpolated along candidate corridor; geometry schematic' if eid else 'Observed scanner succession; physical corridor is not mapped'))
+                            if eid: edges[eid]['evidence'].append(evidence(r))
                         stops.append(dict(id=loc,arrival=t,departure=t))
                     summary='Scanner read · '+loc
                 else: summary='PLC acknowledgement → '+r['target']+' · '+loc
@@ -138,8 +129,8 @@ def build():
                     prev=stops[-1]
                     if t>prev['departure']:
                         eid=connect(prev['id'],loc)
-                        legs.append(dict(a=prev['id'],b=loc,start=prev['departure'],end=t,edges=[eid],positionBasis='Interpolated to recorded database reference'))
-                        edges[eid]['evidence'].append(evidence(r))
+                        legs.append(dict(a=prev['id'],b=loc,start=prev['departure'],end=t,edges=[eid] if eid else [],routeStatus='topology-edge' if eid else 'unknown',positionBasis='Interpolated along candidate corridor; geometry schematic' if eid else 'Recorded database position; physical corridor is not mapped'))
+                        if eid: edges[eid]['evidence'].append(evidence(r))
                     else:
                         assert (nodes[loc]['x'],nodes[loc]['y'])==(nodes[location]['x'],nodes[location]['y'])
                     stops.append(dict(id=loc,arrival=t,departure=t));location=loc
@@ -177,7 +168,7 @@ def build():
     # Logs provide route evidence, not a complete CAD/topology inventory.
     # Keep the full floor topology in the rendered model; evidence status on
     # each edge tells the UI/analysis whether the selected parcels traversed it.
-    model=dict(nodes=list(nodes.values()),edges=list(edges.values()),parcels=parcels,validation=validation,sourceManifest=data['manifest'])
+    model=dict(nodes=list(nodes.values()),edges=list(edges.values()),parcels=parcels,routeObservations=route_observations,validation=validation,sourceManifest=data['manifest'])
     (ROOT/'analysis/fiege-replay-model.json').write_text(json.dumps(model,ensure_ascii=False),encoding='utf-8')
     (ROOT/'analysis/fiege-replay-validation.json').write_text(json.dumps(validation,indent=2),encoding='utf-8')
     (ROOT/'analysis/fiege-real-cases.md').write_text('# Ten completed Fiege journeys — 11 September 2026\n\n'+validation['scope']+'\n\nAll 226 supplied files searched by ParcelID and linked Tracking IDs. Start requires SC_START and INSERT/NEW; completion requires CLOSED, PLC exit confirmation and FWMS destination notification. Later references are classified, not silently discarded. No claim is made about files outside this supplied capture. Missing intermediate reads remain gaps; no synthetic workstation, sealer, printer or transit events are added. Unobserved layout elements are retained without claiming log confirmation.\n\n'+'\n'.join(report),encoding='utf-8')

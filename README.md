@@ -76,3 +76,9 @@ The committed offline HTML can restore the real JSON model with the 3D build,
 without access to source logs. `topology/replay-layout.json` retains the earlier
 schematic equipment inventory; only observed scanner transitions are animated.
 Legacy synthetic generators are development history and are not the release input.
+
+## Optional journey folder
+
+The viewer opens without a dataset. Choose an optional folder with **Browse** or **Use folder**; it is remembered locally until changed. Selecting a folder does not load journeys. **Include subfolders** controls catalogue discovery, **Load Journeys** loads published files explicitly, and **Load selected** opens only the searched ParcelID. Suggestions begin after four characters and support clicking, Arrow Up/Down, Enter and Escape. The catalogue reads published index metadata (or file headers for unindexed candidates), not event payloads. PJ01 loading requires the matching index and dictionary. **Clear loaded** keeps the selected default folder. Restarting remembers the folder but does not reload journeys.
+
+Local settings live in the user application-data directory; source datasets are not stored in Git. Runtime assets contain geometry/UI only, with no bundled parcel histories.

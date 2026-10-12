@@ -56,6 +56,20 @@
         function sample(model, parcel, time) {
           const nodes = Object.fromEntries(model.nodes.map((n) => [n.id, n]));
           const edges = Object.fromEntries(model.edges.map((e) => [e.id, e]));
+          const pointsFor = (leg2) => {
+            if (!leg2.edges?.length) return null;
+            const route = [];
+            let at2 = leg2.a;
+            for (const id of leg2.edges) {
+              const edge = edges[id];
+              if (!edge || edge.a !== at2) return null;
+              route.push(...edge.points.slice(route.length ? 1 : 0));
+              at2 = edge.b;
+            }
+            return at2 === leg2.b ? route : null;
+          };
+          const routeUnknown = (leg2) => !pointsFor(leg2) || leg2.routeStatus === "unknown";
+          const playbackPoints = (leg2) => pointsFor(leg2) || [[nodes[leg2.a].x, nodes[leg2.a].y], [nodes[leg2.b].x, nodes[leg2.b].y]];
           const t = Math.max(0, Math.min(parcel.duration, time));
           let index = 0;
           for (let i = 0; i < parcel.events.length; i++) if (parcel.events[i].t <= t) index = i;
@@ -64,26 +78,39 @@
           const visited = parcel.stops.filter((s) => s.arrival <= t), stop = visited[visited.length - 1];
           const nextStop = parcel.stops.find((s) => s.arrival > t) || null;
           const done = t >= parcel.duration;
-          const xy = leg ? at(edges[leg.edges[0]].points, (t - leg.start) / (leg.end - leg.start)) : [nodes[stop.id].x, nodes[stop.id].y];
+          const xy = leg ? routeUnknown(leg) ? [nodes[leg.a].x, nodes[leg.a].y] : at(playbackPoints(leg), (t - leg.start) / (leg.end - leg.start)) : [nodes[stop.id].x, nodes[stop.id].y];
           const history = [];
           let liquid = [];
           for (const l of parcel.legs) {
             if (l.start >= t) break;
-            const ps = edges[l.edges[0]].points, f = Math.min(1, (t - l.start) / (l.end - l.start));
+            if (routeUnknown(l)) continue;
+            const ps = playbackPoints(l), f = Math.min(1, (t - l.start) / (l.end - l.start));
             history.push(slice(ps, 0, f));
           }
           const latestLeg = parcel.legs.filter((l) => l.start < t).at(-1);
-          if (latestLeg) {
-            const ps = edges[latestLeg.edges[0]].points;
+          if (latestLeg && !routeUnknown(latestLeg)) {
+            const ps = playbackPoints(latestLeg);
             liquid = slice(ps, 0, Math.min(1, (t - latestLeg.start) / (latestLeg.end - latestLeg.start)));
           }
           const bright = done ? history : liquid.length ? [liquid] : [];
-          const phase = done ? parcel.outcome || "completed" : leg ? "travelling" : "processing";
-          const current = done ? parcel.completeness : leg ? `Moving: ${nodes[leg.a].label} \u2192 ${nodes[leg.b].label}` : event.Summary;
-          const next = done ? "Replay ended here. No further movement is implied." : nextStop ? `Next recorded position in ${(nextStop.arrival - t).toFixed(1)}s: ${nodes[nextStop.id].label}` : `Final observations: ${Math.max(0, parcel.duration - t).toFixed(1)}s remaining.`;
-          return { t, xy, index, event, upcoming, leg, stop, nextStop, done, phase, current, next, history, liquid, bright };
+          const phase = done ? parcel.outcome || "completed" : leg ? routeUnknown(leg) ? "route-unknown" : "travelling" : "processing";
+          const current = done ? parcel.completeness : leg ? routeUnknown(leg) ? `Observed movement: ${nodes[leg.a].label} \u2192 ${nodes[leg.b].label}; physical route unknown` : `Moving: ${nodes[leg.a].label} \u2192 ${nodes[leg.b].label}` : event.Summary;
+          const next = done ? "Replay ended here. No further movement is implied." : leg && routeUnknown(leg) ? `Next recorded scanner: ${nodes[leg.b].label}. Conveyor route is not mapped.` : nextStop ? `Next recorded position in ${(nextStop.arrival - t).toFixed(1)}s: ${nodes[nextStop.id].label}` : `Final observations: ${Math.max(0, parcel.duration - t).toFixed(1)}s remaining.`;
+          const positionKnown = !(leg && routeUnknown(leg)) && nodes[stop.id].physical !== false;
+          return { t, xy, positionKnown, index, event, upcoming, leg, routeUnknown: leg ? routeUnknown(leg) : false, stop, nextStop, done, phase, current, next, history, liquid, bright };
         }
-        return { sample, at, slice, length };
+        return { sample, at, slice, length, pointsFor(model, leg) {
+          const edges = Object.fromEntries(model.edges.map((edge) => [edge.id, edge]));
+          let at2 = leg.a, points = [];
+          if (!leg.edges?.length) return null;
+          for (const id of leg.edges) {
+            const edge = edges[id];
+            if (!edge || edge.a !== at2) return null;
+            points.push(...edge.points.slice(points.length ? 1 : 0));
+            at2 = edge.b;
+          }
+          return at2 === leg.b ? points : null;
+        } };
       })();
       if (typeof module !== "undefined") module.exports = ReplayEngine2;
     }
@@ -31703,7 +31730,19 @@ void main() {
   function buildTrailSegments(edges, parcel) {
     const segments = [];
     for (const leg of parcel.legs) {
-      const points = edges.get(leg.edges[0]).points;
+      if (!leg.edges?.length || leg.routeStatus === "unknown") continue;
+      let at = leg.a;
+      const points = [];
+      for (const id of leg.edges) {
+        const edge = edges.get(id);
+        if (!edge || edge.a !== at) {
+          points.length = 0;
+          break;
+        }
+        points.push(...edge.points.slice(points.length ? 1 : 0));
+        at = edge.b;
+      }
+      if (!points.length || at !== leg.b) continue;
       const lengths = points.slice(1).map((b, i) => Math.hypot(b[0] - points[i][0], b[1] - points[i][1]));
       const total = lengths.reduce((a, b) => a + b, 0);
       let distance = 0;
@@ -31896,7 +31935,7 @@ void main() {
     ];
     const plantBounds = new Box3();
     const footprintPoints = [
-      ...model.nodes.map((n) => [n.x * S, n.y * S]),
+      ...model.nodes.filter((n) => n.physical !== false).map((n) => [n.x * S, n.y * S]),
       ...model.edges.flatMap((e) => e.points.map((p) => [p[0] * S, p[1] * S])),
       ...sections.flatMap(([, x1, z1, x2, z2]) => [
         [x1, z1],
@@ -31906,7 +31945,7 @@ void main() {
       ])
     ];
     const outline = footprint(footprintPoints);
-    for (const n of model.nodes)
+    for (const n of model.nodes.filter((n2) => n2.physical !== false))
       plantBounds.expandByPoint(world([n.x, n.y], 1.3));
     for (const e of model.edges)
       for (const p of e.points) plantBounds.expandByPoint(world(p, 0));
@@ -32050,7 +32089,7 @@ void main() {
       junction: 9413566
     };
     const picks = [];
-    for (const n of model.nodes) {
+    for (const n of model.nodes.filter((node) => node.physical !== false)) {
       const x = n.x * S, z = n.y * S, c = equipmentColors[n.kind];
       if (n.kind === "scanner" || n.kind === "decision") {
         box(c, x - 0.39, 0.68, z, 0.1, 0.85, 0.16);
@@ -32392,7 +32431,6 @@ void main() {
         action = "Parcel state stored";
       else if (/print|label/.test(text)) action = "Label print operation";
       else if (/weight|scale|brutto/.test(text)) action = "Weight check";
-      if (e.CloseObservationNumber) action = "CLOSE observation " + e.CloseObservationNumber;
       const source = e.Source || e.source || e.system || "";
       const method = e.Operation || e.operation || e.EventType || e.eventType || "";
       const technical = [source, method].filter(Boolean).join(" \xB7 ") || raw || action;
@@ -32733,12 +32771,12 @@ Click equipment for details`;
       hover.style.top = `${Math.max(310, Math.min(host.clientHeight - 40, p.y - 20))}px`;
     }
     function ui() {
-      const status = state.done ? state.phase.toUpperCase() : state.leg ? "IN TRANSIT" : "AT EQUIPMENT";
+      const status = state.done ? state.phase.toUpperCase() : state.leg ? state.routeUnknown ? "ROUTE UNKNOWN" : "IN TRANSIT" : "AT EQUIPMENT";
       $("state-badge").textContent = status;
       $("percent").textContent = `${Math.floor(t / chosen.duration * 100)}%`;
       $("progress-fill").style.width = `${t / chosen.duration * 100}%`;
-      $("current").textContent = state.done ? chosen.completeness : state.leg ? "Conveyor transfer" : nodes.get(state.stop.id).label;
-      $("description").textContent = state.leg ? `${nodes.get(state.leg.a).label} \u2192 ${nodes.get(state.leg.b).label}` : operatorEvent(state.event).technical;
+      $("current").textContent = state.done ? chosen.completeness : state.leg ? state.routeUnknown ? "No mapped physical belt" : "Conveyor transfer" : nodes.get(state.stop.id).label;
+      $("description").textContent = state.leg ? `${nodes.get(state.leg.a).label} \u2192 ${nodes.get(state.leg.b).label}${state.routeUnknown ? " \xB7 physical route unknown" : ""}` : operatorEvent(state.event).technical;
       $("next").textContent = state.done ? "End of this replay" : nodes.get(state.leg?.b || state.nextStop?.id)?.label || "Final operation";
       $("expectation").textContent = state.next;
       $("seek").value = t;
@@ -32766,21 +32804,23 @@ Click equipment for details`;
     }
     function update() {
       state = import_replay_engine.default.sample(model, chosen, t);
+      parcel.visible = state.positionKnown;
+      halo.visible = state.positionKnown;
       parcel.position.copy(world(state.xy, 0.535));
       halo.position.copy(world(state.xy, 0.3));
       const color = state.done ? state.phase === "completed" ? palette.success : state.phase === "held" ? palette.warning : palette.exception : palette.trace;
       halo.material.color.set(color);
       trail.material.color.set(color);
-      if (state.leg) {
-        const e = edges.get(state.leg.edges[0]), f = Math.min(
+      if (state.leg && !state.routeUnknown) {
+        const points = import_replay_engine.default.pointsFor(model, state.leg), f = Math.min(
           1,
           (t - state.leg.start) / (state.leg.end - state.leg.start) + 1e-4
-        ), q = import_replay_engine.default.at(e.points, f);
+        ), q = import_replay_engine.default.at(points, f);
         const dx = q[0] - state.xy[0], dz = q[1] - state.xy[1];
         if (Math.hypot(dx, dz) > 1e-5) parcel.rotation.y = Math.atan2(dx, dz);
       }
       updateTrail(t);
-      if (following) centerOn(world(state.xy, 0));
+      if (following && state.positionKnown) centerOn(world(state.xy, 0));
     }
     function frame(now) {
       frameId = 0;

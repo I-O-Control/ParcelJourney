@@ -26,6 +26,7 @@ builder.Services.AddSingleton<IParcelJourneyBuilder, ParcelJourneyBuilder>();
 builder.Services.AddHostedService<LogIndexWarmupService>();
 var app = builder.Build();
 var token = Convert.ToHexString(RandomNumberGenerator.GetBytes(32));
+JourneyFolderEndpoints.Map(app, token);
 app.Use(async (context, next) => {
     if (context.Request.Host.Host != "127.0.0.1") { context.Response.StatusCode = 403; return; }
     context.Response.Headers.CacheControl = "no-store";
@@ -36,6 +37,8 @@ app.Use(async (context, next) => {
     await next();
 });
 app.MapRazorPages();
+app.MapGet("/journey-browser.js", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.Folder.Js"), "text/javascript"));
+app.MapGet("/journey-browser.css", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.Folder.Css"), "text/css"));
 app.MapGet("/theme.css", () => Results.Content(EmbeddedAssets.Read("ParcelJourney.Theme"), "text/css"));
 // The 3D viewer returns here. Keep this route available in the packaged app as
 // well as in the static demo, so both views always use the same curated 2D UI.

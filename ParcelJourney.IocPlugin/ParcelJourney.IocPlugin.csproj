@@ -5,13 +5,20 @@
     <ProjectReference Include="..\ParcelJourney.Core\ParcelJourney.Core.csproj" />
     <ProjectReference Include="$(IocOrchestratorRoot)\IocOrchestrator.Abstractions\IocOrchestrator.Abstractions.csproj"><Private>false</Private></ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\demo\3d\model.json;wwwroot\demo\2d\index.html" />
+    <Content Include="..\ParcelJourney.App\Assets\replay-model.json" Link="wwwroot\demo\3d\model.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\ParcelJourney.App\Assets\equipment-replay.html" Link="wwwroot\demo\2d\index.html" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
   <ItemGroup><None Update="plugin.json" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
     <Target Name="DeployToHostPlugins" AfterTargets="Build">
     <PropertyGroup><HostPluginsDir>$(IocOrchestratorRoot)\bin\$(Configuration)\net8.0-windows\plugins\parcel-journey\</HostPluginsDir></PropertyGroup>
-    <ItemGroup><PluginAssets Include="$(MSBuildThisFileDirectory)wwwroot\**\*" /></ItemGroup>
+    <ItemGroup><PluginAssets Include="$(MSBuildThisFileDirectory)wwwroot\**\*" Exclude="$(MSBuildThisFileDirectory)wwwroot\demo\3d\model.json;$(MSBuildThisFileDirectory)wwwroot\demo\2d\index.html" /></ItemGroup>
     <MakeDir Directories="$(HostPluginsDir)" ContinueOnError="true" />
     <Copy SourceFiles="$(TargetPath);$(TargetDir)plugin.json;$(TargetDir)$(AssemblyName).deps.json" DestinationFolder="$(HostPluginsDir)" SkipUnchangedFiles="true" ContinueOnError="true" />
     <Copy SourceFiles="@(ReferenceCopyLocalPaths)" DestinationFolder="$(HostPluginsDir)" SkipUnchangedFiles="true" ContinueOnError="true" />
     <Copy SourceFiles="@(PluginAssets)" DestinationFolder="$(HostPluginsDir)wwwroot\%(RecursiveDir)" SkipUnchangedFiles="true" ContinueOnError="true" />
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)..\ParcelJourney.App\Assets\replay-model.json" DestinationFiles="$(HostPluginsDir)wwwroot\demo\3d\model.json" SkipUnchangedFiles="true" ContinueOnError="true" />
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)..\ParcelJourney.App\Assets\equipment-replay.html" DestinationFiles="$(HostPluginsDir)wwwroot\demo\2d\index.html" SkipUnchangedFiles="true" ContinueOnError="true" />
   </Target>
 </Project>

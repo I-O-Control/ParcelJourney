@@ -1,7 +1,8 @@
 const fs=require('fs');
 const model=JSON.parse(fs.readFileSync('analysis/fiege-replay-model.json','utf8'));
+const physicalNodes=model.nodes.filter(n=>n.physical!==false);
 const nodes=new Map(model.nodes.map(n=>[n.id,n]));
-const adjacency=new Map(model.nodes.map(n=>[n.id,new Set()]));
+const adjacency=new Map(physicalNodes.map(n=>[n.id,new Set()]));
 const failures=[];
 for(const edge of model.edges){
   const a=nodes.get(edge.a),b=nodes.get(edge.b),first=edge.points[0],last=edge.points.at(-1);
@@ -19,6 +20,6 @@ for(const edge of model.edges){
 }
 const start=model.nodes[0]?.id,seen=new Set(start?[start]:[]),queue=start?[start]:[];
 while(queue.length){for(const next of adjacency.get(queue.shift())||[])if(!seen.has(next)){seen.add(next);queue.push(next)}}
-for(const node of model.nodes){if(!adjacency.get(node.id)?.size)failures.push(`${node.id}: equipment is not attached to a conveyor`);if(!seen.has(node.id))failures.push(`${node.id}: disconnected from plant network`)}
+for(const node of physicalNodes){if(!adjacency.get(node.id)?.size)failures.push(`${node.id}: equipment is not attached to a conveyor`);if(!seen.has(node.id))failures.push(`${node.id}: disconnected from plant network`)}
 if(failures.length){console.error(failures.join('\n'));process.exit(1)}
-console.log(`PASS: ${model.nodes.length} equipment points attached through ${model.edges.length} modeled connections; one connected plant graph; every rendered path terminates at its declared equipment.`);
+console.log(`PASS: ${physicalNodes.length} physical points attached through ${model.edges.length} modeled connections; nonphysical database references excluded; one connected plant graph.`);

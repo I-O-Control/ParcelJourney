@@ -1,9 +1,0 @@
-{
-  "mode": "real-logs",
-  "runs": 30,
-  "scenarioFamilies": 30,
-  "filesChecked": 457,
-  "completeLifecycles": true,
-  "laterMovement": 0,
-  "scope": "Real timestamps, scanner reads, PLC acknowledgements and DB states. Geometry and between-scan position remain schematic."
-}

@@ -12,7 +12,11 @@ for(const p of model.parcels){
  const times=[0,p.duration,...segments.flatMap(s=>[s.start,s.start+.00001,(s.start+s.end)/2,s.end])];
  // Reversed order includes backward seek and restarting after completion.
  for(const t of [...times,...times.toReversed()]){
-  const state=engine.sample(model,p,t),tail=segments.filter(s=>s.start<t).at(-1);
+  const state=engine.sample(model,p,t);
+  if(state.routeUnknown)continue;
+  const lastLeg=p.legs.filter(l=>l.start<t).at(-1);
+  if(lastLeg&&(lastLeg.routeStatus==='unknown'||!lastLeg.edges?.length))continue;
+  const tail=segments.filter(s=>s.start<t).at(-1);
   if(!tail)continue;
   const f=Math.min(1,(t-tail.start)/(tail.end-tail.start));
   const xy=tail.a.map((v,i)=>v+(tail.b[i]-v)*f);

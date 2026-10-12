@@ -91,7 +91,7 @@ async function boot() {
   ];
   const plantBounds = new THREE.Box3();
   const footprintPoints = [
-    ...model.nodes.map((n) => [n.x * S, n.y * S]),
+    ...model.nodes.filter((n) => n.physical !== false).map((n) => [n.x * S, n.y * S]),
     ...model.edges.flatMap((e) => e.points.map((p) => [p[0] * S, p[1] * S])),
     ...sections.flatMap(([, x1, z1, x2, z2]) => [
       [x1, z1],
@@ -101,7 +101,7 @@ async function boot() {
     ]),
   ];
   const outline = footprint(footprintPoints);
-  for (const n of model.nodes)
+  for (const n of model.nodes.filter((n) => n.physical !== false))
     plantBounds.expandByPoint(world([n.x, n.y], 1.3));
   for (const e of model.edges)
     for (const p of e.points) plantBounds.expandByPoint(world(p, 0));
@@ -262,7 +262,7 @@ async function boot() {
     junction: 0x8fa3be,
   };
   const picks = [];
-  for (const n of model.nodes) {
+  for (const n of model.nodes.filter((node) => node.physical !== false)) {
     const x = n.x * S,
       z = n.y * S,
       c = equipmentColors[n.kind];
@@ -1155,7 +1155,7 @@ async function boot() {
     const status = state.done
       ? state.phase.toUpperCase()
       : state.leg
-        ? "IN TRANSIT"
+        ? state.routeUnknown ? "ROUTE UNKNOWN" : "IN TRANSIT"
         : "AT EQUIPMENT";
     $("state-badge").textContent = status;
     $("percent").textContent = `${Math.floor((t / chosen.duration) * 100)}%`;
@@ -1163,10 +1163,10 @@ async function boot() {
     $("current").textContent = state.done
       ? chosen.completeness
       : state.leg
-        ? "Conveyor transfer"
+        ? state.routeUnknown ? "No mapped physical belt" : "Conveyor transfer"
         : nodes.get(state.stop.id).label;
     $("description").textContent = state.leg
-      ? `${nodes.get(state.leg.a).label} → ${nodes.get(state.leg.b).label}`
+      ? `${nodes.get(state.leg.a).label} → ${nodes.get(state.leg.b).label}${state.routeUnknown ? " · physical route unknown" : ""}`
       : operatorEvent(state.event).technical;
     $("next").textContent = state.done
       ? "End of this replay"
@@ -1198,6 +1198,8 @@ async function boot() {
   }
   function update() {
     state = ReplayEngine.sample(model, chosen, t);
+    parcel.visible = state.positionKnown;
+    halo.visible = state.positionKnown;
     parcel.position.copy(world(state.xy, 0.535));
     halo.position.copy(world(state.xy, 0.3));
     const color = state.done
@@ -1209,19 +1211,19 @@ async function boot() {
       : palette.trace;
     halo.material.color.set(color);
     trail.material.color.set(color);
-    if (state.leg) {
-      const e = edges.get(state.leg.edges[0]),
+    if (state.leg && !state.routeUnknown) {
+      const points = ReplayEngine.pointsFor(model, state.leg),
         f = Math.min(
           1,
           (t - state.leg.start) / (state.leg.end - state.leg.start) + 0.0001,
         ),
-        q = ReplayEngine.at(e.points, f);
+        q = ReplayEngine.at(points, f);
       const dx = q[0] - state.xy[0],
         dz = q[1] - state.xy[1];
       if (Math.hypot(dx, dz) > 0.00001) parcel.rotation.y = Math.atan2(dx, dz);
     }
     updateTrail(t);
-    if (following) centerOn(world(state.xy, 0));
+    if (following && state.positionKnown) centerOn(world(state.xy, 0));
   }
   function frame(now) {
     frameId = 0;

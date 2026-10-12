@@ -9,6 +9,26 @@ namespace ParcelJourney.Core;
 /// <summary>Reads the parser's PJ01 binary contract, not the older compact JSON demo.</summary>
 public static class PjourneyReader
 {
+    /// <summary>Metadata only; full payload checksum validation still happens on Read.</summary>
+    public static JsonObject ReadHeader(string path)
+    {
+        using var file = File.OpenRead(path);
+        if (file.Length > 32 * 1024 * 1024) throw new InvalidDataException("Parcel file limit.");
+        var envelope = new byte[37]; file.ReadExactly(envelope);
+        if (Encoding.ASCII.GetString(envelope, 0, 4) != "PJ01" || envelope[4] > 1) throw new InvalidDataException("Unsupported .pjourney header.");
+        using Stream payload = envelope[4] == 1 ? new ZLibStream(file, CompressionMode.Decompress, leaveOpen: true) : file;
+        long length = 0; bool complete = false;
+        for (int shift = 0; shift < 63; shift += 7)
+        {
+            int b = payload.ReadByte(); if (b < 0) throw new InvalidDataException("Truncated header.");
+            length |= (long)(b & 127) << shift;
+            if (b < 128) { complete = true; break; }
+        }
+        if (!complete || length is < 1 or > 256 * 1024) throw new InvalidDataException("Parcel metadata limit.");
+        var bytes = new byte[(int)length]; payload.ReadExactly(bytes);
+        return JsonNode.Parse(bytes)!.AsObject();
+    }
+
     public static JsonObject Read(string path, IReadOnlyList<string> dictionary)
     {
         if (new FileInfo(path).Length > 32 * 1024 * 1024) throw new InvalidDataException("Parcel file limit.");

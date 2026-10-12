@@ -35,12 +35,12 @@
     },
     {
       "id": "SC_UMR",
-      "label": "Quality / manual-close decision",
+      "label": "Strapping line distributor",
       "x": 560,
       "y": 0,
       "kind": "decision",
       "equipment": "3020-1",
-      "note": "Version conflict: PLC name table maps 3020-1; current SC1 logic describes quality point 1460. Placement is provisional.",
+      "note": "PLC logic: single-strap parcels divert right; double-strap parcels continue straight. Exact downstream corridor is schematic.",
       "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
@@ -248,12 +248,12 @@
     {
       "id": "SC_ETIOTL5",
       "label": "Top verification 5",
-      "x": 1620,
+      "x": 1430,
       "y": 850,
       "kind": "scanner",
       "equipment": "3080-2",
       "note": "",
-      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+      "coordinateBasis": "Co-located side/top read heads; no physical conveyor travel between them"
     },
     {
       "id": "STRAP2",
@@ -308,12 +308,12 @@
     {
       "id": "SC_ETIOTL2",
       "label": "Top verification 2",
-      "x": 1620,
+      "x": 1430,
       "y": 950,
       "kind": "scanner",
       "equipment": "3150-2",
       "note": "",
-      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+      "coordinateBasis": "Co-located side/top read heads; no physical conveyor travel between them"
     },
     {
       "id": "STRAP1",
@@ -368,12 +368,12 @@
     {
       "id": "SC_ETIOTL1",
       "label": "Top verification 1",
-      "x": 1620,
+      "x": 1430,
       "y": 1050,
       "kind": "scanner",
       "equipment": "3215-2",
       "note": "",
-      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+      "coordinateBasis": "Co-located side/top read heads; no physical conveyor travel between them"
     },
     {
       "id": "STRAP3",
@@ -428,12 +428,12 @@
     {
       "id": "SC_ETIOTL3",
       "label": "Top verification 3",
-      "x": 1620,
+      "x": 1430,
       "y": 1150,
       "kind": "scanner",
       "equipment": "3275-2",
       "note": "",
-      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+      "coordinateBasis": "Co-located side/top read heads; no physical conveyor travel between them"
     },
     {
       "id": "STRAP4",
@@ -488,12 +488,12 @@
     {
       "id": "SC_ETIOTL4",
       "label": "Top verification 4",
-      "x": 1620,
+      "x": 1430,
       "y": 1250,
       "kind": "scanner",
       "equipment": "3345-2",
       "note": "",
-      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+      "coordinateBasis": "Co-located side/top read heads; no physical conveyor travel between them"
     },
     {
       "id": "SHIP",
@@ -858,11 +858,11 @@
     {
       "id": "SC_H3RU",
       "label": "Hall 3 chute decision",
-      "x": 1780,
-      "y": 1880,
+      "x": 190,
+      "y": 1810,
       "kind": "decision",
       "equipment": "4240-1",
-      "note": "",
+      "note": "Hall 3 chute scanner; repeated live scans place it before Hall 3 telescopes.",
       "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
     },
     {
@@ -1201,7 +1201,9 @@
           -260
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_WAAP>SC_WAVL",
@@ -1217,7 +1219,9 @@
           170
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_WAAP>SC_AP",
@@ -1233,7 +1237,9 @@
           -260
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_AP>SC_UMR",
@@ -1249,7 +1255,9 @@
           0
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_UMR>SC_WAVL",
@@ -1273,7 +1281,9 @@
           170
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "recirculation",
+      "confidence": "candidate"
     },
     {
       "id": "PACK>STRAP5",
@@ -1293,7 +1303,9 @@
           850
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "STRAP5>SC_BWL5",
@@ -1309,7 +1321,9 @@
           850
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_BWL5>SC_ETIINL5",
@@ -1325,7 +1339,9 @@
           850
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_ETIINL5>PRINT5",
@@ -1341,7 +1357,9 @@
           850
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "PRINT5>SC_ETIOSL5",
@@ -1357,7 +1375,9 @@
           850
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_ETIOSL5>SC_ETIOTL5",
@@ -1369,11 +1389,13 @@
           850
         ],
         [
-          1620,
+          1430,
           850
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_ETIOTL5>OUT",
@@ -1381,7 +1403,7 @@
       "b": "OUT",
       "points": [
         [
-          1620,
+          1430,
           850
         ],
         [
@@ -1393,7 +1415,9 @@
           1250
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "PACK>STRAP2",
@@ -1413,7 +1437,9 @@
           950
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "STRAP2>SC_BWL2",
@@ -1429,7 +1455,9 @@
           950
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_BWL2>SC_ETIINL2",
@@ -1445,7 +1473,9 @@
           950
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_ETIINL2>PRINT2",
@@ -1461,7 +1491,9 @@
           950
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "PRINT2>SC_ETIOSL2",
@@ -1477,7 +1509,9 @@
           950
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_ETIOSL2>SC_ETIOTL2",
@@ -1489,11 +1523,13 @@
           950
         ],
         [
-          1620,
+          1430,
           950
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_ETIOTL2>OUT",
@@ -1501,7 +1537,7 @@
       "b": "OUT",
       "points": [
         [
-          1620,
+          1430,
           950
         ],
         [
@@ -1513,7 +1549,9 @@
           1250
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "PACK>STRAP1",
@@ -1533,7 +1571,9 @@
           1050
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "STRAP1>SC_BWL1",
@@ -1549,7 +1589,9 @@
           1050
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_BWL1>SC_ETIINL1",
@@ -1565,7 +1607,9 @@
           1050
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_ETIINL1>PRINT1",
@@ -1581,7 +1625,9 @@
           1050
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "PRINT1>SC_ETIOSL1",
@@ -1597,7 +1643,9 @@
           1050
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_ETIOSL1>SC_ETIOTL1",
@@ -1609,11 +1657,13 @@
           1050
         ],
         [
-          1620,
+          1430,
           1050
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_ETIOTL1>OUT",
@@ -1621,7 +1671,7 @@
       "b": "OUT",
       "points": [
         [
-          1620,
+          1430,
           1050
         ],
         [
@@ -1633,7 +1683,9 @@
           1250
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "PACK>STRAP3",
@@ -1653,7 +1705,9 @@
           1150
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "STRAP3>SC_BWL3",
@@ -1669,7 +1723,9 @@
           1150
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_BWL3>SC_ETIINL3",
@@ -1685,7 +1741,9 @@
           1150
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_ETIINL3>PRINT3",
@@ -1701,7 +1759,9 @@
           1150
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "PRINT3>SC_ETIOSL3",
@@ -1717,7 +1777,9 @@
           1150
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_ETIOSL3>SC_ETIOTL3",
@@ -1729,11 +1791,13 @@
           1150
         ],
         [
-          1620,
+          1430,
           1150
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_ETIOTL3>OUT",
@@ -1741,7 +1805,7 @@
       "b": "OUT",
       "points": [
         [
-          1620,
+          1430,
           1150
         ],
         [
@@ -1753,7 +1817,9 @@
           1250
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "PACK>STRAP4",
@@ -1773,7 +1839,9 @@
           1250
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "STRAP4>SC_BWL4",
@@ -1789,7 +1857,9 @@
           1250
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_BWL4>SC_ETIINL4",
@@ -1805,7 +1875,9 @@
           1250
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_ETIINL4>PRINT4",
@@ -1821,7 +1893,9 @@
           1250
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "PRINT4>SC_ETIOSL4",
@@ -1837,7 +1911,9 @@
           1250
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_ETIOSL4>SC_ETIOTL4",
@@ -1849,11 +1925,13 @@
           1250
         ],
         [
-          1620,
+          1430,
           1250
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_ETIOTL4>OUT",
@@ -1861,7 +1939,7 @@
       "b": "OUT",
       "points": [
         [
-          1620,
+          1430,
           1250
         ],
         [
@@ -1873,7 +1951,9 @@
           1250
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "OUT>SHIP",
@@ -1902,7 +1982,9 @@
         ]
       ],
       "basis": "Estimated connection from section arrangement",
-      "purpose": "Transfer from packaging to shipping"
+      "purpose": "Transfer from packaging to shipping",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SHIP>SC_H4T1",
@@ -1922,7 +2004,9 @@
           1540
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H4T1>H4_EXIT1",
@@ -1938,7 +2022,9 @@
           1670
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H4T1>SC_H4T2",
@@ -1954,7 +2040,9 @@
           1540
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H4T2>H4_EXIT2",
@@ -1970,7 +2058,9 @@
           1670
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H4T2>SC_H4T3",
@@ -1986,7 +2076,9 @@
           1540
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H4T3>H4_EXIT3",
@@ -2002,7 +2094,9 @@
           1670
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H4T3>SC_H4T4",
@@ -2018,7 +2112,9 @@
           1540
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H4T4>H4_EXIT4",
@@ -2034,7 +2130,9 @@
           1670
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H4T4>SC_H4T5",
@@ -2050,7 +2148,9 @@
           1540
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H4T5>H4_EXIT5",
@@ -2066,7 +2166,9 @@
           1670
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H4T5>SC_H4T6",
@@ -2082,7 +2184,9 @@
           1540
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H4T6>H4_EXIT6",
@@ -2098,7 +2202,9 @@
           1670
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H4T6>SC_H4T7",
@@ -2114,7 +2220,9 @@
           1540
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H4T7>H4_EXIT7",
@@ -2130,7 +2238,9 @@
           1670
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H4T7>SC_H4T8",
@@ -2146,7 +2256,9 @@
           1540
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H4T8>H4_EXIT8",
@@ -2162,7 +2274,9 @@
           1670
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H4T8>SC_H4RU",
@@ -2178,7 +2292,9 @@
           1540
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H4RU>H4_CHUTE1",
@@ -2203,7 +2319,9 @@
         ]
       ],
       "basis": "Schematic branch after chute decision; avoids reverse travel over upstream scanners.",
-      "purpose": "Leave shipping belt for chute bank"
+      "purpose": "Leave shipping belt for chute bank",
+      "routeType": "branch",
+      "confidence": "schematic"
     },
     {
       "id": "SC_H4RU>H4_CHUTE2",
@@ -2228,7 +2346,9 @@
         ]
       ],
       "basis": "Schematic branch after chute decision; avoids reverse travel over upstream scanners.",
-      "purpose": "Leave shipping belt for chute bank"
+      "purpose": "Leave shipping belt for chute bank",
+      "routeType": "branch",
+      "confidence": "schematic"
     },
     {
       "id": "SC_H4RU>H4_CHUTE3",
@@ -2253,7 +2373,9 @@
         ]
       ],
       "basis": "Schematic branch after chute decision; avoids reverse travel over upstream scanners.",
-      "purpose": "Leave shipping belt for chute bank"
+      "purpose": "Leave shipping belt for chute bank",
+      "routeType": "branch",
+      "confidence": "schematic"
     },
     {
       "id": "SC_H4RU>H4_CHUTE4",
@@ -2278,40 +2400,9 @@
         ]
       ],
       "basis": "Schematic branch after chute decision; avoids reverse travel over upstream scanners.",
-      "purpose": "Leave shipping belt for chute bank"
-    },
-    {
-      "id": "SC_H4RU>SC_H3T1",
-      "a": "SC_H4RU",
-      "b": "SC_H3T1",
-      "points": [
-        [
-          1780,
-          1540
-        ],
-        [
-          1970,
-          1540
-        ],
-        [
-          1970,
-          1815
-        ],
-        [
-          190,
-          1815
-        ],
-        [
-          190,
-          1880
-        ],
-        [
-          250,
-          1880
-        ]
-      ],
-      "basis": "Schematic transfer corridor: removes same-belt reversal; exact physical return corridor unverified.",
-      "purpose": "Transfer to next shipping hall"
+      "purpose": "Leave shipping belt for chute bank",
+      "routeType": "branch",
+      "confidence": "schematic"
     },
     {
       "id": "SC_H3T1>H3_EXIT1",
@@ -2327,7 +2418,9 @@
           2010
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H3T1>SC_H3T2",
@@ -2343,7 +2436,9 @@
           1880
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H3T2>H3_EXIT2",
@@ -2359,7 +2454,9 @@
           2010
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H3T2>SC_H3T3",
@@ -2375,7 +2472,9 @@
           1880
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H3T3>H3_EXIT3",
@@ -2391,7 +2490,9 @@
           2010
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H3T3>SC_H3T4",
@@ -2407,7 +2508,9 @@
           1880
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H3T4>H3_EXIT4",
@@ -2423,7 +2526,9 @@
           2010
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H3T4>SC_H3T5",
@@ -2439,7 +2544,9 @@
           1880
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H3T5>H3_EXIT5",
@@ -2455,7 +2562,9 @@
           2010
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H3T5>SC_H3T6",
@@ -2471,7 +2580,9 @@
           1880
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H3T6>H3_EXIT6",
@@ -2487,7 +2598,9 @@
           2010
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H3T6>SC_H3T7",
@@ -2503,7 +2616,9 @@
           1880
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H3T7>H3_EXIT7",
@@ -2519,23 +2634,9 @@
           2010
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
-    },
-    {
-      "id": "SC_H3T7>SC_H3RU",
-      "a": "SC_H3T7",
-      "b": "SC_H3RU",
-      "points": [
-        [
-          1330,
-          1880
-        ],
-        [
-          1780,
-          1880
-        ]
-      ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H3RU>H3_CHUTE1",
@@ -2543,8 +2644,8 @@
       "b": "H3_CHUTE1",
       "points": [
         [
-          1780,
-          1880
+          190,
+          1810
         ],
         [
           1780,
@@ -2560,7 +2661,9 @@
         ]
       ],
       "basis": "Schematic branch after chute decision; avoids reverse travel over upstream scanners.",
-      "purpose": "Leave shipping belt for chute bank"
+      "purpose": "Leave shipping belt for chute bank",
+      "routeType": "branch",
+      "confidence": "schematic"
     },
     {
       "id": "SC_H3RU>H3_CHUTE2",
@@ -2568,8 +2671,8 @@
       "b": "H3_CHUTE2",
       "points": [
         [
-          1780,
-          1880
+          190,
+          1810
         ],
         [
           1780,
@@ -2585,7 +2688,9 @@
         ]
       ],
       "basis": "Schematic branch after chute decision; avoids reverse travel over upstream scanners.",
-      "purpose": "Leave shipping belt for chute bank"
+      "purpose": "Leave shipping belt for chute bank",
+      "routeType": "branch",
+      "confidence": "schematic"
     },
     {
       "id": "SC_H3RU>H3_CHUTE3",
@@ -2593,8 +2698,8 @@
       "b": "H3_CHUTE3",
       "points": [
         [
-          1780,
-          1880
+          190,
+          1810
         ],
         [
           1780,
@@ -2610,40 +2715,9 @@
         ]
       ],
       "basis": "Schematic branch after chute decision; avoids reverse travel over upstream scanners.",
-      "purpose": "Leave shipping belt for chute bank"
-    },
-    {
-      "id": "SC_H3RU>SC_H2T1",
-      "a": "SC_H3RU",
-      "b": "SC_H2T1",
-      "points": [
-        [
-          1780,
-          1880
-        ],
-        [
-          1970,
-          1880
-        ],
-        [
-          1970,
-          2155
-        ],
-        [
-          190,
-          2155
-        ],
-        [
-          190,
-          2220
-        ],
-        [
-          250,
-          2220
-        ]
-      ],
-      "basis": "Schematic transfer corridor: removes same-belt reversal; exact physical return corridor unverified.",
-      "purpose": "Transfer to next shipping hall"
+      "purpose": "Leave shipping belt for chute bank",
+      "routeType": "branch",
+      "confidence": "schematic"
     },
     {
       "id": "SC_H2T1>H2_EXIT1",
@@ -2659,7 +2733,9 @@
           2350
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H2T1>SC_H2T2",
@@ -2675,7 +2751,9 @@
           2220
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H2T2>H2_EXIT2",
@@ -2691,7 +2769,9 @@
           2350
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H2T2>SC_H2T3",
@@ -2707,7 +2787,9 @@
           2220
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H2T3>H2_EXIT3",
@@ -2723,7 +2805,9 @@
           2350
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H2T3>SC_H2T4",
@@ -2739,7 +2823,9 @@
           2220
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H2T4>H2_EXIT4",
@@ -2755,7 +2841,9 @@
           2350
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H2T4>SC_H2T5",
@@ -2771,7 +2859,9 @@
           2220
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H2T5>H2_EXIT5",
@@ -2787,7 +2877,9 @@
           2350
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H2T5>SC_H2T6",
@@ -2803,7 +2895,9 @@
           2220
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H2T6>H2_EXIT6",
@@ -2819,7 +2913,9 @@
           2350
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H2T6>SC_H2T7",
@@ -2835,7 +2931,9 @@
           2220
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H2T7>H2_EXIT7",
@@ -2851,7 +2949,9 @@
           2350
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H2T7>SC_H2T8",
@@ -2867,7 +2967,9 @@
           2220
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H2T8>H2_EXIT8",
@@ -2883,7 +2985,9 @@
           2350
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H2T8>SC_H2T9",
@@ -2899,7 +3003,9 @@
           2220
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H2T9>H2_EXIT9",
@@ -2915,7 +3021,9 @@
           2350
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_H2T9>SHIP",
@@ -2940,7 +3048,9 @@
         ]
       ],
       "basis": "Estimated connection from section arrangement",
-      "purpose": "Shipping recirculation to infeed"
+      "purpose": "Shipping recirculation to infeed",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_WAVL>SC_VL1",
@@ -2956,7 +3066,9 @@
           170
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_VL1>SC_VL2",
@@ -2972,7 +3084,9 @@
           170
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_VL2>RETURN",
@@ -2992,7 +3106,9 @@
           550
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "recirculation",
+      "confidence": "candidate"
     },
     {
       "id": "RETURN>SC_WAVL",
@@ -3017,7 +3133,9 @@
         ]
       ],
       "basis": "Estimated connection from section arrangement",
-      "purpose": "Sealer recirculation to allocation"
+      "purpose": "Sealer recirculation to allocation",
+      "routeType": "recirculation",
+      "confidence": "candidate"
     },
     {
       "id": "SC_WAVL>MERGE",
@@ -3041,7 +3159,9 @@
           650
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "MERGE>PACK",
@@ -3070,7 +3190,9 @@
         ]
       ],
       "basis": "Estimated connection from section arrangement",
-      "purpose": "Transfer from sealing to packaging"
+      "purpose": "Transfer from sealing to packaging",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_VL1>SEAL1",
@@ -3090,7 +3212,9 @@
           380
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SEAL1>MERGE",
@@ -3110,7 +3234,9 @@
           650
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_VL1>SEAL2",
@@ -3130,7 +3256,9 @@
           380
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SEAL2>MERGE",
@@ -3150,7 +3278,9 @@
           650
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_VL1>SEAL3",
@@ -3170,7 +3300,9 @@
           380
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SEAL3>MERGE",
@@ -3190,7 +3322,9 @@
           650
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_VL1>SEAL4",
@@ -3210,7 +3344,9 @@
           380
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SEAL4>MERGE",
@@ -3230,7 +3366,9 @@
           650
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_VL2>SEAL5",
@@ -3250,7 +3388,9 @@
           380
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SEAL5>MERGE",
@@ -3270,7 +3410,9 @@
           650
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_VL2>SEAL6",
@@ -3290,7 +3432,9 @@
           380
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SEAL6>MERGE",
@@ -3310,7 +3454,9 @@
           650
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_VL2>SEAL7",
@@ -3330,7 +3476,9 @@
           380
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SEAL7>MERGE",
@@ -3350,7 +3498,9 @@
           650
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "SC_VL1>NOREAD",
@@ -3370,7 +3520,9 @@
           380
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_VL2>NOREAD",
@@ -3390,7 +3542,9 @@
           380
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_AP>AP1",
@@ -3414,7 +3568,9 @@
           -510
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "AP1>SC_UMR",
@@ -3438,7 +3594,9 @@
           0
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_AP>AP2",
@@ -3462,7 +3620,9 @@
           -449
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "AP2>SC_UMR",
@@ -3486,7 +3646,9 @@
           0
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_AP>AP3",
@@ -3510,7 +3672,9 @@
           -388
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "AP3>SC_UMR",
@@ -3534,7 +3698,9 @@
           0
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_AP>AP4",
@@ -3558,7 +3724,9 @@
           -327
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "AP4>SC_UMR",
@@ -3582,7 +3750,9 @@
           0
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_AP>AP5",
@@ -3606,7 +3776,9 @@
           -266
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "AP5>SC_UMR",
@@ -3630,7 +3802,9 @@
           0
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_AP>AP6",
@@ -3654,7 +3828,9 @@
           -205
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "AP6>SC_UMR",
@@ -3678,7 +3854,9 @@
           0
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_AP>AP7",
@@ -3702,7 +3880,9 @@
           -144
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "AP7>SC_UMR",
@@ -3726,7 +3906,9 @@
           0
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_AP>AP8",
@@ -3750,7 +3932,9 @@
           -83
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "AP8>SC_UMR",
@@ -3774,7 +3958,9 @@
           0
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_AP>AP9",
@@ -3798,7 +3984,9 @@
           -22
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "AP9>SC_UMR",
@@ -3822,7 +4010,9 @@
           0
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
     },
     {
       "id": "SC_AP>AP10",
@@ -3846,7 +4036,9 @@
           39
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "branch",
+      "confidence": "candidate"
     },
     {
       "id": "AP10>SC_UMR",
@@ -3870,7 +4062,109 @@
           0
         ]
       ],
-      "basis": "Estimated connection from section arrangement"
+      "basis": "Estimated connection from section arrangement",
+      "routeType": "trunk",
+      "confidence": "candidate"
+    },
+    {
+      "id": "SC_H4RU>SC_H3RU",
+      "a": "SC_H4RU",
+      "b": "SC_H3RU",
+      "points": [
+        [
+          1780,
+          1540
+        ],
+        [
+          1780,
+          1740
+        ],
+        [
+          190,
+          1740
+        ],
+        [
+          190,
+          1810
+        ]
+      ],
+      "routeType": "trunk",
+      "basis": "Live scanner order and source equipment roles; schematic corridor, physical survey pending"
+    },
+    {
+      "id": "SC_H3RU>SC_H3T1",
+      "a": "SC_H3RU",
+      "b": "SC_H3T1",
+      "points": [
+        [
+          190,
+          1810
+        ],
+        [
+          190,
+          1880
+        ],
+        [
+          250,
+          1880
+        ]
+      ],
+      "routeType": "trunk",
+      "basis": "Live scanner order and source equipment roles; schematic corridor, physical survey pending"
+    },
+    {
+      "id": "SC_H3T7>SC_H2T1",
+      "a": "SC_H3T7",
+      "b": "SC_H2T1",
+      "points": [
+        [
+          1330,
+          1880
+        ],
+        [
+          1650,
+          1880
+        ],
+        [
+          1650,
+          2140
+        ],
+        [
+          250,
+          2140
+        ],
+        [
+          250,
+          2220
+        ]
+      ],
+      "routeType": "trunk",
+      "basis": "Live scanner order and source equipment roles; schematic corridor, physical survey pending"
+    },
+    {
+      "id": "SC_UMR>PACK",
+      "a": "SC_UMR",
+      "b": "PACK",
+      "points": [
+        [
+          560,
+          0
+        ],
+        [
+          350,
+          0
+        ],
+        [
+          350,
+          770
+        ],
+        [
+          400,
+          770
+        ]
+      ],
+      "routeType": "branch",
+      "basis": "Live scanner order and source equipment roles; schematic corridor, physical survey pending"
     }
   ]
 }

@@ -2,7 +2,10 @@
 export function buildTrailSegments(edges, parcel) {
   const segments=[];
   for (const leg of parcel.legs) {
-    const points=edges.get(leg.edges[0]).points;
+    if (!leg.edges?.length || leg.routeStatus==='unknown') continue;
+    let at=leg.a;const points=[];
+    for(const id of leg.edges){const edge=edges.get(id);if(!edge||edge.a!==at){points.length=0;break;}points.push(...edge.points.slice(points.length?1:0));at=edge.b;}
+    if(!points.length||at!==leg.b)continue;
     const lengths=points.slice(1).map((b,i)=>Math.hypot(b[0]-points[i][0],b[1]-points[i][1]));
     const total=lengths.reduce((a,b)=>a+b,0);
     let distance=0;

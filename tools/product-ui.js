@@ -2,9 +2,9 @@ const demoHeader=document.querySelector('header');const demoSubtitle=demoHeader?
 function updateMission(){
  if(!latestState||!p)return;
  const s=latestState,edge=s.leg?E[s.leg.edges[0]]:null;
- $('mission-phase').textContent=s.done?s.phase.toUpperCase():s.leg?'IN TRANSIT':'AT EQUIPMENT';
- $('mission-current').textContent=s.done?p.completeness:s.leg?(edge.purpose||'Conveyor transfer'):N[s.stop.id].label;
- const currentFact=operatorEvent(s.event);$('mission-description').textContent=s.leg?`${N[s.leg.a].label} → ${N[s.leg.b].label}`:currentFact.action+' · '+currentFact.role;
+ $('mission-phase').textContent=s.done?s.phase.toUpperCase():s.routeUnknown?'ROUTE UNKNOWN':s.leg?'IN TRANSIT':'AT EQUIPMENT';
+ $('mission-current').textContent=s.done?p.completeness:s.routeUnknown?'No mapped physical belt':s.leg?(edge?.purpose||'Conveyor transfer'):N[s.stop.id].label;
+ const currentFact=operatorEvent(s.event);$('mission-description').textContent=s.leg?`${N[s.leg.a].label} → ${N[s.leg.b].label}${s.routeUnknown?' · physical route unknown':''}`:currentFact.action+' · '+currentFact.role;
  const target=s.leg?s.leg.b:s.nextStop?.id;
  $('mission-next').textContent=s.done?'End of this replay':target?N[target].label:'Finishing operation';
  $('mission-expectation').textContent=s.next;

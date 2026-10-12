@@ -8,12 +8,14 @@ public static class CaptureReplay
 {
     private static readonly object Sync = new();
     private static string? current;
-    public static string Model { get { if(current is not null)return current;var empty=JsonNode.Parse(EmbeddedAssets.Read("ParcelJourney.3d.Model"))!.AsObject();empty["parcels"]=new JsonArray();empty["validation"]=new JsonObject{["mode"]="no-capture"};return empty.ToJsonString(); } }
+    private static int loadedCount;
+    public static int LoadedCount { get { lock (Sync) return loadedCount; } }
+    public static void Clear() { lock (Sync) { current = null; loadedCount = 0; } }
+    public static string Model { get { lock (Sync) { if(current is not null)return current;var empty=JsonNode.Parse(EmbeddedAssets.Read("ParcelJourney.3d.Model"))!.AsObject();empty["parcels"]=new JsonArray();empty["validation"]=new JsonObject{["mode"]="no-capture"};return empty.ToJsonString(); } } }
     public static string Viewer()
     {
         var html = EmbeddedAssets.Read("ParcelJourney.Viewer");
-        if (current is null) return "<html><head><title>ParcelJourney</title><link rel='stylesheet' href='/theme.css'></head><body style='background:#101b30;color:#e2e8f0;font:16px sans-serif;padding:32px'><h1>ParcelJourney</h1><p>Choose a folder containing your parcel capture.</p><select id='pick' disabled><option>No capture loaded</option></select><p><a href='/3d'>3D viewer</a></p></body></html>";
-        html = Regex.Replace(html, @"(?m)^const M=.*;\r?$", _ => "const M=" + LayoutStore.Apply(current) + ";");
+        html = Regex.Replace(html, @"(?m)^const M=.*;\r?$", _ => "const M=" + LayoutStore.Apply(Model) + ";");
         html = html.Replace(" completed real parcels", " captured parcels").Replace("No later movement in supplied logs.", "Capture coverage only; no later movement inferred.");
         html=html.Replace("evidence[0]?.LineNumber||item.line||'?'", "(evidence[0]?.ByteOffset!==undefined&&evidence[0]?.ByteOffset!==null?'byte '+evidence[0].ByteOffset:evidence[0]?.LineNumber||item.line||'?')").Replace("x.LineNumber||x.line||'?'", "(x.ByteOffset!==undefined&&x.ByteOffset!==null?'byte '+x.ByteOffset:x.LineNumber||x.line||'?')");
         html=html.Replace("detailPanel.append(dl);", "detailPanel.append(dl);if(p.captureMetadata){const metadata=document.createElement('details'),heading=document.createElement('summary'),pre=document.createElement('pre');heading.textContent='Stored parcel metadata';pre.textContent=JSON.stringify(p.captureMetadata,null,2);metadata.append(heading,pre);detailPanel.append(metadata);}");
@@ -21,79 +23,7 @@ public static class CaptureReplay
         html = html.Replace("return{action,role,summary:e.Summary||'Recorded exchange'", "if(e.CloseObservationNumber){action='CLOSE observation '+e.CloseObservationNumber;role='Database';}return{action,role,summary:e.Summary||'Recorded exchange'");
         return html;
     }
-    public static string AddLoader(string html) => html + """
-<script>
-(() => {
-  const editorLink = document.createElement('a');
-  editorLink.href = '/layout-editor' + (location.pathname.startsWith('/3d') ? '?return=3d' : '');
-  editorLink.textContent = 'Edit layout';
-  editorLink.style.cssText = 'display:inline-block;padding:8px 12px;margin:6px;color:#60cdff;border:1px solid #506078;border-radius:6px;text-decoration:none';
-  (document.querySelector('header') || document.body).append(editorLink);
-  fetch('/3d/model.json').then(r=>r.json()).then(model=>{if(model.layoutWarning){const warning=document.createElement('p');warning.textContent=model.layoutWarning;warning.style.cssText='color:#ffc885;padding:8px';editorLink.after(warning);}}).catch(()=>{});
-  // Both viewers use the same loader, placed beside their parcel selector.
-  const select = document.getElementById('scenario') || document.getElementById('pick');
-  if (!select) return;
-
-  const box = document.createElement('div');
-  box.style.marginBottom = '12px';
-  const browse = document.createElement('button');
-  browse.type = 'button';
-  browse.textContent = 'Browse parcel folder';
-  browse.style.width = '100%';
-
-  // Use the browser picker: a native server-side dialog can leave the page waiting.
-  const input = document.createElement('input');
-  input.type = 'file';
-  input.setAttribute('webkitdirectory', '');
-  input.multiple = true;
-  input.hidden = true;
-
-  const status = document.createElement('p');
-  status.style.fontSize = '12px';
-  status.style.overflowWrap = 'anywhere';
-  status.setAttribute('role', 'status');
-  box.append(browse, input, status);
-  select.before(box);
-  const label = document.querySelector('label[for="scenario"]');
-  if (label) label.textContent = 'Parcel capture';
-
-  browse.onclick = () => input.click();
-  input.onchange = async () => {
-    if (!input.files.length) return;
-    browse.disabled = true;
-    try {
-      const body = new FormData();
-      let count = 0;
-      // PJ01 needs its index and shared dictionary. Exclude parser working data.
-      for (const file of input.files) {
-        const name = file.webkitRelativePath || file.name;
-        if (name.endsWith('.pjourney') || name.endsWith('/index.json') ||
-            /\/dictionaries\/[^/]+\.json$/.test(name)) {
-          body.append('files', file, name);
-          count++;
-        }
-      }
-      if (!count) throw Error('No capture files. Select Data containing index.json and dictionaries.');
-      status.textContent = 'Loading ' + count + ' capture files...';
-      const response = await fetch('/api/capture/upload', { method: 'POST', body });
-      const report = await response.json();
-      if (!response.ok) throw Error(report.error);
-
-      // Reload only after the server has decoded and installed the selected model.
-      sessionStorage.setItem('parceljourney-capture-folder', input.files[0].webkitRelativePath.split('/')[0]);
-      location.reload();
-    } catch (error) {
-      status.textContent = error.message;
-    } finally {
-      // Allow retrying, including selecting the same folder after an error.
-      browse.disabled = false;
-      input.value = '';
-    }
-  };
-  status.textContent = sessionStorage.getItem('parceljourney-capture-folder') || 'Select the capture Data folder';
-})();
-</script>
-""";
+    public static string AddLoader(string html) => html + "<link rel=\"stylesheet\" href=\"/journey-browser.css\"><script src=\"/journey-browser.js\" defer></script>";
     private static string S(JsonNode? n) => n is null ? "" : n.ToString();
     private static long N(JsonNode? n) => n is null ? 0 : n.GetValue<long>();
     private static string Stamp(long ms) => DateTime.UnixEpoch.AddMilliseconds(ms).ToString("yyyy.MM.dd HH:mm:ss.fff");
@@ -104,7 +34,7 @@ public static class CaptureReplay
         foreach (var key in new[] { "Status", "TrackingId", "LastScanPos", "CarrierID", "ControlFlag", "OrderID", "CartonType", "PlcTarget", "WeightStart", "WeightBrutto", "GrossWeight", "VRNewHeight" }) if (e[key] is not null) result[key] = e[key]!.DeepClone();
         return result;
     }
-    public static JsonObject Load(string selection, bool closedOnly = true)
+    public static JsonObject Load(string selection, bool closedOnly = true, IReadOnlyCollection<string>? selectedFiles = null)
     {
         lock (Sync)
         {
@@ -120,7 +50,9 @@ public static class CaptureReplay
             foreach (var node in nodeMap.Values) node["observationStatus"] = "Retained layout asset; not confirmed by this capture";
             var parcels = new JsonArray(); var errors = new JsonArray(); var unknown = new HashSet<string>(); int eventTotal = 0;
             string scanFolder = Directory.Exists(Path.Combine(full,"parcels")) ? Path.Combine(full,"parcels") : full;
-            var paths = File.Exists(full) ? new[] {full} : Directory.EnumerateFiles(scanFolder,"*.pjourney",SearchOption.AllDirectories).OrderBy(p=>p,StringComparer.Ordinal).ToArray();
+            var published = index["entries"]!.AsArray().OfType<JsonObject>().Select(e => SafePath(root, S(e["file"]))).ToHashSet(StringComparer.OrdinalIgnoreCase);
+            var paths = selectedFiles is not null ? selectedFiles.Select(Path.GetFullPath).OrderBy(p=>p,StringComparer.Ordinal).ToArray() : File.Exists(full) ? new[] {full} : published.Where(p => Path.GetFullPath(p).StartsWith(Path.GetFullPath(scanFolder).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)).OrderBy(p=>p,StringComparer.Ordinal).ToArray();
+            if (paths.Any(p => !published.Contains(p))) throw new InvalidDataException("Selected .pjourney is not part of the published index.");
             foreach (string candidate in paths)
             {
                 string path = SafePath(root, Path.GetRelativePath(root,candidate));
@@ -129,6 +61,7 @@ public static class CaptureReplay
                     var parcel = PjourneyReader.Read(path, dictionary);
                     var indexed = index["entries"]!.AsArray().OfType<JsonObject>().FirstOrDefault(e=>SafePath(root,S(e["file"])).Equals(path,StringComparison.OrdinalIgnoreCase));
                     if(indexed is not null && S(indexed["parcel"])!=S(parcel["parcel"]))throw new InvalidDataException("Index/parcel identity mismatch.");
+                    if (indexed?["events"] is not null && N(indexed["events"]) != parcel["events"]!.AsArray().Count) throw new InvalidDataException("Index/parcel event count mismatch.");
                     var metadata=parcel.DeepClone().AsObject();metadata.Remove("events");
                     bool isClosed = parcel["closed"]?.GetValue<bool>() == true;
                     bool startObserved = parcel["start_observed"]?.GetValue<bool>() == true;
@@ -139,7 +72,7 @@ public static class CaptureReplay
                     int closeOrdinal = 0; var closeObservations = new JsonArray();
                     long first = N(parcel["first"]); var events = new JsonArray(); var observations = new JsonArray(); var stops = new JsonArray(); var legs = new JsonArray();
                     string location = "UNOBSERVED_POSITION"; JsonObject? previous = null;
-                    if (S(recorded[0]["kind"]) != "scan") { if(!nodeMap.ContainsKey(location)){var placeholder=new JsonObject { ["id"]=location,["label"]="Position not observed",["x"]=2400,["y"]=2600,["kind"]="junction",["coordinateBasis"]="Unknown position placeholder; not physical equipment"};nodes.Add(placeholder);nodeMap[location]=placeholder;}previous=new JsonObject { ["id"]=location,["arrival"]=0d,["departure"]=0d};stops.Add(previous); } var state = new JsonObject();
+                    if (S(recorded[0]["kind"]) != "scan") { if(!nodeMap.ContainsKey(location)){var placeholder=new JsonObject { ["id"]=location,["label"]="Position not observed",["x"]=2400,["y"]=2600,["kind"]="junction",["physical"]=false,["coordinateBasis"]="Unknown position placeholder; not physical equipment"};nodes.Add(placeholder);nodeMap[location]=placeholder;}previous=new JsonObject { ["id"]=location,["arrival"]=0d,["departure"]=0d};stops.Add(previous); } var state = new JsonObject();
                     foreach (var e in recorded)
                     {
                         double t = (N(e["t"]) - first) / 1000d; if (t < 0) throw new InvalidDataException("Event precedes declared start.");
@@ -158,20 +91,19 @@ public static class CaptureReplay
                                 if (previous is not null)
                                 {
                                     string a = S(previous["id"]), key = a + ">" + observed;
-                                    if (!edgeMap.ContainsKey(key))
-                                    {
-                                        var na = nodeMap[a]; var nb = nodeMap[observed];
-                                        var edge = new JsonObject { ["id"] = key, ["a"] = a, ["b"] = observed, ["points"] = new JsonArray(new JsonArray(na["x"]!.DeepClone(), na["y"]!.DeepClone()), new JsonArray(na["x"]!.DeepClone(), nb["y"]!.DeepClone()), new JsonArray(nb["x"]!.DeepClone(), nb["y"]!.DeepClone())), ["basis"] = "Observed scanner succession; schematic connection, intermediate equipment unknown", ["topology"] = "observed-transition" }; edges.Add(edge); edgeMap[key] = edge;
-                                    }
-                                    edgeMap[key]["observationStatus"] = "Observed scanner succession in capture";
+                                    bool physicalEdge = edgeMap.TryGetValue(key, out var matchingEdge) && S(matchingEdge["a"]) == a && S(matchingEdge["b"]) == observed;
+                                    if (physicalEdge) matchingEdge!["observationStatus"] = "Observed scanner succession matches this directed topology edge; exact geometry remains schematic";
                                     double departure = previous["departure"]!.GetValue<double>();
-                                    if (a != "UNOBSERVED_POSITION" && t > departure) legs.Add(new JsonObject { ["a"] = a, ["b"] = observed, ["start"] = departure, ["end"] = t, ["edges"] = new JsonArray(key), ["positionBasis"] = "Schematic interpolation between observed scans" });
+                                    if (a != "UNOBSERVED_POSITION" && t > departure) legs.Add(new JsonObject { ["a"] = a, ["b"] = observed, ["start"] = departure, ["end"] = t, ["edges"] = physicalEdge ? new JsonArray(key) : new JsonArray(), ["routeStatus"] = physicalEdge ? "topology-edge" : "unknown", ["positionBasis"] = physicalEdge ? "Interpolated along the matching directed topology edge; geometry remains schematic" : "Observed scanner succession; physical corridor is not mapped" });
                                 }
                                 previous = new JsonObject { ["id"] = observed, ["arrival"] = t, ["departure"] = t }; stops.Add(previous);
                             }
                             location = observed;
                         }
-                        if (previous is not null && (observed == location || string.IsNullOrEmpty(observed))) previous["departure"] = t;
+                        // Software traffic and LastScanPos snapshots do not establish
+                        // physical dwell. In particular, the next scanner's transport
+                        // receipt must not postpone departure from the previous scanner.
+                        if (kind == "scan" && previous is not null) previous["departure"] = t;
                         string summary = kind switch { "scan" => "Scanner read | " + observed, "ack" => "PLC reported " + S(e["reported"]) + " | " + observed, "command" => "PLC requested " + S(e["requested"]), "state" => "Database " + S(e["Status"]) + " | " + observed, "mismatch" => "Destination mismatch | " + observed, _ => "Recorded exchange | " + S(e["module"]) };
                         if (S(e["summary"]) != "") summary = S(e["summary"]);
                         int? closeNumber = null;
@@ -188,20 +120,84 @@ public static class CaptureReplay
                         observations.Add(new JsonObject { ["t"] = t, ["Timestamp"] = Stamp(N(e["t"])), ["raw"] = S(e["raw"]), ["values"] = kind == "state" ? values.DeepClone() : null, ["LocationId"] = observed, ["Layer"] = kind == "state" ? "Db" : kind == "ack" || kind == "command" || S(e["source"]).Contains("PLC") ? "PLC" : S(e["source"]).Contains("LVS") ? "Transport" : "Logic", ["system"] = S(e["module"]), ["sourceFile"] = S(e["source"]), ["line"] = (S(e["offset_unit"]) == "line" ? "line " : "byte ") + N(e["offset"]), ["captureFields"] = e.DeepClone(), ["index"] = observations.Count });
                     }
                     if (stops.Count == 0) throw new InvalidDataException("No displayable event position.");
+                    var lastScan = recorded.LastOrDefault(e => S(e["kind"]) == "scan");
+                    if (lastScan?["terminal_outlet_node"] is not null && nodeMap.ContainsKey(S(lastScan["terminal_outlet_node"])))
+                    {
+                        string outlet = S(lastScan["terminal_outlet_node"]);
+                        double reportTime = (N(lastScan["terminal_report_t"]) - first) / 1000d;
+                        double departure = previous!["departure"]!.GetValue<double>();
+                        if (reportTime > departure)
+                        {
+                            legs.Add(new JsonObject { ["a"] = S(lastScan["point"]), ["b"] = outlet, ["start"] = departure, ["end"] = reportTime,
+                                ["edges"] = new JsonArray(), ["captureRouteStatus"] = S(lastScan["terminal_route_status"]),
+                                ["captureRouteEdgeIds"] = JsonNode.Parse(S(lastScan["terminal_route_edge_ids_json"])),
+                                ["captureStepId"] = S(lastScan["step_id"]), ["reportedOutletEvidenceId"] = S(lastScan["terminal_report_event_id"]),
+                                ["positionBasis"] = S(lastScan["terminal_position_basis"]), ["routeStatus"] = "unknown" });
+                            previous = new JsonObject { ["id"] = outlet, ["arrival"] = reportTime, ["departure"] = reportTime,
+                                ["positionBasis"] = S(lastScan["terminal_position_basis"]), ["observationKind"] = "plc-reported-outlet" };
+                            stops.Add(previous);
+                        }
+                    }
+                    foreach (var leg in legs.OfType<JsonObject>())
+                    {
+                        var departure = first + (long)Math.Round(leg["start"]!.GetValue<double>() * 1000);
+                        var step = recorded.LastOrDefault(e => S(e["kind"]) == "scan" && N(e["t"]) == departure && S(e["point"]) == S(leg["a"]) && S(e["next_observed_location"]) == S(leg["b"]));
+                        if (step?["route_status"] is null) continue;
+                        leg["captureStepId"] = S(step["step_id"]);
+                        leg["captureRouteStatus"] = S(step["route_status"]);
+                        leg["captureRouteEdgeIds"] = JsonNode.Parse(S(step["route_edge_ids_json"])) ?? new JsonArray();
+                        leg["routeReason"] = S(step["route_unresolved_reason"]);
+                        leg["positionBasis"] = S(step["route_basis"]) + " " + S(step["route_geometry_basis"]);
+                    }
                     double duration = events.Last()!["t"]!.GetValue<double>(); previous!["departure"] = duration;
                     string line = stops.OfType<JsonObject>().Select(s => S(s["id"])).FirstOrDefault(s => s.StartsWith("SC_BWL"))?.Replace("SC_BWL", "") ?? "unknown";
                     var replay = new JsonObject { ["parcelId"] = S(parcel["parcel"]), ["visitKey"] = Path.GetFileNameWithoutExtension(path), ["closeCount"] = closeOrdinal, ["closeObservations"] = closeObservations, ["id"] = S(parcel["parcel"]), ["name"] = S(state["CarrierID"]) + " | line " + line + " | " + (startObserved ? "entry captured" : "entry unobserved") + " | " + Stamp(N(parcel["first"])), ["events"] = events, ["observations"] = observations, ["stops"] = stops, ["legs"] = legs, ["duration"] = duration, ["completeness"] = isClosed ? "CLOSED observed; " + closeOrdinal + " closure records; " + (startObserved ? "" : "entry not captured; ") + "capture coverage only" : "Partial capture; no CLOSED observed", ["outcome"] = isClosed ? "completed" : "partial", ["captureMetadata"] = metadata, ["fixture"] = new JsonObject(), ["source"] = "pjourney-capture", ["aliases"] = parcel["aliases"]?.DeepClone() ?? new JsonArray(), ["proof"] = new JsonObject { ["closedObserved"] = isClosed, ["startObserved"] = startObserved, ["completePhysicalCoverage"] = false, ["sourceFile"] = Path.GetFileName(path) } };
-                    eventTotal += events.Count; parcels.Add(replay);
+                    eventTotal += events.Count; if(eventTotal>500000)throw new JourneyCapacityException("Journey load exceeds 500,000 events. Choose a smaller subfolder or load a selected ParcelID."); parcels.Add(replay);
                 }
                 catch (Exception ex) when (ex is InvalidDataException or IOException or System.Text.Json.JsonException or InvalidOperationException or OverflowException) { errors.Add(new JsonObject { ["file"] = Path.GetFileName(path), ["error"] = ex.Message }); }
             }
             if (parcels.Count == 0) throw new InvalidDataException("No readable " + (closedOnly ? "CLOSED " : "") + "parcels found. " + errors.ToJsonString());
             var validation = new JsonObject { ["mode"] = "pjourney-capture", ["runs"] = parcels.Count, ["closedOnly"] = closedOnly, ["events"] = eventTotal, ["filesChecked"] = paths.Length, ["completeLifecycles"] = false, ["scope"] = "Parser-associated evidence only. CLOSED is a database observation; physical geometry and movement between scans are schematic.", ["unmappedScanners"] = new JsonArray(unknown.Select(x => (JsonNode?)JsonValue.Create(x)).ToArray()), ["errors"] = errors };
             model["parcels"] = parcels; model["validation"] = validation; model.Remove("sourceManifest");
-            current = model.ToJsonString();
+            CorridorRoutes.Resolve(model);
+            current = model.ToJsonString(); loadedCount = parcels.Count;
             return validation;
         }
     }
+    public static JsonObject LoadFiles(IReadOnlyCollection<JourneyFile> files)
+    {
+        if (files.Count == 0 || files.Count > 10000) throw new InvalidDataException("Select between 1 and 10,000 published journeys.");
+        lock (Sync)
+        {
+            var previous = current; var previousCount = loadedCount;
+            var combined = JsonNode.Parse(EmbeddedAssets.Read("ParcelJourney.3d.Model"))!.AsObject();
+            var parcels = new JsonArray(); var errors = new JsonArray(); int events = 0, sources = 0;
+            var nodes = combined["nodes"]!.AsArray(); var nodeIds = nodes.Select(n => S(n!["id"])).ToHashSet();
+            try
+            {
+                foreach (var group in files.DistinctBy(f=>f.File,StringComparer.OrdinalIgnoreCase).GroupBy(f => f.DatasetRoot))
+                {
+                    if (group.Key is null) throw new InvalidDataException("Matching index and dictionary are required to load .pjourney files.");
+                    var report = Load(group.Key, false, group.Select(f=>f.File).ToArray()); sources++;
+                    var model = JsonNode.Parse(current!)!;
+                    foreach (var n in model["nodes"]!.AsArray()) if (nodeIds.Add(S(n!["id"]))) nodes.Add(n!.DeepClone());
+                    foreach (var parcel in model["parcels"]!.AsArray())
+                    {
+                        var clone = parcel!.DeepClone(); clone["captureFolder"] = group.Key; parcels.Add(clone);
+                    }
+                    events += report["events"]!.GetValue<int>();
+                    if(events>500000)throw new JourneyCapacityException("Journey load exceeds 500,000 events. Choose a smaller subfolder or load a selected ParcelID.");
+                    foreach (var error in report["errors"]!.AsArray()) errors.Add(error!.DeepClone());
+                }
+                var validation = new JsonObject { ["mode"]="pjourney-capture", ["runs"]=parcels.Count, ["events"]=events, ["sources"]=sources, ["filesChecked"]=files.Count, ["errors"]=errors, ["completeLifecycles"]=false };
+                combined["parcels"] = parcels; combined["validation"] = validation;
+                CorridorRoutes.Resolve(combined); current = combined.ToJsonString(); loadedCount = parcels.Count;
+                return validation;
+            }
+            catch { current = previous; loadedCount = previousCount; throw; }
+        }
+    }
+
     private static string SafePath(string root, string relative)
     {
         string full = Path.GetFullPath(Path.Combine(root, relative));
@@ -209,3 +205,5 @@ public static class CaptureReplay
         return full;
     }
 }
+
+public sealed class JourneyCapacityException(string message) : Exception(message);

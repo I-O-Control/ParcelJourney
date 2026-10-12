@@ -18,8 +18,8 @@ public static class LayoutStore
             var clean = new JsonObject(); foreach (var field in fields) if (item![field] is not null) clean[field] = item[field]!.DeepClone(); return (JsonNode)clean;
         }).ToArray());
         return new JsonObject { ["version"] = 1,
-            ["nodes"] = Select("nodes", ["id", "label", "x", "y", "kind", "equipment", "section"]),
-            ["edges"] = Select("edges", ["id", "a", "b", "points"]) };
+            ["nodes"] = new JsonArray(Select("nodes", ["id", "label", "x", "y", "kind", "equipment", "section", "note", "coordinateBasis", "category", "icon", "physical"]).Where(n => n?["physical"]?.GetValue<bool>() != false).Select(n => n!.DeepClone()).ToArray()),
+            ["edges"] = Select("edges", ["id", "a", "b", "points", "basis", "topology", "routeType", "confidence", "observationStatus", "userDefined"]) };
     }
     public static object Get(string source)
     {
@@ -30,6 +30,26 @@ public static class LayoutStore
         }
     }
     private static string Id(JsonNode? n) => n?.GetValue<string>() ?? throw new InvalidDataException("Missing identifier.");
+    private static List<JsonNode>? UniqueDirectedPath(string from, string to, JsonArray edges)
+    {
+        var outgoing = edges.Where(e => e?["userDefined"]?.GetValue<bool>() == true).GroupBy(e => Id(e!["a"])).ToDictionary(g => g.Key, g => g.ToArray());
+        var visited = new HashSet<string>(StringComparer.Ordinal) { from };
+        var path = new List<JsonNode>(); List<JsonNode>? unique = null; var matches = 0;
+        void Walk(string at)
+        {
+            if (matches > 1) return;
+            if (at == to) { matches++; if (matches == 1) unique = path.ToList(); return; }
+            if (!outgoing.TryGetValue(at, out var next)) return;
+            foreach (var edge in next)
+            {
+                var target = Id(edge!["b"]); if (!visited.Add(target)) continue;
+                path.Add(edge); Walk(target); path.RemoveAt(path.Count - 1); visited.Remove(target);
+                if (matches > 1) return;
+            }
+        }
+        Walk(from);
+        return matches == 1 ? unique : null;
+    }
     private static double Number(JsonNode? n)
     {
         if (n is null || !double.TryParse(n.ToJsonString(), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var v) || !double.IsFinite(v) || Math.Abs(v) > 1000000) throw new InvalidDataException("Coordinates must be finite and within ±1,000,000.");
@@ -68,43 +88,43 @@ public static class LayoutStore
         // This is a replay sentinel, not a physical station owned by the layout.
         var unobserved = model["nodes"]!.AsArray().FirstOrDefault(n => Id(n!["id"]) == "UNOBSERVED_POSITION");
         if (unobserved is not null && !nodes.Any(n => Id(n!["id"]) == "UNOBSERVED_POSITION")) nodes.Add(unobserved.DeepClone());
+        foreach (var reference in model["nodes"]!.AsArray().Where(n => n?["physical"]?.GetValue<bool>() == false))
+            if (!nodes.Any(n => Id(n!["id"]) == Id(reference!["id"]))) nodes.Add(reference!.DeepClone());
         var ids = nodes.Select(n => Id(n!["id"])).ToHashSet();
         var edgeMap = edges.ToDictionary(e => Id(e!["id"]), e => e!);
-        var outgoing = edges.GroupBy(e => Id(e!["a"])).ToDictionary(g => g.Key, g => g.ToArray());
         var rendered = edges.DeepClone().AsArray();
-        var routes = new Dictionary<string, string>();
         foreach (var parcel in model["parcels"]!.AsArray())
         {
             foreach (var stop in parcel!["stops"]!.AsArray()) if (!ids.Contains(Id(stop!["id"]))) throw new InvalidDataException("Layout is missing recorded station " + Id(stop["id"]) + ". Restore it before applying this capture.");
             foreach (var leg in parcel["legs"]!.AsArray())
             {
-                var a = Id(leg!["a"]); var b = Id(leg["b"]); var key = a + "\n" + b;
-                var original = Id(leg["edges"]![0]);
-                if (edgeMap.TryGetValue(original, out var direct) && Id(direct["a"]) == a && Id(direct["b"]) == b) continue;
-                if (!routes.TryGetValue(key, out var routeId))
+                // Evidence-selected corridors are validated against the new geometry below.
+                // Editing a belt must not replace an unresolved branch with a guessed path.
+                if (leg!["captureRouteStatus"] is not null) continue;
+                var a = Id(leg!["a"]); var b = Id(leg["b"]);
+                var original = leg["edges"]?.AsArray().FirstOrDefault() is JsonNode originalNode ? Id(originalNode) : "";
+                if (original != "" && edgeMap.TryGetValue(original, out var originalEdge) && Id(originalEdge["a"]) == a && Id(originalEdge["b"]) == b) continue;
+                var direct = edges.Where(e => Id(e!["a"]) == a && Id(e["b"]) == b).ToArray();
+                if (direct.Length == 1)
                 {
-                    // Directed shortest physical path, only along user-supplied connections.
-                    var queue = new PriorityQueue<string, double>(); queue.Enqueue(a, 0);
-                    var distance = new Dictionary<string, double> { [a] = 0 }; var previous = new Dictionary<string, JsonNode>();
-                    while (queue.TryDequeue(out var node, out var cost))
-                    {
-                        if (node == b) break;
-                        if (cost > distance[node] || !outgoing.TryGetValue(node, out var next)) continue;
-                        foreach (var e in next)
-                        {
-                            var ps = e!["points"]!.AsArray(); double length = 0;
-                            for (int i = 1; i < ps.Count; i++) length += Math.Sqrt(Math.Pow(Number(ps[i]![0]) - Number(ps[i-1]![0]), 2) + Math.Pow(Number(ps[i]![1]) - Number(ps[i-1]![1]), 2));
-                            var target = Id(e["b"]); var total = cost + Math.Max(length, .001);
-                            if (!distance.TryGetValue(target, out var old) || total < old) { distance[target] = total; previous[target] = e; queue.Enqueue(target, total); }
-                        }
-                    }
-                    if (!distance.ContainsKey(b)) throw new InvalidDataException($"No directed physical route from {a} to {b}. Add a connection before saving.");
-                    var chain = new List<JsonNode>(); for (var at = b; at != a;) { var e = previous[at]; chain.Add(e); at = Id(e["a"]); } chain.Reverse();
-                    var points = new JsonArray(); foreach (var e in chain) foreach (var p in e["points"]!.AsArray().Skip(points.Count == 0 ? 0 : 1)) points.Add(p!.DeepClone());
-                    routeId = "layout-replay-" + Guid.NewGuid().ToString("N"); routes[key] = routeId;
-                    rendered.Add(new JsonObject { ["id"] = routeId, ["a"] = a, ["b"] = b, ["points"] = points, ["basis"] = "User layout: shortest directed physical path between recorded stations" });
+                    leg["edges"] = new JsonArray(Id(direct[0]!["id"]));
+                    leg["routeStatus"] = "topology-edge";
+                    leg["positionBasis"] = "Interpolated along the matching directed user-layout belt";
+                    continue;
                 }
-                leg["edges"] = new JsonArray(routeId);
+                var path = direct.Length == 0 ? UniqueDirectedPath(a, b, edges) : null;
+                if (path is not null)
+                {
+                    leg["edges"] = new JsonArray(path.Select(e => (JsonNode?)JsonValue.Create(Id(e["id"]))).ToArray());
+                    leg["routeStatus"] = "user-defined-path";
+                    leg["positionBasis"] = "Interpolated along the unique path of user-drawn directed belts";
+                    continue;
+                }
+                // Removing a belt must never make the editor invent another route.
+                // Preserve the observed scanner leg and let replay show it as unknown.
+                leg["edges"] = new JsonArray();
+                leg["routeStatus"] = "unknown";
+                leg["positionBasis"] = "Observed scanner succession; physical corridor is not connected in the edited layout";
             }
         }
         var originalNodes = model["nodes"]!.AsArray().ToDictionary(n => Id(n!["id"]));
@@ -112,9 +132,11 @@ public static class LayoutStore
         foreach (var n in nodes) {
             var value = originalNodes.TryGetValue(Id(n!["id"]), out var originalNode) ? originalNode!.DeepClone().AsObject() : new JsonObject();
             foreach (var property in n!.AsObject()) value[property.Key] = property.Value?.DeepClone();
-            value["coordinateBasis"] = "User physical layout"; merged.Add(value);
+            if (n!["physical"]?.GetValue<bool>() != false) value["coordinateBasis"] = "User physical layout";
+            merged.Add(value);
         }
         model["nodes"] = merged; model["edges"] = rendered;
+        CorridorRoutes.Resolve(model);
         return model;
     }
     public static string Apply(string source)
