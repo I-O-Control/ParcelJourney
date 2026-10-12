@@ -31,9 +31,12 @@ await writeFile(
     .join("\n"),
 );
 
-// Keep the embedded layout geometry; captures are loaded at runtime.
+// Keep the dataset-agnostic bundled layout geometry; captures are loaded at runtime.
 const model = JSON.parse(
-  await readFile(path.join(root, "analysis/fiege-replay-model.json"), "utf8"),
+  await readFile(
+    path.join(root, "ParcelJourney.App/Assets/replay-model.json"),
+    "utf8",
+  ),
 );
 if (!Array.isArray(model.nodes) || !Array.isArray(model.edges))
   throw new Error("Layout geometry is required.");

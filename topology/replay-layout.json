@@ -8,7 +8,7 @@
       "kind": "scale",
       "equipment": "1090-1",
       "note": "",
-      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -19,7 +19,7 @@
       "kind": "decision",
       "equipment": "1095-1",
       "note": "",
-      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -30,7 +30,7 @@
       "kind": "decision",
       "equipment": "1125-1",
       "note": "",
-      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -41,7 +41,7 @@
       "kind": "decision",
       "equipment": "3020-1",
       "note": "PLC logic: single-strap parcels divert right; double-strap parcels continue straight. Exact downstream corridor is schematic.",
-      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -52,12 +52,12 @@
       "kind": "decision",
       "equipment": "2000-1",
       "note": "",
-      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
       "id": "SC_VL1",
-      "label": "Select sealer 1\u20134",
+      "label": "Select sealer 1–4",
       "x": 820,
       "y": 170,
       "kind": "decision",
@@ -67,7 +67,7 @@
     },
     {
       "id": "SC_VL2",
-      "label": "Select sealer 5\u20137",
+      "label": "Select sealer 5–7",
       "x": 1460,
       "y": 170,
       "kind": "decision",
@@ -167,7 +167,7 @@
     },
     {
       "id": "NOREAD",
-      "label": "Target 08 \u00b7 no-read",
+      "label": "Target 08 · no-read",
       "x": 2040,
       "y": 380,
       "kind": "exception",
@@ -868,32 +868,32 @@
     {
       "id": "H3_CHUTE1",
       "label": "H3 chute 1 / NIO",
-      "x": 1660,
-      "y": 2110,
+      "x": -100,
+      "y": 1660,
       "kind": "exception",
       "equipment": null,
       "note": "",
-      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+      "coordinateBasis": "Schematic Hall 3 chute bank; vertically stacked left of the logged chute decision"
     },
     {
       "id": "H3_CHUTE2",
       "label": "H3 chute 2",
-      "x": 1750,
-      "y": 2110,
+      "x": -100,
+      "y": 1810,
       "kind": "exception",
       "equipment": null,
       "note": "",
-      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+      "coordinateBasis": "Schematic Hall 3 chute bank; vertically stacked left of the logged chute decision"
     },
     {
       "id": "H3_CHUTE3",
       "label": "H3 chute 3",
-      "x": 1840,
-      "y": 2110,
+      "x": -100,
+      "y": 1960,
       "kind": "exception",
       "equipment": null,
       "note": "",
-      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+      "coordinateBasis": "Schematic Hall 3 chute bank; vertically stacked left of the logged chute decision"
     },
     {
       "id": "SC_H2T1",
@@ -1082,8 +1082,8 @@
       "y": -510,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1–10; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1093,8 +1093,8 @@
       "y": -449,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1–10; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1104,8 +1104,8 @@
       "y": -388,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1–10; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1115,8 +1115,8 @@
       "y": -327,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1–10; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1126,8 +1126,8 @@
       "y": -266,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1–10; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1137,8 +1137,8 @@
       "y": -205,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1–10; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1148,8 +1148,8 @@
       "y": -144,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1–10; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1159,8 +1159,8 @@
       "y": -83,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1–10; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1170,8 +1170,8 @@
       "y": -22,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1–10; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1181,8 +1181,8 @@
       "y": 39,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1–10; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     }
   ],
@@ -2648,19 +2648,19 @@
           1810
         ],
         [
-          1780,
-          1935
+          40,
+          1810
         ],
         [
-          1660,
-          1935
+          40,
+          1660
         ],
         [
-          1660,
-          2110
+          -100,
+          1660
         ]
       ],
-      "basis": "Schematic branch after chute decision; avoids reverse travel over upstream scanners.",
+      "basis": "Schematic Hall 3 chute bank: common departure belt, then vertically separated outputs left of the chute decision",
       "purpose": "Leave shipping belt for chute bank",
       "routeType": "branch",
       "confidence": "schematic"
@@ -2675,19 +2675,19 @@
           1810
         ],
         [
-          1780,
-          1935
+          40,
+          1810
         ],
         [
-          1750,
-          1935
+          40,
+          1810
         ],
         [
-          1750,
-          2110
+          -100,
+          1810
         ]
       ],
-      "basis": "Schematic branch after chute decision; avoids reverse travel over upstream scanners.",
+      "basis": "Schematic Hall 3 chute bank: common departure belt, then vertically separated outputs left of the chute decision",
       "purpose": "Leave shipping belt for chute bank",
       "routeType": "branch",
       "confidence": "schematic"
@@ -2702,19 +2702,19 @@
           1810
         ],
         [
-          1780,
-          1935
+          40,
+          1810
         ],
         [
-          1840,
-          1935
+          40,
+          1960
         ],
         [
-          1840,
-          2110
+          -100,
+          1960
         ]
       ],
-      "basis": "Schematic branch after chute decision; avoids reverse travel over upstream scanners.",
+      "basis": "Schematic Hall 3 chute bank: common departure belt, then vertically separated outputs left of the chute decision",
       "purpose": "Leave shipping belt for chute bank",
       "routeType": "branch",
       "confidence": "schematic"

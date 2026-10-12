@@ -29,9 +29,9 @@
     mod
   ));
 
-  // ../replay-engine.js
+  // tools/replay-engine.js
   var require_replay_engine = __commonJS({
-    "../replay-engine.js"(exports, module) {
+    "tools/replay-engine.js"(exports, module) {
       var ReplayEngine2 = /* @__PURE__ */ (() => {
         const length = (ps) => ps.slice(1).reduce((sum, b, i) => sum + Math.hypot(b[0] - ps[i][0], b[1] - ps[i][1]), 0);
         function at(ps, fraction) {
@@ -116,7 +116,7 @@
     }
   });
 
-  // node_modules/three/build/three.core.js
+  // tools/viewer3d/node_modules/three/build/three.core.js
   var REVISION = "186";
   var MOUSE = { LEFT: 0, MIDDLE: 1, RIGHT: 2, ROTATE: 0, DOLLY: 1, PAN: 2 };
   var TOUCH = { ROTATE: 0, PAN: 1, DOLLY_PAN: 2, DOLLY_ROTATE: 3 };
@@ -19309,7 +19309,7 @@
     }
   }
 
-  // node_modules/three/build/three.module.js
+  // tools/viewer3d/node_modules/three/build/three.module.js
   function WebGLAnimation() {
     let context = null;
     let isAnimating = false;
@@ -30807,7 +30807,7 @@ void main() {
     }
   };
 
-  // node_modules/three/examples/jsm/controls/OrbitControls.js
+  // tools/viewer3d/node_modules/three/examples/jsm/controls/OrbitControls.js
   var _changeEvent = { type: "change" };
   var _startEvent = { type: "start" };
   var _endEvent = { type: "end" };
@@ -31723,10 +31723,10 @@ void main() {
     }
   }
 
-  // viewer.js
+  // tools/viewer3d/viewer.js
   var import_replay_engine = __toESM(require_replay_engine(), 1);
 
-  // trail.mjs
+  // tools/viewer3d/trail.mjs
   function buildTrailSegments(edges, parcel) {
     const segments = [];
     for (const leg of parcel.legs) {
@@ -31756,7 +31756,7 @@ void main() {
     return segments;
   }
 
-  // route-labels.mjs
+  // tools/viewer3d/route-labels.mjs
   function routeEntries(parcel, nodes) {
     const entries = /* @__PURE__ */ new Map();
     for (const stop of parcel.stops) {
@@ -31813,7 +31813,7 @@ void main() {
     };
   }
 
-  // parcel-state.mjs
+  // tools/viewer3d/parcel-state.mjs
   var fields = ["PrincipalID", "OrderID", "ParcelID", "ControlFlag", "GrossWeight", "CarrierID", "CartonType", "LastScanPos", "WeightStart", "WeightBrutto", "VRNewHeight", "PlcTarget", "TrackingId", "Status"];
   var meanings = { NEW: "A parcel record was created.", PENDING: "The parcel is being processed.", WEIGHTERR: "The start-weight check failed; the parcel requires workstation handling.", WEIGHTOK: "The start-weight check was accepted.", WORKSTATION: "The parcel was assigned to a workstation.", CLOSED: "The material-flow controller recorded the outbound diversion as complete.", FAULTY: "The parcel record is marked faulty; the cause requires the associated evidence." };
   function millis(value) {
@@ -31845,7 +31845,7 @@ void main() {
     return [...groups].map(([layer, entries]) => ({ layer, entries }));
   }
 
-  // footprint.mjs
+  // tools/viewer3d/footprint.mjs
   function footprint(points, padding = 0.9) {
     const expanded = points.flatMap(([x, z]) => [[-1, -1], [-1, 1], [1, -1], [1, 1]].map(([dx, dz]) => [x + dx * padding, z + dz * padding]));
     const sorted = [...new Map(expanded.map((p) => [p.join(","), p])).values()].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
@@ -31869,7 +31869,7 @@ void main() {
     return hits.length >= 2 ? [Math.min(...hits), Math.max(...hits)] : null;
   }
 
-  // viewer.js
+  // tools/viewer3d/viewer.js
   var $ = (id) => document.getElementById(id);
   var fmt = (s) => `${Math.floor(s / 60).toString().padStart(2, "0")}:${Math.floor(s % 60).toString().padStart(2, "0")}`;
   var S = 0.02;
@@ -31883,11 +31883,6 @@ void main() {
     if (!response.ok)
       throw new Error("The offline replay model could not be loaded.");
     const model = await response.json();
-    if (!model.parcels.length) {
-      $("loading").hidden = false;
-      $("loading").textContent = "Choose a parcel folder to display its journeys.";
-      return;
-    }
     const nodes = new Map(model.nodes.map((n) => [n.id, n]));
     const edges = new Map(model.edges.map((e) => [e.id, e]));
     const host = $("viewport");
@@ -32224,7 +32219,7 @@ void main() {
       trail.instanceMatrix.needsUpdate = true;
       lastTrailCount = count;
     }
-    let chosen = model.parcels[0], t = 0, playing = false, following = false, isTop = false, lastTime = performance.now(), lastUI = -Infinity, activeIndex = -1, state, hovered = null;
+    let chosen = model.parcels[0] || null, t = 0, playing = false, following = false, isTop = false, lastTime = performance.now(), lastUI = -Infinity, activeIndex = -1, state, hovered = null;
     let frameId = 0, dirty = true, inFrame = false, frames = 0, statsTime = performance.now(), fps = 0;
     const routeButtons = [];
     let overview = true, baseSpan = 36, palette = {};
@@ -32452,6 +32447,7 @@ void main() {
       return unique.map((x) => x.technical + (x.outcome ? " \u2192 " + x.outcome : "")).join("  \xB7  ") + (unique.length < facts.length ? "  \xB7  " + facts.length + " recorded exchanges" : "");
     }
     function openParcelData() {
+      if (!chosen) return;
       pause();
       explanationCard.hidden = false;
       renderParcelData();
@@ -32482,6 +32478,7 @@ void main() {
       }
     });
     function renderParcelData() {
+      if (!chosen) return;
       const snapshot = stateAt(chosen.observations || [], t);
       const activeEvent = (chosen.events || []).filter((e) => e.t <= t).at(-1);
       if (activeEvent?.values) {
@@ -32753,6 +32750,23 @@ void main() {
       if (tag.textContent !== text) tag.textContent = text;
     }
     function updateLabels(now) {
+      if (!chosen) {
+        placeTag("tag-current", null, "");
+        const hover2 = $("tag-hover");
+        if (!hovered) {
+          hover2.style.display = "none";
+          return;
+        }
+        const p2 = projectPoint(world([hovered.x, hovered.y], 1.5));
+        hover2.textContent = `${hovered.label}
+${typeNames[hovered.kind] || hovered.kind} \xB7 ${hovered.id}${hovered.equipment ? " \xB7 " + hovered.equipment : ""}
+Plant layout \xB7 no journey loaded
+Click equipment for details`;
+        hover2.style.display = "block";
+        hover2.style.left = `${Math.max(150, Math.min(host.clientWidth - 150, p2.x))}px`;
+        hover2.style.top = `${Math.max(310, Math.min(host.clientHeight - 40, p2.y - 20))}px`;
+        return;
+      }
       placeTag("tag-current", parcel.position, chosen.id);
       updateRouteLabels(now);
       const hover = $("tag-hover");
@@ -32803,6 +32817,13 @@ Click equipment for details`;
       $("play").textContent = playing ? "\u2161 Pause" : "\u25B6 Play";
     }
     function update() {
+      if (!chosen) {
+        parcel.visible = false;
+        halo.visible = false;
+        trail.count = 0;
+        trail.instanceMatrix.needsUpdate = true;
+        return;
+      }
       state = import_replay_engine.default.sample(model, chosen, t);
       parcel.visible = state.positionKnown;
       halo.visible = state.positionKnown;
@@ -32837,7 +32858,7 @@ Click equipment for details`;
         lastTime = now;
         if (dirty) {
           update();
-          if (now - lastUI >= 100 || !playing) {
+          if (chosen && (now - lastUI >= 100 || !playing)) {
             ui();
             lastUI = now;
           }
@@ -32875,6 +32896,7 @@ Click equipment for details`;
       requestFrame();
     }
     function seek(value) {
+      if (!chosen) return;
       pause();
       t = Math.max(0, Math.min(chosen.duration, value));
       selectedObservation = chosen.events.find(
@@ -32884,6 +32906,7 @@ Click equipment for details`;
       requestFrame();
     }
     function load(index) {
+      if (!model.parcels[index]) return;
       pause();
       chosen = model.parcels[index];
       selectedObservation = null;
@@ -33106,7 +33129,26 @@ Click equipment for details`;
     applyTheme();
     resize();
     setView(false, true);
-    load(0);
+    if (model.parcels.length) load(0);
+    else {
+      $("loading").hidden = false;
+      $("loading").textContent = "Choose a parcel folder to display its journeys.";
+      $("render-info").textContent = "PLANT LAYOUT \xB7 NO JOURNEY LOADED";
+      $("parcel-id").textContent = "\u2014";
+      $("parcel-name").textContent = "No journey loaded";
+      $("state-badge").textContent = "LAYOUT PREVIEW";
+      $("percent").textContent = "\u2014";
+      $("progress-fill").style.width = "0%";
+      $("current").textContent = "Plant layout";
+      $("description").textContent = "Choose a folder to load journeys.";
+      $("next").textContent = "No parcel selected";
+      $("expectation").textContent = "The layout is available without loading a journey.";
+      $("event-count").textContent = "No journey loaded";
+      $("timeline").textContent = "";
+      for (const id of ["scenario", "search", "restart", "previous", "play", "next-event", "seek", "focus"])
+        $(id).disabled = true;
+      requestFrame();
+    }
     if (location.protocol === "http:" && location.hostname === "127.0.0.1") {
       const close = document.getElementById("end-process") || Object.assign(document.createElement("button"), {
         id: "end-process",
@@ -33132,9 +33174,13 @@ Click equipment for details`;
         }
       };
     }
-    $("scenario").disabled = false;
-    $("play").disabled = false;
-    $("loading").hidden = true;
+    if (model.parcels.length) {
+      $("scenario").disabled = false;
+      $("play").disabled = false;
+      $("loading").hidden = true;
+    } else {
+      $("loading").hidden = true;
+    }
   }
   function fail(error2) {
     $("loading").hidden = true;

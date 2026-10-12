@@ -15,7 +15,12 @@
     <div class="journey-actions"><button id="journey-find" type="button" disabled>Find ParcelID</button><button id="journey-load-one" type="button" disabled>Load selected</button></div>
     <p id="journey-folder-status" role="status" aria-live="polite">No journeys loaded. Folder selection is optional.</p>`;
   select.before(box);
-  for(const id of ['search','find'])document.getElementById(id)?.setAttribute('hidden','');
+  for(const id of ['search','find','search-form','search-status'])document.getElementById(id)?.setAttribute('hidden','');
+  const legacySearch=document.getElementById('search-form')||document.querySelector('.search-form');
+  if(legacySearch)legacySearch.style.display='none';
+  const legacyScenarioLabel=document.querySelector(`label[for="${select.id}"]`);
+  const hideEmptyScenario=()=>{const empty=select.options.length===0;select.style.display=empty?'none':'';if(legacyScenarioLabel)legacyScenarioLabel.style.display=empty?'none':'';document.body.classList.toggle('no-journeys',empty);document.body.classList.toggle('layout-only',location.pathname.startsWith('/3d')&&empty);};
+  hideEmptyScenario();
   const $ = id => box.querySelector('#' + id);
   const folder=$('journey-folder'), search=$('journey-search'), list=$('journey-suggestions'), status=$('journey-folder-status');
   const recursion=$('journey-subfolders'), loadAll=$('journey-load-all'), loadOne=$('journey-load-one'), find=$('journey-find');
@@ -65,6 +70,7 @@
   loadAll.onclick=()=>load(null);loadOne.onclick=()=>{if(selectedId)load(selectedId);};
   $('journey-clear').onclick=async()=>{try{await request('/api/journeys/clear',{});sessionStorage.removeItem('parceljourney-load-result');location.reload();}catch(e){status.textContent=e.message;}};
   request('/api/journeys/preferences').then(async preferences=>{
+    hideEmptyScenario();
     folder.value=preferences.folder || '';recursion.checked=preferences.includeSubfolders;available=preferences.available;
     search.disabled=!available;find.disabled=true;loadAll.disabled=!available;$('journey-clear').hidden=preferences.loadedJourneys===0;
     if(!preferences.folder){status.textContent='No folder selected. Explore the layout, or choose a journey folder.';return;}

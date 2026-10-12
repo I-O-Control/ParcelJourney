@@ -35,13 +35,6 @@ async function boot() {
   if (!response.ok)
     throw new Error("The offline replay model could not be loaded.");
   const model = await response.json();
-  // The viewer starts without examples. Wait for a folder before creating a replay.
-  if (!model.parcels.length) {
-    $("loading").hidden = false;
-    $("loading").textContent =
-      "Choose a parcel folder to display its journeys.";
-    return;
-  }
   const nodes = new Map(model.nodes.map((n) => [n.id, n]));
   const edges = new Map(model.edges.map((e) => [e.id, e]));
   const host = $("viewport");
@@ -413,7 +406,7 @@ async function boot() {
     lastTrailCount = count;
   }
 
-  let chosen = model.parcels[0],
+  let chosen = model.parcels[0] || null,
     t = 0,
     playing = false,
     following = false,
@@ -713,6 +706,7 @@ async function boot() {
     );
   }
   function openParcelData() {
+    if (!chosen) return;
     pause();
     explanationCard.hidden = false;
     renderParcelData();
@@ -747,6 +741,7 @@ async function boot() {
     }
   });
   function renderParcelData() {
+    if (!chosen) return;
     const snapshot = stateAt(chosen.observations || [], t);
     const activeEvent = (chosen.events || []).filter((e) => e.t <= t).at(-1);
     if (activeEvent?.values) {
@@ -1136,6 +1131,20 @@ async function boot() {
     if (tag.textContent !== text) tag.textContent = text;
   }
   function updateLabels(now) {
+    if (!chosen) {
+      placeTag("tag-current", null, "");
+      const hover = $("tag-hover");
+      if (!hovered) {
+        hover.style.display = "none";
+        return;
+      }
+      const p = projectPoint(world([hovered.x, hovered.y], 1.5));
+      hover.textContent = `${hovered.label}\n${typeNames[hovered.kind] || hovered.kind} · ${hovered.id}${hovered.equipment ? " · " + hovered.equipment : ""}\nPlant layout · no journey loaded\nClick equipment for details`;
+      hover.style.display = "block";
+      hover.style.left = `${Math.max(150, Math.min(host.clientWidth - 150, p.x))}px`;
+      hover.style.top = `${Math.max(310, Math.min(host.clientHeight - 40, p.y - 20))}px`;
+      return;
+    }
     placeTag("tag-current", parcel.position, chosen.id);
     updateRouteLabels(now);
     const hover = $("tag-hover");
@@ -1197,6 +1206,13 @@ async function boot() {
     $("play").textContent = playing ? "Ⅱ Pause" : "▶ Play";
   }
   function update() {
+    if (!chosen) {
+      parcel.visible = false;
+      halo.visible = false;
+      trail.count = 0;
+      trail.instanceMatrix.needsUpdate = true;
+      return;
+    }
     state = ReplayEngine.sample(model, chosen, t);
     parcel.visible = state.positionKnown;
     halo.visible = state.positionKnown;
@@ -1240,7 +1256,7 @@ async function boot() {
       lastTime = now;
       if (dirty) {
         update();
-        if (now - lastUI >= 100 || !playing) {
+        if (chosen && (now - lastUI >= 100 || !playing)) {
           ui();
           lastUI = now;
         }
@@ -1280,6 +1296,7 @@ async function boot() {
     requestFrame();
   }
   function seek(value) {
+    if (!chosen) return;
     pause();
     t = Math.max(0, Math.min(chosen.duration, value));
     selectedObservation =
@@ -1290,6 +1307,7 @@ async function boot() {
     requestFrame();
   }
   function load(index) {
+    if (!model.parcels[index]) return;
     pause();
     chosen = model.parcels[index];
     selectedObservation = null;
@@ -1533,7 +1551,28 @@ async function boot() {
   applyTheme();
   resize();
   setView(false, true);
-  load(0);
+  if (model.parcels.length) load(0);
+  else {
+    $("loading").hidden = false;
+    $("loading").textContent =
+      "Choose a parcel folder to display its journeys.";
+    $("render-info").textContent = "PLANT LAYOUT · NO JOURNEY LOADED";
+    $("parcel-id").textContent = "—";
+    $("parcel-name").textContent = "No journey loaded";
+    $("state-badge").textContent = "LAYOUT PREVIEW";
+    $("percent").textContent = "—";
+    $("progress-fill").style.width = "0%";
+    $("current").textContent = "Plant layout";
+    $("description").textContent = "Choose a folder to load journeys.";
+    $("next").textContent = "No parcel selected";
+    $("expectation").textContent =
+      "The layout is available without loading a journey.";
+    $("event-count").textContent = "No journey loaded";
+    $("timeline").textContent = "";
+    for (const id of ["scenario", "search", "restart", "previous", "play", "next-event", "seek", "focus"])
+      $(id).disabled = true;
+    requestFrame();
+  }
   if (location.protocol === "http:" && location.hostname === "127.0.0.1") {
     const close =
       document.getElementById("end-process") ||
@@ -1562,9 +1601,13 @@ async function boot() {
       }
     };
   }
-  $("scenario").disabled = false;
-  $("play").disabled = false;
-  $("loading").hidden = true;
+  if (model.parcels.length) {
+    $("scenario").disabled = false;
+    $("play").disabled = false;
+    $("loading").hidden = true;
+  } else {
+    $("loading").hidden = true;
+  }
 }
 function fail(error) {
   $("loading").hidden = true;

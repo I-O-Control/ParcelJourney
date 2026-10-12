@@ -868,32 +868,32 @@
     {
       "id": "H3_CHUTE1",
       "label": "H3 chute 1 / NIO",
-      "x": 1660,
-      "y": 2110,
+      "x": -100,
+      "y": 1660,
       "kind": "exception",
       "equipment": null,
       "note": "",
-      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+      "coordinateBasis": "Schematic Hall 3 chute bank; vertically stacked left of the logged chute decision"
     },
     {
       "id": "H3_CHUTE2",
       "label": "H3 chute 2",
-      "x": 1750,
-      "y": 2110,
+      "x": -100,
+      "y": 1810,
       "kind": "exception",
       "equipment": null,
       "note": "",
-      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+      "coordinateBasis": "Schematic Hall 3 chute bank; vertically stacked left of the logged chute decision"
     },
     {
       "id": "H3_CHUTE3",
       "label": "H3 chute 3",
-      "x": 1840,
-      "y": 2110,
+      "x": -100,
+      "y": 1960,
       "kind": "exception",
       "equipment": null,
       "note": "",
-      "coordinateBasis": "Estimated schematic position; not surveyed CAD coordinates"
+      "coordinateBasis": "Schematic Hall 3 chute bank; vertically stacked left of the logged chute decision"
     },
     {
       "id": "SC_H2T1",
@@ -2718,19 +2718,19 @@
           1810
         ],
         [
-          1780,
-          1935
+          40,
+          1810
         ],
         [
-          1660,
-          1935
+          40,
+          1660
         ],
         [
-          1660,
-          2110
+          -100,
+          1660
         ]
       ],
-      "basis": "Schematic branch after chute decision; avoids reverse travel over upstream scanners.",
+      "basis": "Schematic Hall 3 chute bank: common departure belt, then vertically separated outputs left of the chute decision",
       "routeType": "branch",
       "confidence": "schematic",
       "topology": "floor-layout"
@@ -2745,19 +2745,19 @@
           1810
         ],
         [
-          1780,
-          1935
+          40,
+          1810
         ],
         [
-          1750,
-          1935
+          40,
+          1810
         ],
         [
-          1750,
-          2110
+          -100,
+          1810
         ]
       ],
-      "basis": "Schematic branch after chute decision; avoids reverse travel over upstream scanners.",
+      "basis": "Schematic Hall 3 chute bank: common departure belt, then vertically separated outputs left of the chute decision",
       "routeType": "branch",
       "confidence": "schematic",
       "topology": "floor-layout"
@@ -2772,19 +2772,19 @@
           1810
         ],
         [
-          1780,
-          1935
+          40,
+          1810
         ],
         [
-          1840,
-          1935
+          40,
+          1960
         ],
         [
-          1840,
-          2110
+          -100,
+          1960
         ]
       ],
-      "basis": "Schematic branch after chute decision; avoids reverse travel over upstream scanners.",
+      "basis": "Schematic Hall 3 chute bank: common departure belt, then vertically separated outputs left of the chute decision",
       "routeType": "branch",
       "confidence": "schematic",
       "topology": "floor-layout"
@@ -4301,6 +4301,8 @@
   "parcels": [],
   "validation": {
     "mode": "no-capture",
-    "completeLifecycles": false
+    "runs": 0,
+    "completeLifecycles": false,
+    "scope": "Validation is supplied by the user-selected capture."
   }
 }
