@@ -21,6 +21,9 @@
   const legacyScenarioLabel=document.querySelector(`label[for="${select.id}"]`);
   const hideEmptyScenario=()=>{const empty=select.options.length===0;select.style.display=empty?'none':'';if(legacyScenarioLabel)legacyScenarioLabel.style.display=empty?'none':'';document.body.classList.toggle('no-journeys',empty);document.body.classList.toggle('layout-only',location.pathname.startsWith('/3d')&&empty);};
   hideEmptyScenario();
+  // The 3D module populates its selector after fetching the replay model.
+  // Recheck when options arrive, not only during folder-browser startup.
+  new MutationObserver(hideEmptyScenario).observe(select, {childList:true,subtree:true});
   const $ = id => box.querySelector('#' + id);
   const folder=$('journey-folder'), search=$('journey-search'), list=$('journey-suggestions'), status=$('journey-folder-status');
   const recursion=$('journey-subfolders'), loadAll=$('journey-load-all'), loadOne=$('journey-load-one'), find=$('journey-find');
