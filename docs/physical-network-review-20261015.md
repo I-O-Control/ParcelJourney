@@ -12,6 +12,12 @@ Checkpoint pushed before follow-up fixes: `44456a7` on github/master. The accept
 - Replay checks: 9,004 trail checks and 309,176 label-state checks passed. Dedicated external-handling playback checks passed.
 - The UI fallback extractor had incorrectly escaped regex whitespace and excluded Unicode method names. Corrected and checked with ScanAbzweigungArbeitsplätze. The raw capture text already contains valid German characters.
 
+### Layout text corruption: root cause and prevention
+
+The later screenshot of `Select sealer 1–4` showed genuine double mojibake in authored layout metadata. The previous `da2ba22` revision has the correct label. The layout transformation tools used Python `Path.read_text()` without an explicit encoding, while this Windows host defaults to CP1252. Reading UTF-8 with that default, then writing UTF-8, corrupts punctuation; doing it twice reproduces the observed label exactly. The production-log parser was not the source of this label.
+
+Fixed explicit UTF-8 reads in the layout repair tool, replay-model builder, network audit and generated-journey reader, and explicit UTF-8 report writes. Restored 28 affected metadata fields per layout copy, including the saved local layout, while preserving geometry. `tools/test-layout-encoding.py` runs the actual writer twice on Unicode fixtures under legacy Windows defaults and checks that both metadata and geometry survive unchanged. The viewer build additionally rejects known mojibake markers in its authored model metadata. This guard does not rewrite raw log evidence.
+
 ## Still incomplete
 
 - Exact CAD/SCADA coordinate registration. Available CAD section evidence supports arrangement, but the available SCADA extraction provides no direct equipment-prefix matches for the 53 anchors. No nearest-neighbour links were promoted to verified conveyors.

@@ -40,6 +40,12 @@ const model = JSON.parse(
 );
 if (!Array.isArray(model.nodes) || !Array.isArray(model.edges))
   throw new Error("Layout geometry is required.");
+// These English UI metadata fields previously suffered a double UTF-8/1252
+// conversion. Reject broken source text before embedding it in a release.
+for (const node of model.nodes)
+  for (const key of ["label", "note", "coordinateBasis"])
+    if (/[\u00c2\u00c3]|\u00e2\u20ac|\ufffd/.test(node[key] || ""))
+      throw new Error(`Corrupt layout text: ${node.id}.${key}`);
 await writeFile(
   path.join(output, "THREE-LICENSE.txt"),
   await readFile(

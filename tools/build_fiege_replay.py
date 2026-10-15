@@ -17,7 +17,7 @@ def flow_role(edge):
 
 def build():
     data=json.loads((ROOT/'tmp/fiege-index.json').read_text(encoding='utf-8'))
-    layout=json.loads((ROOT/'topology/replay-layout.json').read_text())
+    layout=json.loads((ROOT/'topology/replay-layout.json').read_text(encoding='utf8'))
     route_observations=json.loads((ROOT/'topology/live-1.8-route-observations.json').read_text(encoding='utf-8'))
     nodes={n['id']:n for n in layout['nodes']}
     # PLC source identifies this point as the strapping-line distributor; it is

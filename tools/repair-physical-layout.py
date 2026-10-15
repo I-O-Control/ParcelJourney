@@ -31,7 +31,7 @@ if __name__=='__main__':
     audit=importlib.import_module('physical-network')
     paths=[ROOT/'topology/replay-layout.json',ROOT/'ParcelJourney.App/Assets/replay-model.json']
     for path in paths:
-        before=json.loads(path.read_text()); after=repair(json.loads(path.read_text()))
+        before=json.loads(path.read_text(encoding='utf8')); after=repair(json.loads(path.read_text(encoding='utf8')))
         assert [(e['id'],e['a'],e['b']) for e in before['edges']]==[(e['id'],e['a'],e['b']) for e in after['edges']]
         errors=audit.compile_network(after)['errors']
         if errors:raise ValueError(json.dumps(errors,indent=2))

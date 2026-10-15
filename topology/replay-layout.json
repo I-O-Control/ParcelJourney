@@ -8,7 +8,7 @@
       "kind": "scale",
       "equipment": "1090-1",
       "note": "",
-      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -19,7 +19,7 @@
       "kind": "decision",
       "equipment": "1095-1",
       "note": "",
-      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -30,7 +30,7 @@
       "kind": "decision",
       "equipment": "1125-1",
       "note": "",
-      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -41,7 +41,7 @@
       "kind": "decision",
       "equipment": "3020-1",
       "note": "PLC logic: single-strap parcels divert right; double-strap parcels continue straight. Exact downstream corridor is schematic.",
-      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -52,12 +52,12 @@
       "kind": "decision",
       "equipment": "2000-1",
       "note": "",
-      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
       "id": "SC_VL1",
-      "label": "Select sealer 1Ã¢â‚¬â€œ4",
+      "label": "Select sealer 1\u20134",
       "x": 820,
       "y": 170,
       "kind": "decision",
@@ -67,7 +67,7 @@
     },
     {
       "id": "SC_VL2",
-      "label": "Select sealer 5Ã¢â‚¬â€œ7",
+      "label": "Select sealer 5\u20137",
       "x": 1460,
       "y": 170,
       "kind": "decision",
@@ -167,7 +167,7 @@
     },
     {
       "id": "NOREAD",
-      "label": "Target 08 Ã‚Â· no-read",
+      "label": "Target 08 \u00b7 no-read",
       "x": 2180,
       "y": 380,
       "kind": "exception",
@@ -1082,8 +1082,8 @@
       "y": -510,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1Ã¢â‚¬â€œ10; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1093,8 +1093,8 @@
       "y": -449,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1Ã¢â‚¬â€œ10; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1104,8 +1104,8 @@
       "y": -388,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1Ã¢â‚¬â€œ10; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1115,8 +1115,8 @@
       "y": -327,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1Ã¢â‚¬â€œ10; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1126,8 +1126,8 @@
       "y": -266,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1Ã¢â‚¬â€œ10; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1137,8 +1137,8 @@
       "y": -205,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1Ã¢â‚¬â€œ10; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1148,8 +1148,8 @@
       "y": -144,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1Ã¢â‚¬â€œ10; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1159,8 +1159,8 @@
       "y": -83,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1Ã¢â‚¬â€œ10; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1170,8 +1170,8 @@
       "y": -22,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1Ã¢â‚¬â€œ10; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1181,8 +1181,8 @@
       "y": 39,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1Ã¢â‚¬â€œ10; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1\u201310; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90\u00b0 clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     }
   ],

@@ -130,7 +130,7 @@ def benchmark():
 
 def source_evidence(capture,model):
     contract=json.loads((capture/'flow-contract.json').read_text(encoding='utf8'))
-    scada=json.loads((ROOT/'analysis/scada/fiege-ungarn-screen203-topology.json').read_text())
+    scada=json.loads((ROOT/'analysis/scada/fiege-ungarn-screen203-topology.json').read_text(encoding='utf8'))
     sources=[]
     for source in contract['sources']:
         p=Path(source['path'])
@@ -143,17 +143,17 @@ def source_evidence(capture,model):
         matches=[{'id':s['id'],'x':s['x'],'y':s['y'],'sourceOffset':s.get('sourceOffset')} for s in scada['nodes'] if re.match(r'Pos '+re.escape(base)+r'(?:[-_]|$)',s['label'])]
         registry=contract['registry'].get(str(equipment),{})
         anchors.append({'node':n['id'],'equipment':equipment,'registryScanner':registry.get('scanner'),'registryMatch':registry.get('scanner')==n['id'],'scadaCandidates':matches,'coordinateRegistration':'unresolved; equipment prefix matches are not a surveyed position'})
-    return {'sources':sources,'anchors':anchors,'cad':json.loads((ROOT/'analysis/scada/fiege-cad-topology.json').read_text()),'note':'SCADA identifiers and CAD section roles support mapping. No automatic nearest-neighbour connections are accepted.'}
+    return {'sources':sources,'anchors':anchors,'cad':json.loads((ROOT/'analysis/scada/fiege-cad-topology.json').read_text(encoding='utf8')),'note':'SCADA identifiers and CAD section roles support mapping. No automatic nearest-neighbour connections are accepted.'}
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--capture',action='append',default=[]);ap.add_argument('--output',default='analysis/physical-network');args=ap.parse_args()
-    model=json.loads((ROOT/'topology/replay-layout.json').read_text());out=ROOT/args.output;out.mkdir(parents=True,exist_ok=True)
+    model=json.loads((ROOT/'topology/replay-layout.json').read_text(encoding='utf8'));out=ROOT/args.output;out.mkdir(parents=True,exist_ok=True)
     network=compile_network(model)
-    (out/'network.json').write_text(json.dumps(network,indent=2))
+    (out/'network.json').write_text(json.dumps(network,indent=2),encoding='utf8')
     captures=[audit_capture(Path(p),model) for p in args.capture]
     report={'geometryErrors':network['errors'],'segments':len(network['segments']),'routeCount':len(network['routes']),'benchmark':benchmark(),'captures':captures}
     if args.capture: report['sourceEvidence']=source_evidence(Path(args.capture[-1]),model)
-    (out/'report.json').write_text(json.dumps(report,indent=2))
+    (out/'report.json').write_text(json.dumps(report,indent=2),encoding='utf8')
     print(json.dumps({'geometryErrors':len(network['errors']),'kinds':dict(collections.Counter(e['kind'] for e in network['errors'])),'captures':[{k:c[k] for k in ('dataset','histories','statusCounts')} for c in captures],'benchmark':report['benchmark']},indent=2))
     if network['errors']: raise SystemExit(1)
 
