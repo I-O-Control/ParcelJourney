@@ -48,6 +48,9 @@
 /analysis/interpolated-position-model.json
 /analysis/cad-connected-layout.html
 /analysis/scada/
+/analysis/physical-network/
+/analysis/physical-network-before/
+/analysis/physical-network-check/
 /tools/__pycache__/
 /tools/analyze_real_temp_journeys.py
 /tools/build_fiege_behavior_model.py
