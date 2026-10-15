@@ -22,8 +22,8 @@ export function prepareObservations(events, base) {
     const values=dbValues(raw), explicit=e.location??e.Location??values?.LastScanPos??raw.match(/\bSC_[A-Z0-9_]+\b/)?.[0];
     const sourceFile=e.sourceFile??e.SourceFile??'';
     const layer=values?'Db':normalizeLayer(e.layer??e.Layer,sourceFile,raw);
-    const logMatch=raw.match(/ - ([^-]+?)\\s+- /);
-    const methodMatch=raw.match(/ - [^-]+ - ([A-Za-z_][\\w.]*(?:\\([^)]*\\))?)/);
+    const logMatch=raw.match(/ - ([^-]+?)\s+- /);
+    const methodMatch=raw.match(/ - [^-]+ - ([\p{L}_][\p{L}\p{N}_.]*(?:\([^)]*\))?)/u);
     return {t:(millis(timestamp)-millis(base))/1000,Timestamp:timestamp,raw,values,LocationId:explicit||null,Layer:layer,
       system:e.System||sourceFile.split(/[\\/]/).at(-1).split('_')[0],sourceFile,logLevel:e.logLevel??logMatch?.[1]?.trim()??null,method:e.method??methodMatch?.[1]??null,
       line:e.line??e.Line,index};
