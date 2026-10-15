@@ -44,7 +44,7 @@ public static class CorridorRoutes
                     var ids = leg["captureRouteEdgeIds"]?.AsArray() ?? new JsonArray();
                     var map = edges.ToDictionary(e => e!["id"]!.ToString());
                     string at = from;
-                    bool valid = status is "modeled-corridor" or "reported-branch-corridor" or "reported-outlet-corridor" && ids.Count > 0;
+                    bool valid = (status is "modeled-corridor" or "reported-branch-corridor" or "reported-outlet-corridor" or "plc-reported-output-corridor") && ids.Count > 0;
                     foreach (var id in ids)
                     {
                         if (!valid || !map.TryGetValue(id!.ToString(), out var edge) || edge!["a"]!.ToString() != at) { valid = false; break; }
@@ -77,6 +77,31 @@ public static class CorridorRoutes
                 leg["routeStatus"] = "topology-corridor";
                 leg["positionBasis"] = via is null ? "Interpolated along the unique modeled directed corridor; intermediate equipment is unobserved and geometry is schematic"
                     : "Interpolated along modeled belts via " + via + "; branch selected by recorded PLC acknowledgement, geometry is schematic";
+            }
+        MarkPossibleExternalHandling(model);
+    }
+
+    private static void MarkPossibleExternalHandling(JsonObject model)
+    {
+        var outgoing = model["edges"]!.AsArray().GroupBy(e => e!["a"]!.ToString())
+            .ToDictionary(g => g.Key, g => g.Select(e => e!["b"]!.ToString()).ToArray());
+        var known = model["nodes"]!.AsArray().Where(n => n?["equipment"] is not null && !(n!["coordinateBasis"]?.ToString() ?? "").Contains("Unmapped"))
+            .Select(n => n!["id"]!.ToString()).ToHashSet();
+        bool Reachable(string from, string to)
+        {
+            var seen = new HashSet<string> { from }; var queue = new Queue<string>(); queue.Enqueue(from);
+            while (queue.TryDequeue(out var at))
+                if (outgoing.TryGetValue(at, out var next))
+                    foreach (var destination in next) { if (destination == to) return true; if (seen.Add(destination)) queue.Enqueue(destination); }
+            return false;
+        }
+        foreach (var parcel in model["parcels"]!.AsArray())
+            foreach (var leg in parcel!["legs"]!.AsArray())
+            {
+                string from = leg!["a"]!.ToString(), to = leg["b"]!.ToString();
+                bool possible = leg["routeStatus"]?.ToString() == "unknown" && known.Contains(from) && known.Contains(to) && !Reachable(from, to);
+                leg["possibleExternalHandling"] = possible;
+                if (possible) leg["handlingBasis"] = "No directed conveyor path connects the recorded scanners. Manual handling, missing topology or an association error remain possible; manual handling is not confirmed.";
             }
     }
 }

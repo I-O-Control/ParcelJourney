@@ -27,6 +27,18 @@ public static class CaptureReplay
     private static string S(JsonNode? n) => n is null ? "" : n.ToString();
     private static long N(JsonNode? n) => n is null ? 0 : n.GetValue<long>();
     private static string Stamp(long ms) => DateTime.UnixEpoch.AddMilliseconds(ms).ToString("yyyy.MM.dd HH:mm:ss.fff");
+    private static string RouteAttemptSummary(JsonObject e)
+    {
+        string decision = S(e["scanner_decision_code"]), reported = S(e["scanner_reported_code"]), target = S(e["route_attempt_target_code"]);
+        string text = decision == "WG" ? "Continue straight (WG)" : decision != "" ? "Output request " + decision : "PLC report " + reported;
+        if (target != "") text += " → target " + target;
+        if (reported != "") text += "; PLC reported " + reported;
+        // PJ01 event fields can encode booleans as dictionary strings.
+        if (bool.TryParse(S(e["route_attempt_destination_changed"]), out var changed) && changed) text += "; destination attempt changed " + S(e["route_attempt_previous_target_code"]) + " → " + target;
+        if (S(e["scanner_decision_status"]) == "decision-plc-report-mismatch") text += "; commanded and reported branches differ";
+        if (S(e["route_attempt_next_observed_location"]) != "") text += "; next scanner observed: " + S(e["route_attempt_next_observed_location"]);
+        return text;
+    }
     private static JsonObject Values(JsonObject e)
     {
         var result = new JsonObject();
@@ -67,6 +79,10 @@ public static class CaptureReplay
                     bool startObserved = parcel["start_observed"]?.GetValue<bool>() == true;
                     if (closedOnly && !isClosed) continue;
                     var recorded = parcel["events"]!.AsArray().OfType<JsonObject>().OrderBy(e => N(e["t"])).ThenBy(e => S(e["source"])).ThenBy(e => N(e["offset"])).ToList();
+                    var routeAttempts = new JsonArray();
+                    foreach (var routeEvent in recorded.Where(e => S(e["kind"]) == "scan" && S(e["scanner_decision_status"]) != ""))
+                        routeAttempts.Add(new JsonObject { ["Timestamp"] = Stamp(N(routeEvent["t"])), ["Scanner"] = S(routeEvent["point"]), ["Decision"] = S(routeEvent["scanner_decision_code"]), ["PLCReport"] = S(routeEvent["scanner_reported_code"]), ["TargetCode"] = S(routeEvent["route_attempt_target_code"]), ["DestinationChanged"] = routeEvent["route_attempt_destination_changed"]?.DeepClone(), ["PreviousTargetCode"] = S(routeEvent["route_attempt_previous_target_code"]), ["Status"] = S(routeEvent["scanner_decision_status"]), ["Summary"] = RouteAttemptSummary(routeEvent) });
+                    metadata["route_attempt_history"] = routeAttempts.DeepClone();
                     if (recorded.Count == 0) throw new InvalidDataException("Parcel has no events.");
                     var recordsById = recorded.Where(r => S(r["record_id"]) != "").ToLookup(r => S(r["record_id"]));
                     int closeOrdinal = 0; var closeObservations = new JsonArray();
@@ -121,20 +137,31 @@ public static class CaptureReplay
                     }
                     if (stops.Count == 0) throw new InvalidDataException("No displayable event position.");
                     var lastScan = recorded.LastOrDefault(e => S(e["kind"]) == "scan");
-                    if (lastScan?["terminal_outlet_node"] is not null && nodeMap.ContainsKey(S(lastScan["terminal_outlet_node"])))
+                    string terminalNode = S(lastScan?["terminal_exit_node"]);
+                    if (terminalNode == "") terminalNode = S(lastScan?["terminal_outlet_node"]);
+                    if (terminalNode != "" && nodeMap.ContainsKey(terminalNode))
                     {
-                        string outlet = S(lastScan["terminal_outlet_node"]);
-                        double reportTime = (N(lastScan["terminal_report_t"]) - first) / 1000d;
+                        string outlet = terminalNode;
+                        long terminalReportTime = N(lastScan?["terminal_exit_report_t"]);
+                        if (terminalReportTime == 0) terminalReportTime = N(lastScan?["terminal_report_t"]);
+                        double reportTime = (terminalReportTime - first) / 1000d;
                         double departure = previous!["departure"]!.GetValue<double>();
                         if (reportTime > departure)
                         {
+                            string edgeId = S(lastScan?["point"]) + ">" + outlet;
+                            bool mappedExitEdge = edgeMap.TryGetValue(edgeId, out var exitEdge) && S(exitEdge["a"]) == S(lastScan?["point"]) && S(exitEdge["b"]) == outlet;
+                            if (mappedExitEdge) exitEdge!["observationStatus"] = "PLC output and MFC closure observed at the decision scanner; downstream movement is reported, geometry remains schematic";
+                            var terminalEdgeText = S(lastScan?["terminal_route_edge_ids_json"]);
+                            var terminalEdges = string.IsNullOrWhiteSpace(terminalEdgeText) ? new JsonArray() : JsonNode.Parse(terminalEdgeText) as JsonArray ?? new JsonArray();
+                            if (terminalEdges.Count == 0 && mappedExitEdge) terminalEdges.Add(edgeId);
+                            string captureRouteStatus = S(lastScan?["terminal_exit_status"]) != "" ? "plc-reported-output-corridor" : S(lastScan?["terminal_route_status"]);
                             legs.Add(new JsonObject { ["a"] = S(lastScan["point"]), ["b"] = outlet, ["start"] = departure, ["end"] = reportTime,
-                                ["edges"] = new JsonArray(), ["captureRouteStatus"] = S(lastScan["terminal_route_status"]),
-                                ["captureRouteEdgeIds"] = JsonNode.Parse(S(lastScan["terminal_route_edge_ids_json"])),
-                                ["captureStepId"] = S(lastScan["step_id"]), ["reportedOutletEvidenceId"] = S(lastScan["terminal_report_event_id"]),
-                                ["positionBasis"] = S(lastScan["terminal_position_basis"]), ["routeStatus"] = "unknown" });
+                                ["edges"] = mappedExitEdge ? new JsonArray(edgeId) : new JsonArray(), ["captureRouteStatus"] = captureRouteStatus,
+                                ["captureRouteEdgeIds"] = terminalEdges,
+                                ["captureStepId"] = S(lastScan?["step_id"]), ["reportedOutletEvidenceId"] = S(lastScan?["terminal_exit_report_event_id"]) != "" ? S(lastScan?["terminal_exit_report_event_id"]) : S(lastScan?["terminal_report_event_id"]),
+                                ["positionBasis"] = S(lastScan?["terminal_exit_position_basis"]) != "" ? S(lastScan?["terminal_exit_position_basis"]) : S(lastScan?["terminal_position_basis"]), ["routeStatus"] = mappedExitEdge ? "reported-output-candidate" : "unknown" });
                             previous = new JsonObject { ["id"] = outlet, ["arrival"] = reportTime, ["departure"] = reportTime,
-                                ["positionBasis"] = S(lastScan["terminal_position_basis"]), ["observationKind"] = "plc-reported-outlet" };
+                                ["positionBasis"] = S(lastScan?["terminal_exit_position_basis"]) != "" ? S(lastScan?["terminal_exit_position_basis"]) : S(lastScan?["terminal_position_basis"]), ["observationKind"] = "plc-reported-output" };
                             stops.Add(previous);
                         }
                     }
@@ -145,7 +172,8 @@ public static class CaptureReplay
                         if (step?["route_status"] is null) continue;
                         leg["captureStepId"] = S(step["step_id"]);
                         leg["captureRouteStatus"] = S(step["route_status"]);
-                        leg["captureRouteEdgeIds"] = JsonNode.Parse(S(step["route_edge_ids_json"])) ?? new JsonArray();
+                        var capturedEdgeText = S(step["route_edge_ids_json"]);
+                        leg["captureRouteEdgeIds"] = string.IsNullOrWhiteSpace(capturedEdgeText) ? new JsonArray() : JsonNode.Parse(capturedEdgeText) ?? new JsonArray();
                         leg["routeReason"] = S(step["route_unresolved_reason"]);
                         leg["positionBasis"] = S(step["route_basis"]) + " " + S(step["route_geometry_basis"]);
                     }

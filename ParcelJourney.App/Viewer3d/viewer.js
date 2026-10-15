@@ -29,9 +29,9 @@
     mod
   ));
 
-  // tools/replay-engine.js
+  // ../replay-engine.js
   var require_replay_engine = __commonJS({
-    "tools/replay-engine.js"(exports, module) {
+    "../replay-engine.js"(exports, module) {
       var ReplayEngine2 = /* @__PURE__ */ (() => {
         const length = (ps) => ps.slice(1).reduce((sum, b, i) => sum + Math.hypot(b[0] - ps[i][0], b[1] - ps[i][1]), 0);
         function at(ps, fraction) {
@@ -93,11 +93,12 @@
             liquid = slice(ps, 0, Math.min(1, (t - latestLeg.start) / (latestLeg.end - latestLeg.start)));
           }
           const bright = done ? history : liquid.length ? [liquid] : [];
-          const phase = done ? parcel.outcome || "completed" : leg ? routeUnknown(leg) ? "route-unknown" : "travelling" : "processing";
-          const current = done ? parcel.completeness : leg ? routeUnknown(leg) ? `Observed movement: ${nodes[leg.a].label} \u2192 ${nodes[leg.b].label}; physical route unknown` : `Moving: ${nodes[leg.a].label} \u2192 ${nodes[leg.b].label}` : event.Summary;
+          const possibleExternalHandling = !!leg?.possibleExternalHandling;
+          const phase = done ? parcel.outcome || "completed" : leg ? routeUnknown(leg) ? possibleExternalHandling ? "possible-external-handling" : "route-unknown" : "travelling" : "processing";
+          const current = done ? parcel.completeness : leg ? routeUnknown(leg) ? `Observed movement: ${nodes[leg.a].label} \u2192 ${nodes[leg.b].label}; ${possibleExternalHandling ? "possible external handling" : "physical route unknown"}` : `Moving: ${nodes[leg.a].label} \u2192 ${nodes[leg.b].label}` : event.Summary;
           const next = done ? "Replay ended here. No further movement is implied." : leg && routeUnknown(leg) ? `Next recorded scanner: ${nodes[leg.b].label}. Conveyor route is not mapped.` : nextStop ? `Next recorded position in ${(nextStop.arrival - t).toFixed(1)}s: ${nodes[nextStop.id].label}` : `Final observations: ${Math.max(0, parcel.duration - t).toFixed(1)}s remaining.`;
           const positionKnown = !(leg && routeUnknown(leg)) && nodes[stop.id].physical !== false;
-          return { t, xy, positionKnown, index, event, upcoming, leg, routeUnknown: leg ? routeUnknown(leg) : false, stop, nextStop, done, phase, current, next, history, liquid, bright };
+          return { t, xy, positionKnown, possibleExternalHandling, index, event, upcoming, leg, routeUnknown: leg ? routeUnknown(leg) : false, stop, nextStop, done, phase, current, next, history, liquid, bright };
         }
         return { sample, at, slice, length, pointsFor(model, leg) {
           const edges = Object.fromEntries(model.edges.map((edge) => [edge.id, edge]));
@@ -116,7 +117,7 @@
     }
   });
 
-  // tools/viewer3d/node_modules/three/build/three.core.js
+  // node_modules/three/build/three.core.js
   var REVISION = "186";
   var MOUSE = { LEFT: 0, MIDDLE: 1, RIGHT: 2, ROTATE: 0, DOLLY: 1, PAN: 2 };
   var TOUCH = { ROTATE: 0, PAN: 1, DOLLY_PAN: 2, DOLLY_ROTATE: 3 };
@@ -19309,7 +19310,7 @@
     }
   }
 
-  // tools/viewer3d/node_modules/three/build/three.module.js
+  // node_modules/three/build/three.module.js
   function WebGLAnimation() {
     let context = null;
     let isAnimating = false;
@@ -30807,7 +30808,7 @@ void main() {
     }
   };
 
-  // tools/viewer3d/node_modules/three/examples/jsm/controls/OrbitControls.js
+  // node_modules/three/examples/jsm/controls/OrbitControls.js
   var _changeEvent = { type: "change" };
   var _startEvent = { type: "start" };
   var _endEvent = { type: "end" };
@@ -31723,10 +31724,10 @@ void main() {
     }
   }
 
-  // tools/viewer3d/viewer.js
+  // viewer.js
   var import_replay_engine = __toESM(require_replay_engine(), 1);
 
-  // tools/viewer3d/trail.mjs
+  // trail.mjs
   function buildTrailSegments(edges, parcel) {
     const segments = [];
     for (const leg of parcel.legs) {
@@ -31756,7 +31757,7 @@ void main() {
     return segments;
   }
 
-  // tools/viewer3d/route-labels.mjs
+  // route-labels.mjs
   function routeEntries(parcel, nodes) {
     const entries = /* @__PURE__ */ new Map();
     for (const stop of parcel.stops) {
@@ -31813,7 +31814,7 @@ void main() {
     };
   }
 
-  // tools/viewer3d/parcel-state.mjs
+  // parcel-state.mjs
   var fields = ["PrincipalID", "OrderID", "ParcelID", "ControlFlag", "GrossWeight", "CarrierID", "CartonType", "LastScanPos", "WeightStart", "WeightBrutto", "VRNewHeight", "PlcTarget", "TrackingId", "Status"];
   var meanings = { NEW: "A parcel record was created.", PENDING: "The parcel is being processed.", WEIGHTERR: "The start-weight check failed; the parcel requires workstation handling.", WEIGHTOK: "The start-weight check was accepted.", WORKSTATION: "The parcel was assigned to a workstation.", CLOSED: "The material-flow controller recorded the outbound diversion as complete.", FAULTY: "The parcel record is marked faulty; the cause requires the associated evidence." };
   function millis(value) {
@@ -31845,7 +31846,7 @@ void main() {
     return [...groups].map(([layer, entries]) => ({ layer, entries }));
   }
 
-  // tools/viewer3d/footprint.mjs
+  // footprint.mjs
   function footprint(points, padding = 0.9) {
     const expanded = points.flatMap(([x, z]) => [[-1, -1], [-1, 1], [1, -1], [1, 1]].map(([dx, dz]) => [x + dx * padding, z + dz * padding]));
     const sorted = [...new Map(expanded.map((p) => [p.join(","), p])).values()].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
@@ -31869,7 +31870,7 @@ void main() {
     return hits.length >= 2 ? [Math.min(...hits), Math.max(...hits)] : null;
   }
 
-  // tools/viewer3d/viewer.js
+  // viewer.js
   var $ = (id) => document.getElementById(id);
   var fmt = (s) => `${Math.floor(s / 60).toString().padStart(2, "0")}:${Math.floor(s % 60).toString().padStart(2, "0")}`;
   var S = 0.02;
@@ -32785,11 +32786,11 @@ Click equipment for details`;
       hover.style.top = `${Math.max(310, Math.min(host.clientHeight - 40, p.y - 20))}px`;
     }
     function ui() {
-      const status = state.done ? state.phase.toUpperCase() : state.leg ? state.routeUnknown ? "ROUTE UNKNOWN" : "IN TRANSIT" : "AT EQUIPMENT";
+      const status = state.done ? state.phase.toUpperCase() : state.leg ? state.possibleExternalHandling ? "POSSIBLE EXTERNAL HANDLING" : state.routeUnknown ? "ROUTE UNKNOWN" : "IN TRANSIT" : "AT EQUIPMENT";
       $("state-badge").textContent = status;
       $("percent").textContent = `${Math.floor(t / chosen.duration * 100)}%`;
       $("progress-fill").style.width = `${t / chosen.duration * 100}%`;
-      $("current").textContent = state.done ? chosen.completeness : state.leg ? state.routeUnknown ? "No mapped physical belt" : "Conveyor transfer" : nodes.get(state.stop.id).label;
+      $("current").textContent = state.done ? chosen.completeness : state.leg ? state.possibleExternalHandling ? "Possible external handling" : state.routeUnknown ? "No mapped physical belt" : "Conveyor transfer" : nodes.get(state.stop.id).label;
       $("description").textContent = state.leg ? `${nodes.get(state.leg.a).label} \u2192 ${nodes.get(state.leg.b).label}${state.routeUnknown ? " \xB7 physical route unknown" : ""}` : operatorEvent(state.event).technical;
       $("next").textContent = state.done ? "End of this replay" : nodes.get(state.leg?.b || state.nextStop?.id)?.label || "Final operation";
       $("expectation").textContent = state.next;

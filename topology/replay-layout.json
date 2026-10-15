@@ -8,7 +8,7 @@
       "kind": "scale",
       "equipment": "1090-1",
       "note": "",
-      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -19,7 +19,7 @@
       "kind": "decision",
       "equipment": "1095-1",
       "note": "",
-      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -30,18 +30,18 @@
       "kind": "decision",
       "equipment": "1125-1",
       "note": "",
-      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
       "id": "SC_UMR",
       "label": "Strapping line distributor",
       "x": 560,
-      "y": 0,
+      "y": 200,
       "kind": "decision",
       "equipment": "3020-1",
       "note": "PLC logic: single-strap parcels divert right; double-strap parcels continue straight. Exact downstream corridor is schematic.",
-      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -52,12 +52,12 @@
       "kind": "decision",
       "equipment": "2000-1",
       "note": "",
-      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
       "id": "SC_VL1",
-      "label": "Select sealer 1–4",
+      "label": "Select sealer 1Ã¢â‚¬â€œ4",
       "x": 820,
       "y": 170,
       "kind": "decision",
@@ -67,7 +67,7 @@
     },
     {
       "id": "SC_VL2",
-      "label": "Select sealer 5–7",
+      "label": "Select sealer 5Ã¢â‚¬â€œ7",
       "x": 1460,
       "y": 170,
       "kind": "decision",
@@ -79,7 +79,7 @@
       "id": "RETURN",
       "label": "No compatible sealer: return",
       "x": 2040,
-      "y": 550,
+      "y": -120,
       "kind": "junction",
       "equipment": null,
       "note": "",
@@ -167,8 +167,8 @@
     },
     {
       "id": "NOREAD",
-      "label": "Target 08 · no-read",
-      "x": 2040,
+      "label": "Target 08 Ã‚Â· no-read",
+      "x": 2180,
       "y": 380,
       "kind": "exception",
       "equipment": null,
@@ -879,7 +879,7 @@
       "id": "H3_CHUTE2",
       "label": "H3 chute 2",
       "x": -100,
-      "y": 1810,
+      "y": 1885,
       "kind": "exception",
       "equipment": null,
       "note": "",
@@ -1082,8 +1082,8 @@
       "y": -510,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1–10; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1Ã¢â‚¬â€œ10; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1093,8 +1093,8 @@
       "y": -449,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1–10; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1Ã¢â‚¬â€œ10; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1104,8 +1104,8 @@
       "y": -388,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1–10; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1Ã¢â‚¬â€œ10; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1115,8 +1115,8 @@
       "y": -327,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1–10; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1Ã¢â‚¬â€œ10; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1126,8 +1126,8 @@
       "y": -266,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1–10; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1Ã¢â‚¬â€œ10; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1137,8 +1137,8 @@
       "y": -205,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1–10; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1Ã¢â‚¬â€œ10; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1148,8 +1148,8 @@
       "y": -144,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1–10; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1Ã¢â‚¬â€œ10; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1159,8 +1159,8 @@
       "y": -83,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1–10; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1Ã¢â‚¬â€œ10; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1170,8 +1170,8 @@
       "y": -22,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1–10; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1Ã¢â‚¬â€œ10; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     },
     {
@@ -1181,8 +1181,8 @@
       "y": 39,
       "kind": "sealer",
       "equipment": null,
-      "note": "Target 1–10; role assignment is a test fixture, not verified live configuration.",
-      "coordinateBasis": "Schematic, entry section rotated 90° clockwise per user layout correction; interface at sealer-loop entry retained.",
+      "note": "Target 1Ã¢â‚¬â€œ10; role assignment is a test fixture, not verified live configuration.",
+      "coordinateBasis": "Schematic, entry section rotated 90Ã‚Â° clockwise per user layout correction; interface at sealer-loop entry retained.",
       "section": "entry"
     }
   ],
@@ -1252,7 +1252,7 @@
         ],
         [
           560,
-          0
+          200
         ]
       ],
       "basis": "Estimated connection from section arrangement",
@@ -1266,15 +1266,19 @@
       "points": [
         [
           560,
-          0
+          200
         ],
         [
-          560,
-          80
+          620,
+          200
+        ],
+        [
+          620,
+          120
         ],
         [
           740,
-          80
+          120
         ],
         [
           740,
@@ -2680,11 +2684,11 @@
         ],
         [
           40,
-          1810
+          1885
         ],
         [
           -100,
-          1810
+          1885
         ]
       ],
       "basis": "Schematic Hall 3 chute bank: common departure belt, then vertically separated outputs left of the chute decision",
@@ -3035,11 +3039,11 @@
           2220
         ],
         [
-          2020,
+          2200,
           2220
         ],
         [
-          2020,
+          2200,
           1450
         ],
         [
@@ -3103,7 +3107,7 @@
         ],
         [
           2040,
-          550
+          -120
         ]
       ],
       "basis": "Estimated connection from section arrangement",
@@ -3117,15 +3121,19 @@
       "points": [
         [
           2040,
-          550
+          -120
         ],
         [
-          720,
-          550
+          780,
+          -120
         ],
         [
-          720,
-          170
+          780,
+          80
+        ],
+        [
+          740,
+          80
         ],
         [
           740,
@@ -3147,11 +3155,7 @@
           170
         ],
         [
-          700,
-          170
-        ],
-        [
-          700,
+          740,
           650
         ],
         [
@@ -3512,11 +3516,11 @@
           170
         ],
         [
-          2040,
+          2180,
           170
         ],
         [
-          2040,
+          2180,
           380
         ]
       ],
@@ -3534,11 +3538,11 @@
           170
         ],
         [
-          2040,
+          2180,
           170
         ],
         [
-          2040,
+          2180,
           380
         ]
       ],
@@ -3587,11 +3591,15 @@
         ],
         [
           400,
-          0
+          120
         ],
         [
           560,
-          0
+          120
+        ],
+        [
+          560,
+          200
         ]
       ],
       "basis": "Estimated connection from section arrangement",
@@ -3639,11 +3647,15 @@
         ],
         [
           400,
-          0
+          120
         ],
         [
           560,
-          0
+          120
+        ],
+        [
+          560,
+          200
         ]
       ],
       "basis": "Estimated connection from section arrangement",
@@ -3691,11 +3703,15 @@
         ],
         [
           400,
-          0
+          120
         ],
         [
           560,
-          0
+          120
+        ],
+        [
+          560,
+          200
         ]
       ],
       "basis": "Estimated connection from section arrangement",
@@ -3743,11 +3759,15 @@
         ],
         [
           400,
-          0
+          120
         ],
         [
           560,
-          0
+          120
+        ],
+        [
+          560,
+          200
         ]
       ],
       "basis": "Estimated connection from section arrangement",
@@ -3795,11 +3815,15 @@
         ],
         [
           400,
-          0
+          120
         ],
         [
           560,
-          0
+          120
+        ],
+        [
+          560,
+          200
         ]
       ],
       "basis": "Estimated connection from section arrangement",
@@ -3847,11 +3871,15 @@
         ],
         [
           400,
-          0
+          120
         ],
         [
           560,
-          0
+          120
+        ],
+        [
+          560,
+          200
         ]
       ],
       "basis": "Estimated connection from section arrangement",
@@ -3899,11 +3927,15 @@
         ],
         [
           400,
-          0
+          120
         ],
         [
           560,
-          0
+          120
+        ],
+        [
+          560,
+          200
         ]
       ],
       "basis": "Estimated connection from section arrangement",
@@ -3951,11 +3983,15 @@
         ],
         [
           400,
-          0
+          120
         ],
         [
           560,
-          0
+          120
+        ],
+        [
+          560,
+          200
         ]
       ],
       "basis": "Estimated connection from section arrangement",
@@ -4003,11 +4039,15 @@
         ],
         [
           400,
-          0
+          120
         ],
         [
           560,
-          0
+          120
+        ],
+        [
+          560,
+          200
         ]
       ],
       "basis": "Estimated connection from section arrangement",
@@ -4055,11 +4095,15 @@
         ],
         [
           400,
-          0
+          120
         ],
         [
           560,
-          0
+          120
+        ],
+        [
+          560,
+          200
         ]
       ],
       "basis": "Estimated connection from section arrangement",
@@ -4076,12 +4120,12 @@
           1540
         ],
         [
-          1780,
-          1740
+          2040,
+          1540
         ],
         [
-          190,
-          1740
+          2040,
+          1810
         ],
         [
           190,
@@ -4148,15 +4192,15 @@
       "points": [
         [
           560,
-          0
+          200
         ],
         [
-          350,
-          0
+          560,
+          710
         ],
         [
-          350,
-          770
+          400,
+          710
         ],
         [
           400,

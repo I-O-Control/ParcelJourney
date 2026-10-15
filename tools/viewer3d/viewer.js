@@ -147,11 +147,9 @@ async function boot() {
   );
   scene.add(grid);
   const staticMaterials = new Map();
-  // Many routes reuse only part of the same physical belt. Exact-pair
-  // deduplication leaves overlapping meshes that flicker or visually erase
-  // stretches. Merge every collinear interval into a continuous floor belt.
-  const axes = new Map(),
-    diagonals = new Map();
+  // Shared collinear routes represent one belt body. Geometry is schematic;
+  // its directed network is validated by tools/physical-network.py.
+  const axes = new Map(), diagonals = new Map();
   for (const edge of model.edges)
     for (let i = 1; i < edge.points.length; i++) {
       const a = edge.points[i - 1],
@@ -1164,7 +1162,7 @@ async function boot() {
     const status = state.done
       ? state.phase.toUpperCase()
       : state.leg
-        ? state.routeUnknown ? "ROUTE UNKNOWN" : "IN TRANSIT"
+        ? state.possibleExternalHandling ? "POSSIBLE EXTERNAL HANDLING" : state.routeUnknown ? "ROUTE UNKNOWN" : "IN TRANSIT"
         : "AT EQUIPMENT";
     $("state-badge").textContent = status;
     $("percent").textContent = `${Math.floor((t / chosen.duration) * 100)}%`;
@@ -1172,7 +1170,7 @@ async function boot() {
     $("current").textContent = state.done
       ? chosen.completeness
       : state.leg
-        ? state.routeUnknown ? "No mapped physical belt" : "Conveyor transfer"
+        ? state.possibleExternalHandling ? "Possible external handling" : state.routeUnknown ? "No mapped physical belt" : "Conveyor transfer"
         : nodes.get(state.stop.id).label;
     $("description").textContent = state.leg
       ? `${nodes.get(state.leg.a).label} → ${nodes.get(state.leg.b).label}${state.routeUnknown ? " · physical route unknown" : ""}`

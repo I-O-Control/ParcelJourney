@@ -53,11 +53,12 @@ const ReplayEngine = (() => {
       liquid=slice(ps,0,Math.min(1,(t-latestLeg.start)/(latestLeg.end-latestLeg.start)));
     }
     const bright=done?history:(liquid.length?[liquid]:[]);
-    const phase=done?parcel.outcome||'completed':leg?(routeUnknown(leg)?'route-unknown':'travelling'):'processing';
-    const current=done?parcel.completeness:leg?(routeUnknown(leg)?`Observed movement: ${nodes[leg.a].label} → ${nodes[leg.b].label}; physical route unknown`:`Moving: ${nodes[leg.a].label} → ${nodes[leg.b].label}`):event.Summary;
+    const possibleExternalHandling=!!(leg?.possibleExternalHandling);
+    const phase=done?parcel.outcome||'completed':leg?(routeUnknown(leg)?(possibleExternalHandling?'possible-external-handling':'route-unknown'):'travelling'):'processing';
+    const current=done?parcel.completeness:leg?(routeUnknown(leg)?`Observed movement: ${nodes[leg.a].label} → ${nodes[leg.b].label}; ${possibleExternalHandling?'possible external handling':'physical route unknown'}`:`Moving: ${nodes[leg.a].label} → ${nodes[leg.b].label}`):event.Summary;
     const next=done?'Replay ended here. No further movement is implied.':leg&&routeUnknown(leg)?`Next recorded scanner: ${nodes[leg.b].label}. Conveyor route is not mapped.`:nextStop?`Next recorded position in ${(nextStop.arrival-t).toFixed(1)}s: ${nodes[nextStop.id].label}`:`Final observations: ${Math.max(0,parcel.duration-t).toFixed(1)}s remaining.`;
     const positionKnown=!(leg&&routeUnknown(leg))&&nodes[stop.id].physical!==false;
-    return {t,xy,positionKnown,index,event,upcoming,leg,routeUnknown:leg?routeUnknown(leg):false,stop,nextStop,done,phase,current,next,history,liquid,bright};
+    return {t,xy,positionKnown,possibleExternalHandling,index,event,upcoming,leg,routeUnknown:leg?routeUnknown(leg):false,stop,nextStop,done,phase,current,next,history,liquid,bright};
   }
   return {sample,at,slice,length,pointsFor(model,leg){
     const edges=Object.fromEntries(model.edges.map(edge=>[edge.id,edge]));let at=leg.a,points=[];
