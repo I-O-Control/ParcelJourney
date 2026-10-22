@@ -22,6 +22,11 @@ const ReplayEngine = (() => {
     const nodes=Object.fromEntries(model.nodes.map(n=>[n.id,n]));
     const edges=Object.fromEntries(model.edges.map(e=>[e.id,e]));
     const pointsFor=leg=>{
+      if(leg.routeStatus==='co-located-read-head-change') {
+        const a=nodes[leg.a],b=nodes[leg.b];
+        if(a&&b&&a.x===b.x&&a.y===b.y)return [[a.x,a.y],[b.x,b.y]];
+        return null;
+      }
       if(!leg.edges?.length)return null;
       const route=[];let at=leg.a;
       for(const id of leg.edges){const edge=edges[id];if(!edge||edge.a!==at)return null;route.push(...edge.points.slice(route.length?1:0));at=edge.b;}
@@ -62,6 +67,10 @@ const ReplayEngine = (() => {
   }
   return {sample,at,slice,length,pointsFor(model,leg){
     const edges=Object.fromEntries(model.edges.map(edge=>[edge.id,edge]));let at=leg.a,points=[];
+    if(leg.routeStatus==='co-located-read-head-change') {
+      const a=model.nodes.find(n=>n.id===leg.a),b=model.nodes.find(n=>n.id===leg.b);
+      return a&&b&&a.x===b.x&&a.y===b.y?[[a.x,a.y],[b.x,b.y]]:null;
+    }
     if(!leg.edges?.length)return null;
     for(const id of leg.edges){const edge=edges[id];if(!edge||edge.a!==at)return null;points.push(...edge.points.slice(points.length?1:0));at=edge.b;}
     return at===leg.b?points:null;

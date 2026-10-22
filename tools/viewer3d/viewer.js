@@ -1334,8 +1334,7 @@ async function boot() {
       let group = moments.at(-1);
       if (
         !group ||
-        group.event.LocationId !== e.LocationId ||
-        e.t - group.end > 5
+        group.event.LocationId !== e.LocationId
       ) {
         group = { event: e, end: e.t, events: [] };
         moments.push(group);

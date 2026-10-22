@@ -19,7 +19,13 @@ try
     revision = LayoutStore.Save(layout, revision, source);
     var projected = JsonNode.Parse(LayoutStore.Apply(source))!;
     Check(projected["nodes"]![0]!["x"]!.GetValue<int>() == -50, "Move survives save and reload");
-    Check(projected["parcels"]!.ToJsonString() == JsonNode.Parse(source)!["parcels"]!.ToJsonString(), "Geometry edit preserves capture and timings");
+    var originalParcel = JsonNode.Parse(source)!["parcels"]![0]!;
+    var projectedParcel = projected["parcels"]![0]!;
+    string LegEvidence(JsonNode? leg) => string.Join("|", new[] { "a", "b", "start", "end" }.Select(key => leg![key]?.ToJsonString()));
+    Check(projectedParcel["events"]!.ToJsonString() == originalParcel["events"]!.ToJsonString()
+        && projectedParcel["stops"]!.ToJsonString() == originalParcel["stops"]!.ToJsonString()
+        && projectedParcel["legs"]!.AsArray().Select(LegEvidence).SequenceEqual(originalParcel["legs"]!.AsArray().Select(LegEvidence)),
+        "Geometry edit preserves captured events, scanner sequence and timings while route annotations can be recomputed");
     Reject(() => LayoutStore.Save(layout, "stale", source), "Concurrent editor cannot overwrite");
     var broken = layout.DeepClone().AsObject(); broken["nodes"]!.AsArray().RemoveAt(1);
     Reject(() => LayoutStore.Save(broken, revision, source), "Dangling endpoint rejected");
@@ -67,6 +73,12 @@ try
     corridorEdges.Add(JsonNode.Parse("""{"id":"XB","a":"SEAL1","b":"SC_B","topology":"floor-layout"}"""));
     Check(CorridorRoutes.Find("SC_A", "SC_B", corridorEdges) is null, "Ambiguous branches remain unresolved");
     Check(CorridorRoutes.Find("SC_A", "SC_B", corridorEdges, "SEAL1")?.First()["id"]!.ToString() == "AX", "A confirmed branch selects its connected corridor");
+    var readers = JsonNode.Parse("""{"nodes":[{"id":"SC_ETIOSL4","x":10,"y":20},{"id":"SC_ETIOTL4","x":10,"y":20}],"edges":[],"parcels":[{"events":[],"legs":[{"a":"SC_ETIOSL4","b":"SC_ETIOTL4","captureRouteStatus":"co-located-read-head-change","edges":[]}]}]}""")!.AsObject();
+    CorridorRoutes.Resolve(readers);
+    Check(readers["parcels"]![0]!["legs"]![0]!["routeStatus"]!.ToString() == "co-located-read-head-change", "Co-located side/top readers preserve known position without inventing a belt");
+    readers["nodes"]![1]!["x"] = 50;
+    CorridorRoutes.Resolve(readers);
+    Check(readers["parcels"]![0]!["legs"]![0]!["routeStatus"]!.ToString() == "unknown", "Moving a read head apart keeps its physical transfer unresolved");
     Console.WriteLine($"{passed} layout checks passed.");
 }
 finally { if (Directory.Exists(directory)) Directory.Delete(directory, true); }

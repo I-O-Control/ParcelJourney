@@ -50,4 +50,21 @@ for(const p of m.parcels)for(const leg of p.legs)if(leg.routeStatus==='unknown'|
   assert.equal(state.leg.edges.length,0,'unknown transition has no synthetic geometry edge');
 }
 report.unresolvedTransitions=unresolved;report.checks.push('unmapped scanner transitions remain at last known position and are not drawn as physical routes');
+const heads={nodes:[{id:'SC_ETIOSL4',x:10,y:20},{id:'SC_ETIOTL4',x:10,y:20}],edges:[]};
+const handover={duration:2,events:[{t:0,Summary:'Side read'},{t:1,Summary:'Top read'}],stops:[{id:'SC_ETIOSL4',arrival:0,departure:0},{id:'SC_ETIOTL4',arrival:1,departure:1}],legs:[{a:'SC_ETIOSL4',b:'SC_ETIOTL4',start:0,end:1,edges:[],routeStatus:'co-located-read-head-change'}]};
+const headState=engine.sample(heads,handover,.5);
+assert.equal(headState.positionKnown,true,'co-located heads keep physical position known');
+assert.equal(headState.routeUnknown,false,'read-head handover is not an unknown conveyor route');
+assert.deepEqual(headState.xy,[10,20]);
+assert.deepEqual(engine.pointsFor(heads,handover.legs[0]),[[10,20],[10,20]],'2D and 3D share a stationary location');
+heads.nodes[1].x=50;
+assert.equal(engine.sample(heads,handover,.5).positionKnown,false,'different coordinates must not invent a read-head transfer');
+report.checks.push('co-located reader handover remains stationary; separated heads stay unresolved');
+const shippedHtml=fs.readFileSync(require('node:path').join(__dirname,'../ParcelJourney.App/Assets/equipment-replay.html'),'utf8');
+const visitsSource=shippedHtml.match(/function visits\(parcel\)\{[^\n]+/)[0];
+const visits=require('node:vm').runInNewContext('('+visitsSource+')');
+const stationVisits=visits({events:[{t:0,LocationId:'A'},{t:300,LocationId:'A'},{t:400,LocationId:'B'},{t:700,LocationId:'A'}]});
+assert.equal(stationVisits.length,3,'a long dwell with software events remains one station visit');
+assert.equal(stationVisits[0].items.length,2,'dwell evidence remains expandable within the same visit');
+report.checks.push('station timeline preserves long dwell and genuine return visits');
 console.log(JSON.stringify(report,null,2));

@@ -75,6 +75,11 @@ const ReplayEngine = (() => {
     const nodes=Object.fromEntries(model.nodes.map(n=>[n.id,n]));
     const edges=Object.fromEntries(model.edges.map(e=>[e.id,e]));
     const pointsFor=leg=>{
+      if(leg.routeStatus==='co-located-read-head-change') {
+        const a=nodes[leg.a],b=nodes[leg.b];
+        if(a&&b&&a.x===b.x&&a.y===b.y)return [[a.x,a.y],[b.x,b.y]];
+        return null;
+      }
       if(!leg.edges?.length)return null;
       const route=[];let at=leg.a;
       for(const id of leg.edges){const edge=edges[id];if(!edge||edge.a!==at)return null;route.push(...edge.points.slice(route.length?1:0));at=edge.b;}
@@ -115,6 +120,10 @@ const ReplayEngine = (() => {
   }
   return {sample,at,slice,length,pointsFor(model,leg){
     const edges=Object.fromEntries(model.edges.map(edge=>[edge.id,edge]));let at=leg.a,points=[];
+    if(leg.routeStatus==='co-located-read-head-change') {
+      const a=model.nodes.find(n=>n.id===leg.a),b=model.nodes.find(n=>n.id===leg.b);
+      return a&&b&&a.x===b.x&&a.y===b.y?[[a.x,a.y],[b.x,b.y]]:null;
+    }
     if(!leg.edges?.length)return null;
     for(const id of leg.edges){const edge=edges[id];if(!edge||edge.a!==at)return null;points.push(...edge.points.slice(points.length?1:0));at=edge.b;}
     return at===leg.b?points:null;
@@ -271,7 +280,7 @@ $('play').setAttribute('title','Play / pause (Space)');$('follow').setAttribute(
 // of one parcel position, not separate journey stops.
 (function(){
   const action=e=>{const s=((e.Summary||'')+' '+(e.Raw||e.RawLine||'')).toLowerCase();if(/scanner|scan|onscanner/.test(s))return'Scanner read';if(/weight|scale|brutto/.test(s))return'Weight check';if(/print|label/.test(s))return'Label print';if(/plc|route|divert|fahrziel/.test(s))return'Routing decision';if(/save|insert|update|database|db/.test(s))return'Parcel state stored';return'System exchange'};
-  function visits(parcel){const result=[];parcel.events.forEach((e,i)=>{let g=result.at(-1);if(!g||g.location!==e.LocationId||e.t-g.end>5){g={e,location:e.LocationId,start:e.t,end:e.t,items:[]};result.push(g)}g.end=e.t;g.items.push({e,i})});return result}
+  function visits(parcel){const result=[];parcel.events.forEach((e,i)=>{let g=result.at(-1);if(!g||g.location!==e.LocationId){g={e,location:e.LocationId,start:e.t,end:e.t,items:[]};result.push(g)}g.end=e.t;g.items.push({e,i})});return result}
   function normalize(){const model=window.replayTest?.model,select=document.getElementById('pick'),host=document.getElementById('events');if(!model||!select||!host||!model.parcels[+select.value])return;const parcel=model.parcels[+select.value],groups=visits(parcel);host.replaceChildren();const count=document.getElementById('visit-count');if(count)count.textContent=groups.length+' station visits';for(const g of groups){const row=document.createElement('div');row.className='timeline-group';row.dataset.start=g.start;row.dataset.end=g.end;const b=document.createElement('button');b.className='event';const actions=[...new Set(g.items.map(x=>action(x.e)))];b.textContent=(g.start/60|0).toString().padStart(2,'0')+':'+(g.start%60).toFixed(1).padStart(4,'0')+' · '+(model.nodes.find(n=>n.id===g.location)?.label||'Unknown position')+' — '+actions.join(' + ')+(g.items.length>1?' · '+g.items.length+' exchanges':'');b.onclick=()=>window.replayTest.seek(g.start);row.append(b);if(g.items.length>1){const more=document.createElement('button');more.className='event-expand';more.textContent='Show '+g.items.length+' exchanges';const detail=document.createElement('div');detail.className='timeline-children';detail.hidden=true;more.onclick=ev=>{ev.stopPropagation();detail.hidden=!detail.hidden;more.textContent=detail.hidden?'Show '+g.items.length+' exchanges':'Hide exchanges'};g.items.forEach(x=>{const child=document.createElement('button');child.className='event event-child';child.textContent=(x.e.t-g.start).toFixed(1)+'s · '+action(x.e)+' · '+(x.e.EventType||x.e.Summary||'Recorded exchange');child.onclick=()=>window.replayTest.seek(x.e.t);detail.append(child)});row.append(more,detail)}host.append(row)}updateTimeline(window.replayTest.state.t,true)}
   function updateTimeline(time,instant=false){const host=document.getElementById('events'),rows=[...host.querySelectorAll('.timeline-group')];if(!rows.length)return;let current=0;rows.forEach((row,i)=>{if(+row.dataset.start<=time)current=i});rows.forEach((row,i)=>{row.classList.toggle('past',i<current);row.classList.toggle('current',i===current);row.classList.toggle('future',i>current)});const row=rows[current];if(row&&host.dataset.current!=current){host.dataset.current=current;host.scrollTo({top:Math.max(0,row.offsetTop-42),behavior:instant?'auto':'smooth'})}}
   window.updateJourneyTimeline=updateTimeline;

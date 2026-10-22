@@ -57,6 +57,11 @@
           const nodes = Object.fromEntries(model.nodes.map((n) => [n.id, n]));
           const edges = Object.fromEntries(model.edges.map((e) => [e.id, e]));
           const pointsFor = (leg2) => {
+            if (leg2.routeStatus === "co-located-read-head-change") {
+              const a = nodes[leg2.a], b = nodes[leg2.b];
+              if (a && b && a.x === b.x && a.y === b.y) return [[a.x, a.y], [b.x, b.y]];
+              return null;
+            }
             if (!leg2.edges?.length) return null;
             const route = [];
             let at2 = leg2.a;
@@ -103,6 +108,10 @@
         return { sample, at, slice, length, pointsFor(model, leg) {
           const edges = Object.fromEntries(model.edges.map((edge) => [edge.id, edge]));
           let at2 = leg.a, points = [];
+          if (leg.routeStatus === "co-located-read-head-change") {
+            const a = model.nodes.find((n) => n.id === leg.a), b = model.nodes.find((n) => n.id === leg.b);
+            return a && b && a.x === b.x && a.y === b.y ? [[a.x, a.y], [b.x, b.y]] : null;
+          }
           if (!leg.edges?.length) return null;
           for (const id of leg.edges) {
             const edge = edges[id];
@@ -32932,7 +32941,7 @@ Click equipment for details`;
       const moments = [];
       chosen.events.forEach((e) => {
         let group = moments.at(-1);
-        if (!group || group.event.LocationId !== e.LocationId || e.t - group.end > 5) {
+        if (!group || group.event.LocationId !== e.LocationId) {
           group = { event: e, end: e.t, events: [] };
           moments.push(group);
         }

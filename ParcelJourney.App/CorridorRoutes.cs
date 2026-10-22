@@ -6,6 +6,10 @@ namespace ParcelJourney.App;
 // A scanner observation cannot justify an arbitrary detour through other scanners.
 public static class CorridorRoutes
 {
+    private static bool SameCoordinate(JsonNode? a, JsonNode? b) =>
+        double.TryParse(a?.ToString(), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var x)
+        && double.TryParse(b?.ToString(), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var y)
+        && double.IsFinite(x) && double.IsFinite(y) && x == y;
     public static List<JsonNode>? Find(string from, string to, JsonArray edges, string? via = null)
     {
         var outgoing = edges.Where(e => e?["topology"]?.ToString() == "floor-layout" || e?["userDefined"]?.GetValue<bool>() == true)
@@ -34,6 +38,7 @@ public static class CorridorRoutes
     public static void Resolve(JsonObject model)
     {
         var edges = model["edges"]!.AsArray();
+        var nodes = model["nodes"]!.AsArray().ToDictionary(n => n!["id"]!.ToString());
         foreach (var parcel in model["parcels"]!.AsArray())
             foreach (var leg in parcel!["legs"]!.AsArray())
             {
@@ -41,6 +46,19 @@ public static class CorridorRoutes
                 if (leg["captureRouteStatus"] is not null)
                 {
                     var status = leg["captureRouteStatus"]!.ToString();
+                    if (status == "co-located-read-head-change")
+                    {
+                        string to = leg["b"]!.ToString();
+                        bool paired = System.Text.RegularExpressions.Regex.IsMatch(from, @"^SC_ETIO[ST]L[1-5]$")
+                            && (from.Replace("SC_ETIOSL", "SC_ETIOTL") == to || from.Replace("SC_ETIOTL", "SC_ETIOSL") == to) && from != to;
+                        bool samePlace = paired && nodes.TryGetValue(from, out var a) && nodes.TryGetValue(to, out var b)
+                            && SameCoordinate(a!["x"], b!["x"]) && SameCoordinate(a["y"], b["y"]);
+                        leg["edges"] = new JsonArray();
+                        leg["routeStatus"] = samePlace ? status : "unknown";
+                        leg["routeReason"] = samePlace ? "Side and top readers observe the same physical station; no conveyor movement is implied."
+                            : "Co-located reader evidence does not match the current station coordinates.";
+                        continue;
+                    }
                     var ids = leg["captureRouteEdgeIds"]?.AsArray() ?? new JsonArray();
                     var map = edges.ToDictionary(e => e!["id"]!.ToString());
                     string at = from;
